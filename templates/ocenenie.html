@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ocenenie nehnuteľnosti — Soňa Tománková</title>
+<meta name="description" content="Nezáväzné ocenenie vašej nehnuteľnosti — realitná maklérka Soňa Tománková, Trenčín a okolie.">
+
+<link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/static/favicon-180.png">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ocenenie nehnuteľnosti — Soňa Tománková">
+<meta property="og:description" content="Nezáväzné ocenenie vašej nehnuteľnosti — realitná maklérka Soňa Tománková, Trenčín a okolie.">
+<meta property="og:image" content="/static/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="/static/og-image.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Bodoni+Moda:ital,wght@1,700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:  #F5F0E7;
+    --beige:  #E9E2D6;
+    --sand:   #C9B79E;
+    --brown:  #6B5844;
+    --espresso:#3B2F24;
+    --espresso-deep: #241C15;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--beige);
+    font-family:'Jost', sans-serif;
+    color: var(--espresso);
+  }
+  a{ color:inherit; text-decoration:none; }
+  ::-webkit-scrollbar{ width:0; height:0; }
+
+  .page{
+    max-width: 480px;
+    margin: 0 auto;
+    background: var(--cream);
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* ---------- TOP BAR ---------- */
+  .topbar{
+    background: var(--espresso);
+    padding: 22px 26px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .back-link{
+    font-family:'Jost';
+    font-size:13px;
+    letter-spacing:.05em;
+    color: var(--cream);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .topbar .footer-logo{ margin:0; }
+  .topbar .footer-logo .name{ color:var(--cream); font-size:22px; }
+  .topbar .footer-logo .surname{ color:var(--cream); font-size:7px; }
+
+  /* ---------- HERO / INTRO ---------- */
+  .intro{
+    padding: 38px 26px 10px;
+  }
+  .label{
+    font-family:'Jost';
+    font-size:10px;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    color: #A08B72;
+  }
+  .intro h1{
+    font-family:'Cormorant Garamond';
+    font-weight:500;
+    font-size:34px;
+    color: var(--espresso);
+    line-height:1.15;
+    margin: 14px 0 0;
+  }
+  .intro p{
+    font-family:'Jost';
+    font-weight:300;
+    font-size:14px;
+    color: var(--brown);
+    line-height:1.65;
+    margin-top:14px;
+  }
+
+  /* ---------- FORM ---------- */
+  .form-wrap{
+    padding: 30px 26px 50px;
+  }
+
+  .field{
+    margin-bottom:16px;
+  }
+  .field-label{
+    display:block;
+    font-family:'Jost';
+    font-weight:400;
+    font-size:12px;
+    letter-spacing:.04em;
+    color: var(--espresso);
+    margin-bottom:8px;
+  }
+  .field input,
+  .field select,
+  .field textarea{
+    width:100%;
+    font-family:'Jost';
+    font-size:14px;
+    color: var(--espresso);
+    background:#fff;
+    border:1px solid #DCD2C2;
+    padding:14px 18px;
+    border-radius:14px;
+    appearance:none;
+    -webkit-appearance:none;
+  }
+  .field textarea{ resize:none; border-radius:16px; }
+  .field input::placeholder, .field textarea::placeholder{ color:#B7A98F; }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline:none;
+    border-color: var(--sand);
+  }
+
+  .field-row{
+    display:flex;
+    gap:12px;
+  }
+  .field-row .field{ flex:1; margin-bottom:16px; }
+
+  .unsure-row{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin-top:8px;
+  }
+  .unsure-row input{
+    accent-color: var(--espresso);
+    width:14px;
+    height:14px;
+    flex-shrink:0;
+  }
+  .unsure-row label{
+    font-family:'Jost';
+    font-weight:300;
+    font-size:11.5px;
+    color: #A08B72;
+    cursor:pointer;
+  }
+
+  .select-wrap{ position:relative; }
+  .select-wrap::after{
+    content:"⌄";
+    position:absolute;
+    right:18px;
+    top:50%;
+    transform:translateY(-50%);
+    color:var(--brown);
+    pointer-events:none;
+    font-size:16px;
+  }
+
+  fieldset{
+    border:none;
+    padding:0;
+    margin:0 0 16px;
+  }
+  legend{
+    font-family:'Jost';
+    font-weight:400;
+    font-size:12px;
+    letter-spacing:.04em;
+    color: var(--espresso);
+    margin-bottom:10px;
+    padding:0;
+  }
+  .radio-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+  .radio-option{
+    position:relative;
+  }
+  .radio-option input{
+    position:absolute;
+    opacity:0;
+    inset:0;
+    margin:0;
+    cursor:pointer;
+  }
+  .radio-option label{
+    display:block;
+    text-align:center;
+    font-family:'Jost';
+    font-size:13px;
+    color: var(--espresso);
+    background:#fff;
+    border:1px solid #DCD2C2;
+    border-radius:100px;
+    padding:12px 10px;
+    transition: background .15s ease, border-color .15s ease;
+  }
+  .radio-option input:checked + label{
+    background: var(--espresso);
+    color: var(--cream);
+    border-color: var(--espresso);
+  }
+
+  .checkbox-row{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    margin: 22px 0 26px;
+  }
+  .checkbox-row input{
+    margin-top:3px;
+    accent-color: var(--espresso);
+    width:16px;
+    height:16px;
+    flex-shrink:0;
+  }
+  .checkbox-row label{
+    font-family:'Jost';
+    font-weight:300;
+    font-size:12px;
+    color: var(--brown);
+    line-height:1.55;
+  }
+
+  button[type="submit"]{
+    width:100%;
+    font-family:'Jost';
+    font-size:14px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color: var(--cream);
+    background: var(--espresso);
+    border:none;
+    border-radius:100px;
+    padding:17px;
+    cursor:pointer;
+    transition: opacity .2s ease;
+  }
+  button[type="submit"]:hover{ opacity:0.88; }
+
+  .form-note{
+    font-family:'Jost';
+    font-weight:300;
+    font-size:12px;
+    color:#A08B72;
+    margin-top:14px;
+    line-height:1.5;
+    text-align:center;
+  }
+
+  .toast{
+    position: fixed;
+    left:50%;
+    bottom: 30px;
+    transform: translateX(-50%) translateY(12px);
+    background: var(--espresso);
+    color: var(--cream);
+    font-family:'Jost';
+    font-size:13px;
+    padding:14px 24px;
+    border-radius:100px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+    z-index: 60;
+    opacity:0;
+    pointer-events:none;
+    transition: opacity .3s ease, transform .3s ease;
+    text-align:center;
+    max-width:88vw;
+  }
+  .toast.visible{
+    opacity:1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .contact-strip{
+    text-align:center;
+    padding: 30px 26px 50px;
+    border-top:1px solid #DCD2C2;
+    margin-top: 10px;
+  }
+  .contact-strip .label{ margin-bottom:12px; }
+  .contact-strip a{
+    display:inline-block;
+    font-family:'Cormorant Garamond';
+    font-size:20px;
+    color: var(--espresso);
+  }
+  .contact-strip .sub{
+    font-family:'Jost';
+    font-weight:300;
+    font-size:12px;
+    color:#A08B72;
+    margin-top:6px;
+  }
+
+  @media (min-width: 900px){
+    .page{ max-width:640px; }
+    .intro h1{ font-size:44px; }
+    .intro p{ font-size:16px; max-width:480px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="topbar">
+    <a href="index.html" class="back-link">← Späť na web</a>
+    <div class="footer-logo">
+      <span class="name" style="font-family:'Bodoni Moda'; font-weight:700; font-style:italic; display:block; line-height:1;">soňa</span>
+      <span class="surname" style="font-family:'Jost'; letter-spacing:.32em; text-transform:uppercase; display:block; text-align:center;">Tománková</span>
+    </div>
+  </div>
+
+  <div class="intro">
+    <div class="label">Nezáväzný odhad</div>
+    <h1>Ocenenie nehnuteľnosti</h1>
+    <p>Vyplňte pár základných údajov o vašej nehnuteľnosti a ja sa vám ozvem s orientačným odhadom trhovej ceny a odporúčaním, ako z predaja vyťažiť čo najviac.</p>
+  </div>
+
+  <div class="form-wrap">
+    <form id="valuationForm">
+
+      <fieldset>
+        <legend>Typ nehnuteľnosti</legend>
+        <div class="radio-grid">
+          <div class="radio-option">
+            <input type="radio" name="typ" id="typ-byt" value="Byt" checked>
+            <label for="typ-byt">Byt</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="typ" id="typ-dom" value="Dom">
+            <label for="typ-dom">Dom</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="typ" id="typ-pozemok" value="Pozemok">
+            <label for="typ-pozemok">Pozemok</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="typ" id="typ-ine" value="Iné">
+            <label for="typ-ine">Iné</label>
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="field">
+        <label class="field-label" for="adresa">Lokalita / adresa nehnuteľnosti</label>
+        <input type="text" id="adresa" name="adresa" placeholder="napr. Trenčín, Sihoť" required>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label class="field-label" for="rozloha">Rozloha (m²)</label>
+          <input type="number" id="rozloha" name="rozloha" placeholder="65" min="0" required>
+          <div class="unsure-row">
+            <input type="checkbox" id="rozloha-unsure">
+            <label for="rozloha-unsure">Nie som si istý/á</label>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label" for="izby">Počet izieb</label>
+          <input type="number" id="izby" name="izby" placeholder="3" min="0" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="stav">Stav nehnuteľnosti</label>
+        <div class="select-wrap">
+          <select id="stav" name="stav" required>
+            <option value="" disabled selected>Vyberte stav</option>
+            <option value="Novostavba">Novostavba</option>
+            <option value="Po rekonštrukcii">Po rekonštrukcii</option>
+            <option value="Pôvodný stav">Pôvodný stav</option>
+            <option value="Vyžaduje rekonštrukciu">Vyžaduje rekonštrukciu</option>
+            <option value="Nie som si istý/á">Nie som si istý/á</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="meno">Meno a priezvisko</label>
+        <input type="text" id="meno" name="meno" placeholder="Vaše meno" required>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label class="field-label" for="telefon">Telefón</label>
+          <input type="tel" id="telefon" name="telefon" placeholder="+421" required>
+        </div>
+        <div class="field">
+          <label class="field-label" for="email">E-mail</label>
+          <input type="email" id="email" name="email" placeholder="vas@email.sk" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="poznamka">Poznámka (nepovinné)</label>
+        <textarea id="poznamka" name="poznamka" rows="3" placeholder="Čokoľvek ďalšie, čo by som mala vedieť..."></textarea>
+      </div>
+
+      <div class="checkbox-row">
+        <input type="checkbox" id="suhlas" name="suhlas" required>
+        <label for="suhlas">Súhlasím so spracovaním osobných údajov za účelom vypracovania ocenenia nehnuteľnosti a následného kontaktovania.</label>
+      </div>
+
+      <button type="submit">Odoslať na ocenenie</button>
+      <p class="form-note" id="formNote">Po odoslaní vás budem kontaktovať priamo na uvedený telefón alebo e-mail.</p>
+    </form>
+  </div>
+
+  <div class="contact-strip">
+    <div class="label">Radšej priamo?</div>
+    <a href="tel:{{ contact_tel }}">{{ site.contact.phone }}</a>
+    <div class="sub">{{ site.contact.email }}</div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const form = document.getElementById('valuationForm');
+
+  // "Nie som si istý/á" pri rozlohe -> vypne pole a jeho povinnosť
+  const rozlohaInput = document.getElementById('rozloha');
+  const rozlohaUnsure = document.getElementById('rozloha-unsure');
+  rozlohaUnsure.addEventListener('change', () => {
+    if (rozlohaUnsure.checked){
+      rozlohaInput.disabled = true;
+      rozlohaInput.required = false;
+      rozlohaInput.value = '';
+      rozlohaInput.placeholder = 'Nie som si istý/á';
+    } else {
+      rozlohaInput.disabled = false;
+      rozlohaInput.required = true;
+      rozlohaInput.placeholder = '65';
+    }
+  });
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    const typ = form.typ.value;
+    const adresa = form.adresa.value.trim();
+    const rozloha = rozlohaUnsure.checked ? 'Nie som si istý/á' : form.rozloha.value.trim();
+    const izby = form.izby.value.trim();
+    const stav = form.stav.value;
+    const meno = form.meno.value.trim();
+    const telefon = form.telefon.value.trim();
+    const email = form.email.value.trim();
+    const poznamka = form.poznamka.value.trim();
+
+    const toastEl = document.getElementById('toast');
+    let toastTimer = null;
+    function showToast(message){
+      toastEl.textContent = message;
+      toastEl.classList.add('visible');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toastEl.classList.remove('visible'), 3800);
+    }
+
+    try {
+      const res = await fetch('https://formspree.io/f/mpqvqpqn', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new URLSearchParams({
+          _subject: `Žiadosť o ocenenie nehnuteľnosti — ${meno}`,
+          Meno: meno,
+          Telefón: telefon,
+          'E-mail': email,
+          'Typ nehnuteľnosti': typ,
+          Lokalita: adresa,
+          Rozloha: rozloha ? (rozloha + (rozlohaUnsure.checked ? '' : ' m²')) : '-',
+          'Počet izieb': izby || '-',
+          'Stav nehnuteľnosti': stav || '-',
+          Poznámka: poznamka || '-'
+        })
+      });
+      if (res.ok){
+        showToast('Ďakujeme! Ozvem sa vám s ocenením čo najskôr.');
+        form.reset();
+      } else {
+        showToast('Nastala chyba pri odosielaní. Skúste to prosím znova, alebo nám rovno zavolajte.');
+      }
+    } catch (err){
+      showToast('Nastala chyba pri odosielaní. Skúste to prosím znova, alebo nám rovno zavolajte.');
+    }
+  });
+</script>
+
+</body>
+</html>

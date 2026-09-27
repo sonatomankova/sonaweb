@@ -1,0 +1,68 @@
+{% extends "admin_layout.html" %}
+{% block title %}Recenzie{% endblock %}
+{% block content %}
+<h1 class="page-title">Recenzie</h1>
+<p style="font-size:13px;color:var(--brown);margin-top:-14px;margin-bottom:20px;">Na webe sa rozdelia rovnomerne do dvoch radov.</p>
+
+<div class="cardlist">
+  {% for r in site.reviews %}
+  <div class="card">
+    <div class="card-head">
+      <div class="card-title">{{ loop.index }}. {{ r.author or '(bez mena)' }} — {{ '★' * r.stars }}</div>
+      <div class="card-actions">
+        <form method="post" action="{{ url_for('admin_recenzie_move', idx=loop.index0) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="direction" value="up"><button class="icon-btn" title="Hore">↑</button></form>
+        <form method="post" action="{{ url_for('admin_recenzie_move', idx=loop.index0) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="direction" value="down"><button class="icon-btn" title="Dole">↓</button></form>
+        <form method="post" action="{{ url_for('admin_recenzie_delete', idx=loop.index0) }}" onsubmit="return confirm('Naozaj zmazať túto recenziu?');"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="icon-btn danger" title="Zmazať">Zmazať</button></form>
+      </div>
+    </div>
+    <details>
+      <summary>Upraviť</summary>
+      <div class="details-body">
+        <form method="post" action="{{ url_for('admin_recenzie_edit', idx=loop.index0) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <div class="field-row two">
+            <label>Meno autora <input type="text" name="author" value="{{ r.author }}"></label>
+            <label>Iniciály (do bublinky) <input type="text" name="avatar" value="{{ r.avatar }}"></label>
+          </div>
+          <label>Hviezdičky
+            <select name="stars">
+              {% for n in [5,4,3,2,1] %}
+              <option value="{{ n }}" {{ 'selected' if r.stars == n else '' }}>{{ '★' * n }}</option>
+              {% endfor %}
+            </select>
+          </label>
+          <label>Text recenzie <textarea name="text" rows="3">{{ r.text }}</textarea></label>
+          <button class="btn primary" type="submit">Uložiť</button>
+        </form>
+      </div>
+    </details>
+  </div>
+  {% else %}
+  <p style="font-size:14px;color:var(--brown);">Zatiaľ žiadne recenzie.</p>
+  {% endfor %}
+</div>
+
+<details>
+  <summary style="font-size:14px;">+ Pridať recenziu</summary>
+  <div class="details-body">
+    <form method="post" action="{{ url_for('admin_recenzie_add') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="field-row two">
+        <label>Meno autora <input type="text" name="author" placeholder="napr. Petra B."></label>
+        <label>Iniciály (do bublinky) <input type="text" name="avatar" placeholder="napr. PB"></label>
+      </div>
+      <label>Hviezdičky
+        <select name="stars">
+          <option value="5">★★★★★</option>
+          <option value="4">★★★★</option>
+          <option value="3">★★★</option>
+          <option value="2">★★</option>
+          <option value="1">★</option>
+        </select>
+      </label>
+      <label>Text recenzie <textarea name="text" rows="3"></textarea></label>
+      <button class="btn primary" type="submit">Pridať recenziu</button>
+    </form>
+  </div>
+</details>
+{% endblock %}

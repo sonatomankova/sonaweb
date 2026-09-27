@@ -1,0 +1,53 @@
+SONAWEB — ako to funguje
+==============================
+
+Web už nie je len súbor index.html, ale malá appka (Flask/Python), ktorá vie:
+- zobraziť tvoj web (rovnaký vzhľad ako doteraz)
+- a zároveň ti dať prihlásenie + admin, kde si sama pridávaš ponuky, meníš texty aj fotky —
+  zmena sa hneď zobrazí na webe, žiadne sťahovanie/nahrávanie súborov.
+
+AKO TO SPUSTIŤ LOKÁLNE (na tvojom počítači, na testovanie):
+1. Over/nainštaluj závislosti (stačí raz):
+     pip3 install -r requirements.txt
+2. Spusti appku:
+     python3 app.py
+3. Otvor v prehliadači: http://localhost:5050
+   - Prihlásenie nájdeš cez malý odkaz "Správa webu →" v päte stránky, alebo priamo
+     http://localhost:5050/admin/login
+
+POZNÁMKA (Mac): appka beží na porte 5050 zámerne, nie na klasickom 5000 — na macOS je port
+5000 obsadený systémovou službou AirPlay Receiver a spôsobuje to práve prázdnu bielu
+stránku v Safari. Ak by si niekedy port menila, over si najprv, že nie je obsadený.
+
+PRVÉ PRIHLÁSENIE:
+- Meno a heslo pre prvé prihlásenie ti Claude povedal/napísal osobne pri odovzdaní
+  (vygenerovalo sa automaticky pri prvom spustení appky).
+- V Nastaveniach (v admin dashboarde) si ich hneď zmeň na vlastné.
+
+ŠTRUKTÚRA PRIEČINKA:
+- app.py                  → appka (routing, prihlásenie, ukladanie)
+- templates/index.html     → hlavná stránka (šablóna, dopĺňa sa dátami z data/site.json)
+- templates/ocenenie.html  → stránka s formulárom na ocenenie
+- templates/admin_*.html   → stránky admin dashboardu
+- data/site.json           → VŠETOK obsah webu (ponuky, texty, recenzie) — mení sa cez admin, netreba ručne upravovať
+- data/admin.json          → prihlasovacie meno + zahashované heslo (NIKDY sa nezdieľa/nenahráva verejne)
+- data/secret.key          → tajný kľúč appky (tiež sa nezdieľa)
+- static/                  → fotky, video, favicon — verejne dostupné súbory
+- static/uploads/          → sem sa ukladajú fotky, ktoré nahráš cez admin
+
+FORMULÁRE (kontaktný formulár a ocenenie) posielajú správy priamo cez Formspree — bez zmeny.
+
+KEĎ BUDEŠ RIEŠIŤ OSTRÚ PREVÁDZKU (doména + hosting):
+- Táto appka potrebuje hosting, ktorý vie spustiť Python (napr. Render, Railway, Fly.io,
+  PythonAnywhere, alebo bežný VPS) — NIE úplne najlacnejší "len statický" balík a nie
+  klasický zdieľaný hosting s PHP.
+- Viaceré z týchto služieb (Render/Railway/Fly.io) sa dajú nasadiť priamo cez "git push" —
+  presne to, čo si spomínala, že chceš robiť.
+- Súbory data/admin.json a data/secret.key sa NIKDY nemajú dostať do verejného repozitára
+  (sú v .gitignore) — na ostrej appke sa vytvoria nanovo pri prvom spustení.
+
+EXTRA SÚBOR (voliteľný, zo starej verzie webu):
+- index-vsetko-v-jednom.html → staršia samostatná verzia webu s vloženým videom, na rýchle
+  poslanie/ukázanie niekomu bez appky. POZOR: teraz už nie je prepojená s admin obsahom
+  (nezmení sa, keď niečo upravíš cez admin) — ak ju budeš chcieť použiť, over si najprv,
+  či je obsah stále aktuálny.

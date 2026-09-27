@@ -1,0 +1,13 @@
+{% extends "admin_layout.html" %}
+{% block title %}Nastavenia{% endblock %}
+{% block content %}
+<h1 class="page-title">Nastavenia</h1>
+
+<form method="post" action="{{ url_for('admin_nastavenia') }}" style="max-width:360px;">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label>Prihlasovacie meno <input type="text" name="username" value="{{ admin.username }}"></label>
+  <label>Nové heslo (nechaj prázdne, ak nemeníš) <input type="password" name="new_password" autocomplete="new-password"></label>
+  <label>Aktuálne heslo (kvôli overeniu) <input type="password" name="current_password" autocomplete="current-password" required></label>
+  <button class="btn primary" type="submit">Uložiť</button>
+</form>
+{% endblock %}

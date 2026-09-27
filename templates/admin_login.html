@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Prihlásenie — SONAWEB</title>
+<link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32.png">
+<style>
+  :root{
+    --cream:#F5F0E7; --beige:#E9E2D6; --sand:#C9B79E;
+    --brown:#6B5844; --espresso:#3B2F24; --espresso-deep:#241C15;
+    --danger:#a3392f;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background: var(--espresso-deep);
+    background-image: radial-gradient(circle at 30% 20%, var(--espresso) 0%, var(--espresso-deep) 70%);
+  }
+  .login-card{
+    width:min(360px, 90vw); background:var(--cream); border-radius:16px;
+    padding:34px 30px; box-shadow:0 20px 60px rgba(0,0,0,.35);
+  }
+  .logotype{ text-align:center; margin-bottom:22px; }
+  .logotype .name{ font-family:'Bodoni Moda',Georgia,serif; font-weight:700; font-style:italic; font-size:30px; color:var(--espresso); display:block; }
+  .logotype .surname{ font-family:'Jost',sans-serif; font-size:10px; letter-spacing:.32em; text-transform:uppercase; color:var(--brown); }
+  h1{ font-size:15px; text-align:center; color:var(--brown); font-weight:600; margin:0 0 20px; text-transform:uppercase; letter-spacing:.04em; }
+  label{ display:block; font-size:13px; font-weight:600; color:var(--brown); margin-bottom:14px; }
+  input{
+    display:block; width:100%; margin-top:5px; font:inherit; font-size:14px;
+    padding:10px 12px; border:1px solid var(--sand); border-radius:8px; background:#fff; color:var(--espresso-deep);
+  }
+  button{
+    width:100%; margin-top:6px; font:inherit; font-size:14px; font-weight:600; cursor:pointer;
+    padding:11px 14px; border:none; border-radius:8px; background:var(--brown); color:#fff;
+  }
+  button:hover{ background:var(--espresso-deep); }
+  .flash{ font-size:13px; border-radius:8px; padding:9px 12px; margin-bottom:14px; }
+  .flash.error{ background:#fbe4e1; color:var(--danger); }
+  .back-link{ display:block; text-align:center; margin-top:18px; font-size:12px; color:var(--brown); opacity:.7; text-decoration:none; }
+  .back-link:hover{ opacity:1; }
+</style>
+</head>
+<body>
+  <div class="login-card">
+    <div class="logotype">
+      <span class="name">soňa</span>
+      <span class="surname">Tománková</span>
+    </div>
+    <h1>Správa webu</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+    <form method="post">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label>Meno <input type="text" name="username" autocomplete="username" required autofocus></label>
+      <label>Heslo <input type="password" name="password" autocomplete="current-password" required></label>
+      <button type="submit">Prihlásiť sa</button>
+    </form>
+    <a href="/" class="back-link">← Späť na web</a>
+  </div>
+</body>
+</html>

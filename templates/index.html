@@ -1,0 +1,2330 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soňa Tománková — Realitná maklérka | Trenčín a okolie</title>
+<meta name="description" content="Realitná maklérka Soňa Tománková — ocenenie, marketing a predaj, prenájom, správa nehnuteľností, agent kupujúceho, výkup nehnuteľností. Trenčín a okolie.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/static/favicon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/static/favicon-192.png">
+
+<!-- Open Graph / náhľad pri zdieľaní (WhatsApp, Instagram, Facebook, Messenger...) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Soňa Tománková — Realitná maklérka | Trenčín a okolie">
+<meta property="og:description" content="Ocenenie, marketing a predaj, prenájom, správa nehnuteľností, agent kupujúceho, výkup nehnuteľností. Nezáväzná konzultácia zadarmo.">
+<meta property="og:image" content="/static/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="sk_SK">
+
+<!-- Twitter / X card (rovnaký náhľad) -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Soňa Tománková — Realitná maklérka | Trenčín a okolie">
+<meta name="twitter:description" content="Ocenenie, marketing a predaj, prenájom, správa nehnuteľností, agent kupujúceho, výkup nehnuteľností.">
+<meta name="twitter:image" content="/static/og-image.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Bodoni+Moda:ital,wght@1,700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:  #F5F0E7;
+    --beige:  #E9E2D6;
+    --sand:   #C9B79E;
+    --brown:  #6B5844;
+    --espresso:#3B2F24;
+    --espresso-deep: #241C15;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--beige);
+    font-family:'Jost', sans-serif;
+    color: var(--espresso);
+  }
+  a{ color:inherit; text-decoration:none; }
+  ::-webkit-scrollbar{ width:0; height:0; }
+
+  .page{
+    max-width: 480px;
+    margin: 0 auto;
+    background: var(--espresso);
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ---------- HERO (video background) ---------- */
+  .hero{
+    position: relative;
+    min-height: 88vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    overflow:hidden;
+  }
+
+  .hero video, .hero .hero-bg-img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position: 68% 32%;
+    transform: translate(0,0) scale(1.1);
+    will-change: transform;
+  }
+
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background: linear-gradient(180deg, rgba(36,28,21,0.55) 0%, rgba(36,28,21,0.25) 32%, rgba(36,28,21,0.55) 68%, rgba(36,28,21,0.96) 100%);
+    z-index:1;
+  }
+
+  .hero-content{
+    position:relative;
+    z-index:2;
+    padding: 20px 26px 34px;
+    text-align:center;
+  }
+
+  .logotype{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+  }
+  .logotype .name{
+    font-family:'Bodoni Moda';
+    font-weight:700;
+    font-style:italic;
+    font-size:56px;
+    color:var(--cream);
+    line-height:1;
+  }
+  .logotype .surname{
+    font-family:'Jost';
+    font-weight:400;
+    font-size:12px;
+    letter-spacing:.38em;
+    text-transform:uppercase;
+    color:var(--cream);
+  }
+
+  .kicker{
+    font-family:'Jost';
+    font-size:10px;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    color: var(--sand);
+    margin-top:16px;
+  }
+
+  .hero-text{
+    font-family:'Jost';
+    font-weight:300;
+    font-size:14px;
+    color:#D8CBB6;
+    line-height:1.6;
+    margin-top:16px;
+    max-width:280px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+  /* subtle top status-free spacer to mimic breathing room on real phones */
+  .hero-text-panel{
+    display:inline-block;
+    background: rgba(36,28,21,0.38);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-radius: 20px;
+    padding: 22px 28px 26px;
+    border: 1px solid rgba(245,240,231,0.10);
+  }
+
+  .msg-bubble{
+    --bubble-scale: 0.71;
+    position:absolute;
+    top: 16.3%;
+    left: 4.5%;
+    max-width: min(calc(300px * var(--bubble-scale)), 72vw);
+    background: rgba(36,28,21,0.42);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(245,240,231,0.10);
+    color: var(--cream);
+    padding: calc(22px * var(--bubble-scale)) calc(24px * var(--bubble-scale)) calc(26px * var(--bubble-scale));
+    border-radius: calc(24px * var(--bubble-scale)) calc(24px * var(--bubble-scale)) calc(4px * var(--bubble-scale)) calc(24px * var(--bubble-scale));
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    z-index:3;
+    opacity:0;
+    transform: translateY(10px);
+    animation: bubbleIn 0.5s cubic-bezier(.2,.9,.3,1.3) 0.5s forwards;
+  }
+  .msg-bubble::after{
+    content:"";
+    position:absolute;
+    right:-6px;
+    bottom:0;
+    width: calc(16px * var(--bubble-scale));
+    height: calc(16px * var(--bubble-scale));
+    background: rgba(36,28,21,0.42);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    clip-path: polygon(0 0, 0% 100%, 100% 100%);
+  }
+  .msg-bubble .logotype{ align-items:flex-start; gap:3px; }
+  .msg-bubble .logotype .name{ font-size: calc(44px * var(--bubble-scale)); color:var(--cream); }
+  .msg-bubble .logotype .surname{ font-size: calc(11px * var(--bubble-scale)); color:var(--cream); letter-spacing:.3em; }
+  .msg-bubble .kicker{
+    color:var(--sand);
+    margin-top:10px;
+    font-size: calc(10px * var(--bubble-scale));
+    letter-spacing:.18em;
+  }
+  .msg-bubble .hero-text{
+    color:#D8CBB6;
+    font-size: calc(15px * var(--bubble-scale));
+    line-height:1.55;
+    margin-top:14px;
+    max-width:none;
+  }
+
+  @keyframes bubbleIn{
+    to{ opacity:1; transform: translateY(0); }
+  }
+
+  .hero-top-spacer{ height: 28px; }
+
+  /* ---------- LINK BUTTONS ---------- */
+  .links{
+    padding: 22px 26px 30px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    background: var(--espresso);
+  }
+  .link-btn{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-radius:100px;
+    padding:17px 26px;
+    font-family:'Jost';
+    font-size:15px;
+    letter-spacing:.03em;
+    transition: opacity .2s ease, transform .2s ease;
+  }
+  .link-btn:active{ transform: scale(0.98); }
+  .link-btn.primary{
+    background: var(--cream);
+    color: var(--espresso);
+  }
+  .link-btn.outline{
+    background: transparent;
+    border:1px solid var(--brown);
+    color: var(--cream);
+    font-weight:300;
+  }
+  .link-btn .arrow{ opacity:0.8; }
+
+  /* ---------- GALLERY STRIP ---------- */
+  .gallery{
+    display:flex;
+    gap:8px;
+    padding: 0 26px 34px;
+    overflow-x:auto;
+    background: var(--espresso);
+    -webkit-overflow-scrolling: touch;
+  }
+  .gallery img{
+    min-width:120px;
+    height:150px;
+    object-fit:cover;
+    border-radius:3px;
+    flex-shrink:0;
+  }
+  .gallery .ph{
+    min-width:120px;
+    height:150px;
+    border-radius:3px;
+    flex-shrink:0;
+    background-image: repeating-linear-gradient(135deg, rgba(245,240,231,.12) 0 8px, rgba(245,240,231,.04) 8px 16px);
+    background-color: rgba(245,240,231,0.04);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Jost';
+    font-size:9px;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    color: var(--sand);
+    text-align:center;
+    padding: 8px;
+  }
+
+  /* ---------- MOJA PONUKA ---------- */
+  .listings{
+    background: var(--espresso);
+    padding: 4px 26px 34px;
+  }
+  .listings-label{
+    font-family:'Jost';
+    font-size:10px;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    color: var(--sand);
+    margin-bottom:16px;
+  }
+  .listings-updated{
+    font-family:'Jost';
+    font-weight:300;
+    font-size:10.5px;
+    color: rgba(245,240,231,0.4);
+    margin-top:-10px;
+    margin-bottom:16px;
+  }
+  .listings-row{
+    display:flex;
+    gap:12px;
+    overflow-x:auto;
+    padding-bottom:6px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .listings-row::-webkit-scrollbar{ height:0; }
+  .listing-card{
+    display:block;
+    min-width:190px;
+    max-width:190px;
+    flex-shrink:0;
+    background: rgba(245,240,231,0.06);
+    border:1px solid rgba(245,240,231,0.18);
+    border-radius: 20px;
+    overflow:hidden;
+    text-decoration:none;
+    transition: background .2s ease, border-color .2s ease;
+  }
+  .listing-card:hover{
+    background: rgba(245,240,231,0.1);
+    border-color: rgba(245,240,231,0.32);
+  }
+  .listing-media{
+    position:relative;
+    height:110px;
+    width:100%;
+    overflow:hidden;
+  }
+  .listing-media img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    transition: transform 0.5s cubic-bezier(.2,.7,.3,1);
+  }
+  .listing-card:hover .listing-media img,
+  .listing-card:active .listing-media img{
+    transform: scale(1.1);
+  }
+  .listing-media .ph-land{
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background-image: repeating-linear-gradient(135deg, rgba(245,240,231,.10) 0 8px, rgba(245,240,231,.03) 8px 16px);
+    background-color: rgba(245,240,231,0.04);
+  }
+  .listing-media .ph-land span{
+    font-family:'Jost';
+    font-size:9px;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    color: var(--sand);
+  }
+  .listing-badge{
+    position:absolute;
+    top:10px;
+    left:10px;
+    background: var(--sand);
+    color: var(--espresso);
+    font-family:'Jost';
+    font-weight:500;
+    font-size:9px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    padding:4px 10px;
+    border-radius:100px;
+    z-index:2;
+    white-space:nowrap;
+  }
+  .listing-body{
+    padding:14px 16px 16px;
+  }
+  .listing-type{
+    font-family:'Cormorant Garamond';
+    font-weight:500;
+    font-size:19px;
+    color: var(--cream);
+    line-height:1.2;
+  }
+  .listing-place{
+    font-family:'Jost';
+    font-weight:300;
+    font-size:12px;
+    color: var(--sand);
+    margin-top:4px;
+  }
+  .listing-meta{
+    font-family:'Jost';
+    font-weight:400;
+    font-size:12.5px;
+    color: #D8CBB6;
+    margin-top:10px;
+  }
+  .listing-link{
+    display:inline-block;
+    font-family:'Jost';
+    font-size:11px;
+    letter-spacing:.03em;
+    color: var(--cream);
+    border-bottom:1px solid var(--sand);
+    padding-bottom:2px;
+    margin-top:14px;
+  }
+
+  /* ---------- MARKETING VIDEÁ ---------- */
+  .marketing-section{
+    background: var(--espresso);
+    padding: 4px 26px 34px;
+    border-top: 1px solid rgba(245,240,231,0.08);
+  }
+  .marketing-heading{
+    font-family:'Cormorant Garamond';
+    font-weight:500;
+    font-style:italic;
+    font-size:24px;
+    color: var(--cream);
+    line-height:1.25;
+    margin-bottom:10px;
+    max-width:480px;
+  }
+  .marketing-intro{
+    font-family:'Jost';
+    font-weight:300;
+    font-size:13px;
+    color: #D8CBB6;
+    line-height:1.55;
+    max-width:480px;
+    margin-bottom:18px;
+  }
+  .marketing-row{
+    display:flex;
+    gap:12px;
+    overflow-x:auto;
+    padding-bottom:6px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .marketing-row::-webkit-scrollbar{ height:0; }
+  .video-card{
+    min-width:190px;
+    max-width:190px;
+    flex-shrink:0;
+    background: rgba(245,240,231,0.06);
+    border:1px solid rgba(245,240,231,0.18);
+    border-radius: 20px;
+    overflow:hidden;
+  }
+  .video-card video{
+    width:100%;
+    height:300px;
+    object-fit:cover;
+    display:block;
+    background:#000;
+  }
+  .video-card-title{
+    padding:12px 14px 16px;
+    font-family:'Jost';
+    font-weight:300;
+    font-size:12.5px;
+    color: var(--cream);
+    line-height:1.4;
+  }
+
+  /* ---------- SCROLL REVEAL ---------- */
+  .reveal{
+    opacity:0;
+    transform: translateY(28px);
+    transition: opacity .7s cubic-bezier(.2,.7,.3,1), transform .7s cubic-bezier(.2,.7,.3,1);
+  }
+  .reveal.visible{
+    opacity:1;
+    transform: translateY(0);
+  }
+
+  /* ---------- BACK TO TOP ---------- */
+  .back-to-top{
+    position: fixed;
+    right: 18px;
+    bottom: 86px;
+    z-index: 19;
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background: var(--espresso);
+    color: var(--cream);
+    border:1px solid rgba(245,240,231,0.25);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:16px;
+    cursor:pointer;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.3);
+    opacity:0;
+    transform: translateY(10px);
+    pointer-events:none;
+    transition: opacity .3s ease, transform .3s ease;
+  }
+  .back-to-top.visible{
+    opacity:1;
+    transform: translateY(0);
+    pointer-events:auto;
+  }
+  .back-to-top:hover{ background: var(--espresso-deep); }
+
+  /* ---------- TOAST (potvrdenie formulára) ---------- */
+  .toast{
+    position: fixed;
+    left:50%;
+    bottom: 100px;
+    transform: translateX(-50%) translateY(12px);
+    background: var(--espresso);
+    color: var(--cream);
+    font-family:'Jost';
+    font-size:13px;
+    letter-spacing:.02em;
+    padding:14px 24px;
+    border-radius:100px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+    z-index: 60;
+    opacity:0;
+    pointer-events:none;
+    transition: opacity .3s ease, transform .3s ease;
+    text-align:center;
+    max-width:88vw;
+  }
+  .toast.visible{
+    opacity:1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* ---------- MESSAGE BUBBLE — krátky formulár ---------- */
+  .quick-bubble-section{
+    background: var(--espresso-deep);
+    padding: 44px 26px;
+  }
+
+  .qb-tiles{
+    display:flex;
+    gap:12px;
+    width:100%;
+  }
+  .qb-tile{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    text-align:left;
+    background: rgba(245,240,231,0.06);
+    border:1px solid rgba(245,240,231,0.2);
+    border-radius:18px;
+    padding:22px 18px;
+    cursor:pointer;
+    transition: background .2s ease, border-color .2s ease;
+  }
+  .qb-tile:hover{
+    background: rgba(245,240,231,0.1);
+    border-color: rgba(245,240,231,0.36);
+  }
+  .qb-tile.active{
+    background: var(--sand);
+    border-color: var(--sand);
+  }
+  .qb-tile.active .qb-tile-eyebrow,
+  .qb-tile.active .qb-tile-title,
+  .qb-tile.active .qb-tile-arrow{
+    color: var(--espresso);
+  }
+  .qb-tile-eyebrow{
+    font-family:'Jost';
+    font-size:9px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color: var(--sand);
+  }
+  .qb-tile-title{
+    font-family:'Cormorant Garamond';
+    font-weight:500;
+    font-style:italic;
+    font-size:21px;
+    color: var(--cream);
+    margin-top:6px;
+  }
+  .qb-tile-arrow{
+    margin-top:10px;
+    font-family:'Jost';
+    font-size:11px;
+    letter-spacing:.04em;
+    text-decoration:underline;
+    text-underline-offset:3px;
+    color: var(--cream);
+  }
+
+  .qb-form-wrap{
+    display:grid;
+    grid-template-rows: 0fr;
+    opacity:0;
+    transition: grid-template-rows .4s ease, opacity .3s ease;
+  }
+  .qb-form-wrap.open{
+    grid-template-rows: 1fr;
+    opacity:1;
+    margin-top:18px;
+  }
+  .qb-form-wrap > .quick-bubble{
+    overflow:hidden;
+    min-height:0;
+  }
+  .qb-form-wrap-inner{ overflow:hidden; }
+
+  .quick-bubble{
+    position:relative;
+    background: rgba(245,240,231,0.07);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(245,240,231,0.16);
+    border-radius: 22px 22px 22px 4px;
+    padding: 26px 24px;
+  }
+  .quick-bubble::after{
+    content:"";
+    position:absolute;
+    left:-6px;
+    bottom:0;
+    width:16px;
+    height:16px;
+    background: rgba(245,240,231,0.07);
+    border-left:1px solid rgba(245,240,231,0.16);
+    border-bottom:1px solid rgba(245,240,231,0.16);
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  }
+  .quick-bubble-label{
+    font-family:'Cormorant Garamond';
+    font-weight:500;
+    font-style:italic;
+    font-size:22px;
+    color: var(--cream);
+  }
+  .quick-bubble-label span{ color: var(--sand); font-style:normal; }
+
+  .quick-bubble form{
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+    margin-top:14px;
+  }
+  .quick-bubble form input,
+  .quick-bubble form select{
+    font-family:'Jost';
+    font-size:13px;
+    color: var(--espresso);
+    background: var(--cream);
+    border:none;
+    padding:11px 16px;
+    border-radius:100px;
+    width:100%;
+    appearance:none;
+    -webkit-appearance:none;
+  }
+  .quick-bubble form input::placeholder{ color:#B7A98F; }
+
+  .qb-field-label{
+    font-family:'Jost';
+    font-size:10.5px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color: var(--sand);
+    margin-top:6px;
+  }
+  .qb-radio-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:7px;
+  }
+  .qb-radio-option{ position:relative; }
+  .qb-radio-option input{
+    position:absolute;
+    opacity:0;
+    inset:0;
+    margin:0;
+    cursor:pointer;
+  }
+  .qb-radio-option label{
+    display:block;
+    text-align:center;
+    font-family:'Jost';
+    font-size:11.5px;
+    color: var(--cream);
+    background:transparent;
+    border:1px solid rgba(245,240,231,0.3);
+    border-radius:100px;
+    padding:8px 6px;
+    transition: background .15s ease, color .15s ease;
+  }
+  .qb-radio-option input:checked + label{
+    background: var(--sand);
+    color: var(--espresso);
+    border-color: var(--sand);
+  }
+
+  .qb-row{
+    display:flex;
+    gap:8px;
+  }
+  .qb-row input{ flex:1; min-width:0; }
+
+  .qb-field-with-check{ flex:1; min-width:0; }
+  .qb-unsure{
+    display:flex;
+    align-items:center;
+    gap:5px;
+    margin-top:6px;
+    font-family:'Jost';
+    font-weight:300;
+    font-size:10px;
+    color: var(--sand);
+    cursor:pointer;
+  }
+  .qb-unsure input{
+    width:12px; height:12px;
+    accent-color: var(--sand);
+  }
+
+  .qb-select-wrap{ position:relative; }
+  .qb-select-wrap::after{
+    content:"⌄";
+    position:absolute;
+    right:16px;
+    top:50%;
+    transform:translateY(-50%);
+    color: var(--brown);
+    pointer-events:none;
+    font-size:14px;
+  }
+
+  .quick-bubble form button{
+    font-family:'Jost';
+    font-size:12px;
+    font-weight:500;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color: var(--espresso);
+    background: var(--cream);
+    border:none;
+    border-radius:100px;
+    padding:11px;
+    cursor:pointer;
+    margin-top:4px;
+    transition: opacity .2s ease;
+  }
+  .quick-bubble form button:hover{ opacity:.85; }
+  .quick-bubble-note{
+    font-family:'Jost';
+    font-weight:300;
+    font-size:10.5px;
+    color: var(--sand);
+    margin-top:10px;
+    text-align:center;
+  }
+
+  .listings-more{
+    display:inline-block;
+    margin-top:18px;
+    font-family:'Jost';
+    font-weight:400;
+    font-size:12px;
+    letter-spacing:.04em;
+    color: var(--sand);
+    border-bottom:1px solid rgba(201,183,158,0.4);
+    padding-bottom:2px;
+  }
+
+  .strip-cta{
+    margin-top:26px;
+    padding-top:22px;
+    border-top:1px solid #DCD2C2;
+  }
+  .strip-cta-text{
+    font-family:'Jost';
+    font-weight:300;
+    font-size:13px;
+    color: var(--brown);
+    margin-bottom:12px;
+  }
+  .strip-cta-buttons{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .strip-cta-btn{
+    font-family:'Jost';
+    font-weight:500;
+    font-size:12px;
+    padding:10px 18px;
+    border-radius:100px;
+    text-decoration:none;
+    cursor:pointer;
+    border:1px solid var(--espresso);
+  }
+  .strip-cta-btn.solid{
+    background: var(--espresso);
+    color: var(--cream);
+  }
+  .strip-cta-btn.outline{
+    background:transparent;
+    color: var(--espresso);
+  }
+  .strip-cta-btn.solid:hover{ opacity:.88; }
+  .strip-cta-btn.outline:hover{ background: rgba(59,47,36,0.06); }
+
+  /* ---------- LIGHT PANEL ---------- */
+  .panel{
+    background: var(--cream);
+    border-radius:30px 30px 0 0;
+    padding: 38px 26px 30px;
+    position:relative;
+    z-index:2;
+  }
+
+  .label{
+    font-family:'Jost';
+    font-size:10px;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    color: #A08B72;
+  }
+
+  .about-text{
+    font-family:'Jost';
+    font-weight:300;
+    font-size:14px;
+    color: var(--brown);
+    line-height:1.7;
+    margin-top:14px;
+  }
+  .about-text + .about-text{ margin-top:12px; }
+
+  .services{
+    display:flex;
+    flex-direction:column;
+    margin-top:18px;
+  }
+  .service-row{
+    padding:15px 0;
+    border-bottom:1px solid #DCD2C2;
+    font-family:'Jost';
+    font-size:16px;
+    color: var(--espresso);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .service-row span.arrow{
+    color:#A08B72;
+    font-size:14px;
+  }
+
+  .section-spacer{ margin-top:32px; }
+
+  form{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    margin-top:16px;
+  }
+  form input, form textarea{
+    font-family:'Jost';
+    font-size:14px;
+    color: var(--espresso);
+    background:#fff;
+    border:1px solid #DCD2C2;
+    padding:14px 20px;
+    width:100%;
+  }
+  form input{ border-radius:100px; }
+  form textarea{ border-radius:20px; resize:none; }
+  form input::placeholder, form textarea::placeholder{ color:#B7A98F; }
+  form input:focus, form textarea:focus{
+    outline:none;
+    border-color: var(--sand);
+  }
+  form button{
+    font-family:'Jost';
+    font-size:14px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color: var(--cream);
+    background: var(--espresso);
+    border:none;
+    border-radius:100px;
+    padding:15px;
+    cursor:pointer;
+    transition: opacity .2s ease;
+  }
+  form button:hover{ opacity:0.88; }
+  form button:disabled{ opacity:0.6; cursor:default; }
+
+  .form-note{
+    font-family:'Jost';
+    font-weight:300;
+    font-size:12px;
+    color:#A08B72;
+    margin-top:8px;
+    line-height:1.5;
+  }
+
+  .contact-line{
+    text-align:center;
+    margin-top:32px;
+    font-family:'Jost';
+    font-weight:300;
+    font-size:13px;
+    color:#A08B72;
+    letter-spacing:.05em;
+  }
+
+  .footer-logo{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:5px;
+    margin-top:22px;
+    padding-bottom: 8px;
+  }
+  .footer-logo .name{
+    font-family:'Bodoni Moda';
+    font-weight:700;
+    font-style:italic;
+    font-size:26px;
+    color: var(--espresso);
+    line-height:1;
+  }
+  .footer-logo .surname{
+    font-family:'Jost';
+    font-weight:400;
+    font-size:9px;
+    letter-spacing:.32em;
+    text-transform:uppercase;
+    color: var(--espresso);
+  }
+  .admin-entry{
+    display:block;
+    text-align:center;
+    margin-top:14px;
+    font-family:'Jost';
+    font-size:11px;
+    letter-spacing:.08em;
+    color: var(--sand);
+    text-decoration:none;
+    opacity:.7;
+  }
+  .admin-entry:hover{ opacity:1; color: var(--brown); }
+
+  /* ---------- STICKY CTA ---------- */
+  .sticky-cta{
+    position: sticky;
+    bottom:0;
+    background: rgba(36,28,21,.94);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 14px 20px calc(14px + env(safe-area-inset-bottom));
+    z-index: 5;
+  }
+  .sticky-cta a{
+    display:block;
+    text-align:center;
+    background: var(--cream);
+    color: var(--espresso);
+    font-family:'Jost';
+    font-size:14px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    padding:14px;
+    border-radius:100px;
+  }
+
+  /* ---------- HAMBURGER NAV ---------- */
+  .nav-toggle{
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 40;
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    background: rgba(36,28,21,0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(245,240,231,0.25);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+    cursor:pointer;
+  }
+  .nav-toggle span{
+    display:block;
+    width:18px;
+    height:2px;
+    background: var(--cream);
+    border-radius:2px;
+    transition: transform .25s ease, opacity .25s ease;
+  }
+  .nav-toggle.open span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2){ opacity:0; }
+  .nav-toggle.open span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
+  .nav-panel{
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 39;
+    background: rgba(36,28,21,0.94);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(245,240,231,0.18);
+    border-radius: 22px;
+    padding: 66px 14px 14px;
+    min-width: 200px;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    opacity:0;
+    transform: scale(0.92) translateY(-8px);
+    transform-origin: top right;
+    pointer-events:none;
+    transition: opacity .22s ease, transform .22s ease;
+  }
+  .nav-panel.open{
+    opacity:1;
+    transform: scale(1) translateY(0);
+    pointer-events:auto;
+  }
+  .nav-link{
+    display:block;
+    text-align:left;
+    font-family:'Jost';
+    font-size:14px;
+    color: var(--cream);
+    background:transparent;
+    border:none;
+    padding:11px 14px;
+    border-radius:12px;
+    cursor:pointer;
+    transition: background .15s ease;
+  }
+  .nav-link:hover{ background: rgba(245,240,231,0.08); }
+  .nav-link-highlight{
+    margin-top:6px;
+    background: var(--sand);
+    color: var(--espresso);
+    font-weight:500;
+    text-align:center;
+    border-radius:100px;
+  }
+  .nav-link-highlight:hover{ background: var(--sand); opacity:.9; }
+
+  /* ---------- FLOATING VALUATION BADGE ---------- */
+  .valuation-badge{
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 86px;
+    z-index: 20;
+    background: var(--espresso);
+    color: var(--cream);
+    font-family:'Jost';
+    font-weight:400;
+    font-size:13px;
+    letter-spacing:.02em;
+    line-height:1.3;
+    white-space: nowrap;
+    border: 1px solid rgba(245,240,231,0.25);
+    border-radius: 100px;
+    padding: 14px 22px;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.35);
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    gap:4px;
+    animation: badgeFloat 5s ease-in-out infinite;
+  }
+  .valuation-badge span{ color: var(--sand); }
+  .valuation-badge:hover{ background: var(--espresso-deep); }
+
+  @keyframes badgeFloat{
+    0%{   transform: translateX(-50%) translate(0px, 0px) rotate(0deg); }
+    25%{  transform: translateX(-50%) translate(8px, -10px) rotate(1.5deg); }
+    50%{  transform: translateX(-50%) translate(0px, -16px) rotate(0deg); }
+    75%{  transform: translateX(-50%) translate(-8px, -10px) rotate(-1.5deg); }
+    100%{ transform: translateX(-50%) translate(0px, 0px) rotate(0deg); }
+  }
+
+  /* ---------- VALUATION MODAL ---------- */
+  .valuation-modal{
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding: 24px;
+  }
+  .valuation-modal.open{ display:flex; }
+
+  .valuation-modal-backdrop{
+    position:absolute;
+    inset:0;
+    background: rgba(36,28,21,0.72);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .valuation-modal-panel{
+    position:relative;
+    background: var(--cream);
+    width:100%;
+    max-width: 480px;
+    max-height: 88vh;
+    border-radius: 26px;
+    overflow:hidden;
+    box-shadow: 0 30px 70px rgba(0,0,0,0.45);
+    animation: modalIn 0.35s cubic-bezier(.2,.9,.3,1.2) both;
+  }
+  @keyframes modalIn{
+    from{ opacity:0; transform: scale(0.94) translateY(10px); }
+    to{ opacity:1; transform: scale(1) translateY(0); }
+  }
+
+  .valuation-modal-scroll{
+    width:100%;
+    max-height: 88vh;
+    overflow-y:auto;
+    padding: 34px 26px 30px;
+  }
+
+  .vm-intro{ padding-right:30px; }
+  .vm-label{
+    font-family:'Jost';
+    font-size:10px;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    color:#A08B72;
+  }
+  .vm-title{
+    font-family:'Cormorant Garamond';
+    font-weight:500;
+    font-size:28px;
+    color: var(--espresso);
+    margin:10px 0 0;
+  }
+  .vm-text{
+    font-family:'Jost';
+    font-weight:300;
+    font-size:13px;
+    color: var(--brown);
+    line-height:1.6;
+    margin-top:10px;
+  }
+
+  .vm-form{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-top:22px;
+  }
+  .vm-form input,
+  .vm-form select,
+  .vm-form textarea{
+    font-family:'Jost';
+    font-size:14px;
+    color: var(--espresso);
+    background:#fff;
+    border:1px solid #DCD2C2;
+    padding:12px 16px;
+    border-radius:14px;
+    width:100%;
+    appearance:none;
+    -webkit-appearance:none;
+  }
+  .vm-form textarea{ resize:none; border-radius:16px; }
+  .vm-form input::placeholder, .vm-form textarea::placeholder{ color:#B7A98F; }
+  .vm-form input:focus, .vm-form select:focus, .vm-form textarea:focus{
+    outline:none;
+    border-color: var(--sand);
+  }
+
+  .vm-fieldset-label{
+    font-family:'Jost';
+    font-size:12px;
+    color: var(--espresso);
+    margin-top:4px;
+  }
+  .vm-radio-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+  }
+  .vm-radio-option{ position:relative; }
+  .vm-radio-option input{
+    position:absolute; opacity:0; inset:0; margin:0; cursor:pointer;
+  }
+  .vm-radio-option label{
+    display:block;
+    text-align:center;
+    font-family:'Jost';
+    font-size:13px;
+    color: var(--espresso);
+    background:#fff;
+    border:1px solid #DCD2C2;
+    border-radius:100px;
+    padding:10px 8px;
+    transition: background .15s ease, border-color .15s ease;
+  }
+  .vm-radio-option input:checked + label{
+    background: var(--espresso);
+    color: var(--cream);
+    border-color: var(--espresso);
+  }
+
+  .vm-row{ display:flex; gap:8px; }
+  .vm-row input{ flex:1; min-width:0; }
+
+  .vm-field-with-check{ flex:1; min-width:0; }
+  .vm-unsure{
+    display:flex;
+    align-items:center;
+    gap:5px;
+    margin-top:6px;
+    font-family:'Jost';
+    font-weight:300;
+    font-size:10.5px;
+    color:#A08B72;
+    cursor:pointer;
+  }
+  .vm-unsure input{ width:12px; height:12px; accent-color: var(--brown); }
+
+  .vm-select-wrap{ position:relative; }
+  .vm-select-wrap::after{
+    content:"⌄";
+    position:absolute;
+    right:16px; top:50%;
+    transform:translateY(-50%);
+    color: var(--brown);
+    pointer-events:none;
+    font-size:14px;
+  }
+
+  .vm-checkbox-row{
+    display:flex;
+    align-items:flex-start;
+    gap:9px;
+    margin: 6px 0 4px;
+    cursor:pointer;
+  }
+  .vm-checkbox-row input{
+    width:auto;
+    margin-top:3px;
+    accent-color: var(--espresso);
+  }
+  .vm-checkbox-row span{
+    font-family:'Jost';
+    font-weight:300;
+    font-size:11.5px;
+    color: var(--brown);
+    line-height:1.5;
+  }
+
+  .vm-form button[type="submit"]{
+    width:100%;
+    font-family:'Jost';
+    font-size:13px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color: var(--cream);
+    background: var(--espresso);
+    border:none;
+    border-radius:100px;
+    padding:15px;
+    cursor:pointer;
+    margin-top:4px;
+    transition: opacity .2s ease;
+  }
+  .vm-form button[type="submit"]:hover{ opacity:.88; }
+
+  .valuation-modal-close{
+    position:absolute;
+    top:14px;
+    right:14px;
+    z-index:2;
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    background: var(--espresso);
+    color: var(--cream);
+    border:none;
+    font-size:14px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+  }
+
+  @media (min-width: 900px){
+    .valuation-badge{
+      bottom: 30px;
+    }
+    .valuation-modal-panel{ max-width: 560px; }
+    .msg-bubble{
+      top: 24.4%;
+      left: 38.8%;
+      max-width: 380px;
+      padding: 30px 32px 34px;
+    }
+    .msg-bubble .logotype .name{ font-size:54px; }
+    .msg-bubble .logotype .surname{ font-size:13px; }
+    .msg-bubble .kicker{ font-size:11px; }
+    .msg-bubble .hero-text{ font-size:16px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .hero video{ transition:none !important; }
+    html{ scroll-behavior:auto; }
+  }
+
+  /* ---------- default (mobile) spacing for new wrapper blocks ---------- */
+  .services-block{ margin-top:32px; }
+  .reviews-block{ margin-top:32px; }
+  .reviews-block-full{
+    margin: 32px -26px 0;
+    width: calc(100% + 52px);
+    padding: 0 26px;
+  }
+  .reviews-heading{
+    text-align:center;
+    font-family:'Cormorant Garamond';
+    font-weight:500;
+    font-style:italic;
+    font-size:26px;
+    color: var(--espresso);
+    line-height:1.3;
+    max-width:420px;
+    margin:0 auto;
+  }
+  .reviews-heading span{
+    color: var(--brown);
+    font-style:normal;
+  }
+  .contact-block{ margin-top:32px; }
+
+  .reviews{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    margin-top:22px;
+  }
+  .reviews-row{
+    display:flex;
+    gap:12px;
+    overflow-x:auto;
+    padding:4px 4px 10px;
+    scroll-snap-type:x proximity;
+    -webkit-overflow-scrolling: touch;
+    cursor: grab;
+  }
+  .reviews-row.dragging{ cursor: grabbing; scroll-snap-type:none; }
+  .listings-row{ cursor: grab; }
+  .listings-row.dragging{ cursor: grabbing; }
+  .reviews-row::-webkit-scrollbar{ height:0; }
+  .review-msg{
+    display:flex;
+    align-items:flex-end;
+    gap:10px;
+    flex-shrink:0;
+    width: 260px;
+    scroll-snap-align:start;
+    animation: reviewFloat 4.5s ease-in-out infinite;
+  }
+  .review-msg:nth-child(1){ animation-delay: 0s; }
+  .review-msg:nth-child(2){ animation-delay: 0.6s; animation-duration: 5s; }
+  .review-msg:nth-child(3){ animation-delay: 1.2s; animation-duration: 4.2s; }
+  .review-msg:nth-child(4){ animation-delay: 1.8s; animation-duration: 4.8s; }
+
+  @keyframes reviewFloat{
+    0%, 100%{ transform: translateY(0); }
+    50%{ transform: translateY(-6px); }
+  }
+  .review-avatar{
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    background: var(--espresso);
+    color: var(--cream);
+    font-family:'Jost';
+    font-weight:500;
+    font-size:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+  }
+  .review-bubble{
+    background:#fff;
+    border:1px solid #DCD2C2;
+    border-radius:18px 18px 18px 4px;
+    padding:14px 18px;
+    position:relative;
+    user-select:none;
+  }
+  .review-bubble::before{
+    content:"";
+    position:absolute;
+    left:-6px;
+    bottom:0;
+    width:14px;
+    height:14px;
+    background:#fff;
+    border-left:1px solid #DCD2C2;
+    border-bottom:1px solid #DCD2C2;
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  }
+  .stars{
+    color: var(--sand);
+    font-size:13px;
+    letter-spacing:.1em;
+  }
+  .review-text{
+    font-family:'Jost';
+    font-weight:300;
+    font-size:13.5px;
+    color: var(--brown);
+    line-height:1.55;
+    margin-top:6px;
+  }
+  .review-author{
+    font-family:'Jost';
+    font-weight:400;
+    font-size:11px;
+    color: #A08B72;
+    margin-top:8px;
+  }
+  .reviews-more{
+    display:inline-block;
+    margin-top:16px;
+    font-family:'Jost';
+    font-weight:400;
+    font-size:12px;
+    letter-spacing:.04em;
+    color: var(--brown);
+    border-bottom:1px solid var(--sand);
+    padding-bottom:2px;
+  }
+
+  /* ================================================================
+     DESKTOP / WIDER SCREENS
+     ================================================================ */
+  @media (min-width: 900px){
+
+    body{ background: var(--beige); }
+
+    .page{
+      max-width:none;
+      width:100%;
+    }
+
+    /* ---- HERO: full-bleed, larger centered content ---- */
+    .hero{ min-height:100vh; }
+    .hero video, .hero .hero-bg-img{ object-position: 62% 30%; }
+    .hero-content{
+      max-width:680px;
+      margin:0 auto;
+      padding: 0 40px 90px;
+    }
+    .hero-top-spacer{ height:0; }
+    .logotype .name{ font-size:96px; }
+    .logotype .surname{ font-size:15px; letter-spacing:.42em; }
+    .kicker{ font-size:12px; margin-top:22px; }
+    .hero-text{ font-size:17px; max-width:460px; margin-top:20px; }
+
+    /* ---- LINK BUTTONS: horizontal row ---- */
+    .links{
+      flex-direction:row;
+      flex-wrap:wrap;
+      justify-content:center;
+      max-width:1000px;
+      margin:0 auto;
+      padding: 40px 40px 50px;
+      gap:16px;
+    }
+    .link-btn{
+      flex:1 1 220px;
+    }
+
+    /* ---- GALLERY: centered grid, larger images ---- */
+    .gallery{
+      max-width:1100px;
+      margin:0 auto;
+      padding: 0 40px 70px;
+      justify-content:center;
+    }
+    .gallery img, .gallery .ph{
+      min-width:0;
+      flex:1 1 0;
+      height:360px;
+      font-size:11px;
+    }
+
+    /* ---- PANEL: two-column layout ---- */
+    .panel{
+      border-radius:48px 48px 0 0;
+      padding: 80px 0 70px;
+    }
+    .panel-content{
+      max-width:1080px;
+      margin:0 auto;
+      padding:0 40px;
+    }
+    .panel-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:80px;
+      align-items:start;
+    }
+    .services-block{ margin-top:0; }
+    .reviews-block-full{
+      margin-top:60px;
+      margin-left:0; margin-right:0;
+      width:100%;
+      padding:0 40px;
+    }
+    .reviews-heading{ font-size:34px; max-width:560px; }
+    .review-msg{ width:300px; }
+    .review-msg{ max-width:75%; }
+    .listings{ padding: 10px 40px 50px; }
+    .listing-card{ min-width:220px; max-width:220px; padding:20px; }
+    .marketing-section{ padding: 10px 40px 50px; }
+    .marketing-heading{ font-size:32px; }
+    .marketing-intro{ font-size:14px; }
+    .video-card{ min-width:220px; max-width:220px; }
+    .quick-bubble-section{ padding: 60px 40px; }
+    .qb-tile{ padding:30px 26px; }
+    .qb-tile-title{ font-size:26px; }
+    .qb-form-wrap.open{ margin-top:24px; }
+    .quick-bubble{ max-width:460px; }
+    .quick-bubble{ padding:34px 30px; }
+    .quick-bubble-label{ font-size:26px; }
+    .qb-row{ gap:12px; }
+    .about-text{ font-size:16px; max-width:440px; }
+    .services{ margin-top:22px; }
+    .service-row{ font-size:18px; }
+
+    .contact-block{
+      max-width:480px;
+      margin: 70px auto 0;
+    }
+
+    /* sticky call bar not needed once the hero/links already show the number */
+    .sticky-cta{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    {% if site.hero.bg_type == 'image' %}
+    <img class="hero-bg-img" src="{{ site.hero.bg_src }}" alt="">
+    {% else %}
+    <video id="heroVideo" src="{{ site.hero.bg_src }}" autoplay muted loop playsinline preload="auto"></video>
+    {% endif %}
+
+    <div class="msg-bubble" id="msgBubble">
+      <div class="logotype">
+        <div class="name">soňa</div>
+        <div class="surname">Tománková</div>
+      </div>
+      <div class="kicker">{{ site.hero.kicker }}</div>
+      <div class="hero-text">{{ site.hero.text }}</div>
+    </div>
+  </section>
+
+  <!-- LINK BUTTONS -->
+  <section class="links">
+    <a class="link-btn primary" href="tel:{{ contact_tel }}">
+      <span>Zavolať: {{ site.contact.phone }}</span><span class="arrow">→</span>
+    </a>
+    <a class="link-btn outline" href="https://wa.me/{{ contact_wa }}" target="_blank" rel="noopener">
+      <span>WhatsApp</span><span class="arrow">→</span>
+    </a>
+    <a class="link-btn outline" href="{{ site.contact.instagram }}" target="_blank" rel="noopener">
+      <span>Instagram @sona.tomankova</span><span class="arrow">→</span>
+    </a>
+    <a class="link-btn outline" href="{{ site.contact.facebook }}" target="_blank" rel="noopener">
+      <span>Facebook</span><span class="arrow">→</span>
+    </a>
+    <a class="link-btn outline" href="mailto:{{ site.contact.email }}">
+      <span>{{ site.contact.email }}</span><span class="arrow">→</span>
+    </a>
+  </section>
+
+  <!-- MOJA PONUKA -->
+  <section class="listings" id="nav-ponuka" aria-label="Moja aktuálna ponuka nehnuteľností">
+    <div class="listings-label reveal">Moja aktuálna ponuka</div>
+    <div class="listings-updated">{{ site.updated }}</div>
+    <div class="listings-row">
+      {% for l in site.listings %}
+      <a class="listing-card" href="{{ l.href }}" target="_blank" rel="noopener">
+        <div class="listing-media">
+          <span class="listing-badge">{{ l.badge }}</span>
+          <img src="{{ l.img }}" alt="{{ l.alt }}">
+        </div>
+        <div class="listing-body">
+          <div class="listing-type">{{ l.type }}</div>
+          <div class="listing-place">{{ l.place }}</div>
+          <div class="listing-meta">{{ l.meta }}</div>
+          <span class="listing-link">Zobraziť ponuku →</span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    <a href="https://www.bosen.sk/nehnutelnosti?fullText=tom%C3%A1nkov%C3%A1" target="_blank" rel="noopener" class="listings-more">Zobraziť celú ponuku →</a>
+  </section>
+
+  {% if site.marketing_heading %}
+  <!-- MARKETING VIDEÁ -->
+  <section class="marketing-section" aria-label="Ako prezentujem nehnuteľnosti">
+    <div class="marketing-heading reveal">{{ site.marketing_heading }}</div>
+    {% if site.marketing_intro %}<p class="marketing-intro reveal">{{ site.marketing_intro }}</p>{% endif %}
+    {% if site.marketing_videos %}
+    <div class="marketing-row">
+      {% for v in site.marketing_videos %}
+      <div class="video-card">
+        <video src="{{ v.src }}" controls playsinline preload="metadata"></video>
+        {% if v.title %}<div class="video-card-title">{{ v.title }}</div>{% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </section>
+  {% endif %}
+
+  <!-- DVE DLAŽDICE — Hľadám / Chcem predať, formulár sa ukáže po kliknutí -->
+  <section class="quick-bubble-section">
+    <div class="qb-tiles reveal" id="qbTiles">
+      <button type="button" class="qb-tile" data-target="formBuyWrap">
+        <span class="qb-tile-eyebrow">Kupujete</span>
+        <span class="qb-tile-title">Hľadám nehnuteľnosť</span>
+        <span class="qb-tile-arrow">Klikni sem</span>
+      </button>
+      <button type="button" class="qb-tile" data-target="formSellWrap">
+        <span class="qb-tile-eyebrow">Predávate</span>
+        <span class="qb-tile-title">Chcem predať nehnuteľnosť</span>
+        <span class="qb-tile-arrow">Klikni sem</span>
+      </button>
+    </div>
+
+    <div class="qb-form-wrap" id="formBuyWrap">
+      <div class="quick-bubble">
+        <div class="quick-bubble-label">Hľadám <span>nehnuteľnosť</span></div>
+        <form id="quickFormBuy" class="quick-form">
+
+          <div class="qb-field-label">Typ nehnuteľnosti</div>
+          <div class="qb-radio-grid">
+            <div class="qb-radio-option">
+              <input type="radio" name="typ" id="buy-typ-byt" value="Byt" checked>
+              <label for="buy-typ-byt">Byt</label>
+            </div>
+            <div class="qb-radio-option">
+              <input type="radio" name="typ" id="buy-typ-dom" value="Dom">
+              <label for="buy-typ-dom">Dom</label>
+            </div>
+            <div class="qb-radio-option">
+              <input type="radio" name="typ" id="buy-typ-pozemok" value="Pozemok">
+              <label for="buy-typ-pozemok">Pozemok</label>
+            </div>
+            <div class="qb-radio-option">
+              <input type="radio" name="typ" id="buy-typ-ine" value="Iné">
+              <label for="buy-typ-ine">Iné</label>
+            </div>
+          </div>
+
+          <input type="text" name="lokalita" placeholder="Preferovaná lokalita" required>
+
+          <div class="qb-row">
+            <input type="number" name="rozloha" placeholder="Rozloha (m²)" min="0">
+            <input type="number" name="izby" placeholder="Počet izieb" min="0">
+          </div>
+
+          <input type="text" name="rozpocet" placeholder="Orientačný rozpočet (€)">
+
+          <div class="qb-row">
+            <input type="text" name="meno" placeholder="Meno" required>
+            <input type="tel" name="telefon" placeholder="Telefón" required>
+          </div>
+
+          <button type="submit">Odoslať</button>
+        </form>
+        <p class="quick-bubble-note">Ozvem sa vám čo najskôr — bez záväzkov.</p>
+      </div>
+    </div>
+
+    <div class="qb-form-wrap" id="formSellWrap">
+      <div class="quick-bubble">
+        <div class="quick-bubble-label">Chcem <span>predať</span></div>
+        <form id="quickFormSell" class="quick-form">
+
+          <div class="qb-field-label">Typ nehnuteľnosti</div>
+          <div class="qb-radio-grid">
+            <div class="qb-radio-option">
+              <input type="radio" name="typ2" id="sell-typ-byt" value="Byt" checked>
+              <label for="sell-typ-byt">Byt</label>
+            </div>
+            <div class="qb-radio-option">
+              <input type="radio" name="typ2" id="sell-typ-dom" value="Dom">
+              <label for="sell-typ-dom">Dom</label>
+            </div>
+            <div class="qb-radio-option">
+              <input type="radio" name="typ2" id="sell-typ-pozemok" value="Pozemok">
+              <label for="sell-typ-pozemok">Pozemok</label>
+            </div>
+            <div class="qb-radio-option">
+              <input type="radio" name="typ2" id="sell-typ-ine" value="Iné">
+              <label for="sell-typ-ine">Iné</label>
+            </div>
+          </div>
+
+          <input type="text" name="lokalita" placeholder="Lokalita / adresa nehnuteľnosti" required>
+
+          <div class="qb-row">
+            <div class="qb-field-with-check">
+              <input type="number" name="rozloha" id="sell-rozloha" placeholder="Rozloha (m²)" min="0">
+              <label class="qb-unsure"><input type="checkbox" id="sell-rozloha-unsure"> Nie som si istý/á</label>
+            </div>
+            <input type="number" name="izby" placeholder="Počet izieb" min="0">
+          </div>
+
+          <div class="qb-select-wrap">
+            <select name="stav" id="sell-stav">
+              <option value="" disabled selected>Stav nehnuteľnosti</option>
+              <option value="Novostavba">Novostavba</option>
+              <option value="Po rekonštrukcii">Po rekonštrukcii</option>
+              <option value="Pôvodný stav">Pôvodný stav</option>
+              <option value="Vyžaduje rekonštrukciu">Vyžaduje rekonštrukciu</option>
+              <option value="Nie som si istý/á">Nie som si istý/á</option>
+            </select>
+          </div>
+
+          <div class="qb-row">
+            <input type="text" name="meno" placeholder="Meno" required>
+            <input type="tel" name="telefon" placeholder="Telefón" required>
+          </div>
+
+          <button type="submit">Odoslať</button>
+        </form>
+        <p class="quick-bubble-note">Ozvem sa vám čo najskôr — bez záväzkov.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- LIGHT PANEL -->
+  <section class="panel" id="nav-o-mne">
+   <div class="panel-content">
+    <div class="panel-grid">
+     <div class="about-block reveal">
+      <div class="label">O mne</div>
+      {% for p in site.about %}
+      <p class="about-text">{{ p }}</p>
+      {% endfor %}
+     </div>
+
+     <div class="services-block reveal">
+      <div class="label">Ako vám pomôžem</div>
+      <div class="services">
+        <a class="service-row" href="ocenenie.html"><span>Ocenenie nehnuteľnosti</span><span class="arrow">→</span></a>
+        <div class="service-row"><span>Marketing a predaj nehnuteľnosti</span><span class="arrow">→</span></div>
+        <div class="service-row"><span>Prenájom nehnuteľnosti</span><span class="arrow">→</span></div>
+        <div class="service-row"><span>Správa nehnuteľnosti</span><span class="arrow">→</span></div>
+        <div class="service-row"><span>Agent kupujúceho</span><span class="arrow">→</span></div>
+        <div class="service-row"><span>Výkup nehnuteľností</span><span class="arrow">→</span></div>
+      </div>
+
+      <div class="strip-cta">
+        <div class="strip-cta-text">Neviete, kde začať? Nájdeme spolu tú správnu cestu.</div>
+        <div class="strip-cta-buttons">
+          <a href="tel:{{ contact_tel }}" class="strip-cta-btn solid">Hľadám nehnuteľnosť</a>
+          <button type="button" class="strip-cta-btn outline" id="stripCtaSellBtn">Chcem predať</button>
+        </div>
+      </div>
+     </div>
+    </div>
+   </div>
+
+    <div class="reviews-block reviews-block-full" id="nav-recenzie">
+      <div class="reviews-heading reveal">Nemusíte veriť mne — verte im <span>:)</span></div>
+      <div class="reviews">
+        <div class="reviews-row" id="reviewsRow1">
+          {% for r in site.reviews[:4] %}
+          <div class="review-msg">
+            <div class="review-avatar">{{ r.avatar }}</div>
+            <div class="review-bubble">
+              <div class="stars">{{ '★' * r.stars }}</div>
+              <p class="review-text">{{ r.text }}</p>
+              <div class="review-author">{{ r.author }}</div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="reviews-row" id="reviewsRow2">
+          {% for r in site.reviews[4:] %}
+          <div class="review-msg">
+            <div class="review-avatar">{{ r.avatar }}</div>
+            <div class="review-bubble">
+              <div class="stars">{{ '★' * r.stars }}</div>
+              <p class="review-text">{{ r.text }}</p>
+              <div class="review-author">{{ r.author }}</div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <a href="https://www.bosen.sk/makler/57--sona-tomankova" target="_blank" rel="noopener" class="reviews-more">Zobraziť všetky recenzie →</a>
+    </div>
+
+   <div class="panel-content">
+    <div class="contact-block reveal" id="nav-kontakt">
+      <div class="label">Napíšte mi</div>
+      <form id="contactForm">
+        <input type="text" name="meno" placeholder="Meno" required>
+        <input type="tel" name="telefon" placeholder="Telefón" required>
+        <textarea name="sprava" placeholder="Vaša správa" rows="3" required></textarea>
+        <button type="submit">Odoslať</button>
+      </form>
+      <p class="form-note" id="formNote">Po odoslaní sa otvorí váš e-mailový klient s predvyplnenou správou pre {{ site.contact.email }}.</p>
+
+      <div class="contact-line">{{ site.contact.phone }} · {{ site.contact.email }}</div>
+
+      <div class="footer-logo">
+        <span class="name">soňa</span>
+        <span class="surname">Tománková</span>
+      </div>
+      <a href="/admin/login" class="admin-entry">Správa webu →</a>
+    </div>
+   </div>
+  </section>
+
+  <!-- STICKY CTA -->
+  <div class="sticky-cta">
+    <a href="tel:{{ contact_tel }}">Zavolať</a>
+  </div>
+
+</div>
+
+<!-- HAMBURGER NAV -->
+<button type="button" class="nav-toggle" id="navToggle" aria-label="Menu">
+  <span></span><span></span><span></span>
+</button>
+<div class="nav-panel" id="navPanel" aria-hidden="true">
+  <a href="#hero" class="nav-link">Úvod</a>
+  <a href="#nav-ponuka" class="nav-link">Moja ponuka</a>
+  <a href="#nav-o-mne" class="nav-link">O mne</a>
+  <a href="#nav-recenzie" class="nav-link">Recenzie</a>
+  <a href="#nav-kontakt" class="nav-link">Kontakt</a>
+  <button type="button" class="nav-link nav-link-highlight" id="navOceneniBtn">Ocenenie zadarmo</button>
+</div>
+
+<!-- FLOATING VALUATION BADGE -->
+<button class="valuation-badge" id="valuationBadge" type="button">
+  Zisti cenu svojej nehnuteľnosti zadarmo <span>:)</span>
+</button>
+
+<!-- VALUATION MODAL -->
+<div class="valuation-modal" id="valuationModal" aria-hidden="true">
+  <div class="valuation-modal-backdrop" id="valuationBackdrop"></div>
+  <div class="valuation-modal-panel">
+    <button class="valuation-modal-close" id="valuationClose" type="button" aria-label="Zavrieť">✕</button>
+    <div class="valuation-modal-scroll">
+      <div class="vm-intro">
+        <div class="vm-label">Nezáväzný odhad</div>
+        <h2 class="vm-title">Ocenenie nehnuteľnosti</h2>
+        <p class="vm-text">Vyplňte pár základných údajov a ozvem sa vám s orientačným odhadom trhovej ceny.</p>
+      </div>
+
+      <form id="modalValuationForm" class="vm-form">
+        <div class="vm-fieldset-label">Typ nehnuteľnosti</div>
+        <div class="vm-radio-grid">
+          <div class="vm-radio-option">
+            <input type="radio" name="typ" id="m-typ-byt" value="Byt" checked>
+            <label for="m-typ-byt">Byt</label>
+          </div>
+          <div class="vm-radio-option">
+            <input type="radio" name="typ" id="m-typ-dom" value="Dom">
+            <label for="m-typ-dom">Dom</label>
+          </div>
+          <div class="vm-radio-option">
+            <input type="radio" name="typ" id="m-typ-pozemok" value="Pozemok">
+            <label for="m-typ-pozemok">Pozemok</label>
+          </div>
+          <div class="vm-radio-option">
+            <input type="radio" name="typ" id="m-typ-ine" value="Iné">
+            <label for="m-typ-ine">Iné</label>
+          </div>
+        </div>
+
+        <input type="text" name="adresa" placeholder="Lokalita / adresa nehnuteľnosti" required>
+
+        <div class="vm-row">
+          <div class="vm-field-with-check">
+            <input type="number" name="rozloha" id="m-rozloha" placeholder="Rozloha (m²)" min="0">
+            <label class="vm-unsure"><input type="checkbox" id="m-rozloha-unsure"> Nie som si istý/á</label>
+          </div>
+          <input type="number" name="izby" placeholder="Počet izieb" min="0">
+        </div>
+
+        <div class="vm-select-wrap">
+          <select name="stav" id="m-stav">
+            <option value="" disabled selected>Stav nehnuteľnosti</option>
+            <option value="Novostavba">Novostavba</option>
+            <option value="Po rekonštrukcii">Po rekonštrukcii</option>
+            <option value="Pôvodný stav">Pôvodný stav</option>
+            <option value="Vyžaduje rekonštrukciu">Vyžaduje rekonštrukciu</option>
+            <option value="Nie som si istý/á">Nie som si istý/á</option>
+          </select>
+        </div>
+
+        <input type="text" name="meno" placeholder="Meno a priezvisko" required>
+
+        <div class="vm-row">
+          <input type="tel" name="telefon" placeholder="Telefón" required>
+          <input type="email" name="email" placeholder="E-mail" required>
+        </div>
+
+        <textarea name="poznamka" rows="2" placeholder="Poznámka (nepovinné)"></textarea>
+
+        <label class="vm-checkbox-row">
+          <input type="checkbox" required>
+          <span>Súhlasím so spracovaním osobných údajov za účelom ocenenia a kontaktovania.</span>
+        </label>
+
+        <button type="submit">Odoslať na ocenenie</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- BACK TO TOP -->
+<button type="button" class="back-to-top" id="backToTop" aria-label="Späť hore">↑</button>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // Jemný "widescreen" pan na hero pozadí (video alebo fotka) pri scrollovaní cez hero sekciu
+  const heroVideo = document.getElementById('heroVideo');
+  const heroBg = heroVideo || document.querySelector('.hero-bg-img');
+  const hero = document.getElementById('hero');
+  if(heroVideo){
+    heroVideo.muted = true;
+    heroVideo.play().catch(() => {
+      // ak prehliadač zablokuje autoplay, spustí sa pri prvej interakcii používateľa
+      const startOnInteract = () => { heroVideo.play(); document.removeEventListener('click', startOnInteract); document.removeEventListener('touchstart', startOnInteract); };
+      document.addEventListener('click', startOnInteract, { once:true });
+      document.addEventListener('touchstart', startOnInteract, { once:true });
+    });
+  }
+
+  function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
+
+  function onScroll(){
+    const rect = hero.getBoundingClientRect();
+    const h = hero.offsetHeight;
+    // progress 0 (top of hero at top of viewport) -> 1 (hero scrolled fully past)
+    let progress = clamp((0 - rect.top) / h, 0, 1);
+    const scale = 1.1 - progress * 0.06;   // jemný zoom-out
+    const y = -progress * 14;
+    heroBg.style.transform = `translate(0, ${y}px) scale(${scale})`;
+  }
+
+  // Hamburger menu — otvorenie/zatvorenie + plynulé scrollovanie na sekcie
+  const navToggle = document.getElementById('navToggle');
+  const navPanel = document.getElementById('navPanel');
+
+  function closeNav(){
+    navToggle.classList.remove('open');
+    navPanel.classList.remove('open');
+    navPanel.setAttribute('aria-hidden', 'true');
+  }
+  navToggle.addEventListener('click', () => {
+    const isOpen = navPanel.classList.toggle('open');
+    navToggle.classList.toggle('open', isOpen);
+    navPanel.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+  });
+
+  navPanel.querySelectorAll('a.nav-link').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute('href').slice(1);
+      const targetEl = document.getElementById(targetId);
+      closeNav();
+      if (targetEl){
+        setTimeout(() => targetEl.scrollIntoView({ behavior:'smooth', block:'start' }), 150);
+      }
+    });
+  });
+
+  document.getElementById('navOceneniBtn').addEventListener('click', () => {
+    closeNav();
+    setTimeout(() => openValuationModal(), 150);
+  });
+
+  document.addEventListener('click', (e) => {
+    if (navPanel.classList.contains('open') && !navPanel.contains(e.target) && !navToggle.contains(e.target)){
+      closeNav();
+    }
+  });
+
+  // Plávajúca dlaždica "Ocenenie zadarmo" -> otvorí formulár ako modal
+  const valuationBadge = document.getElementById('valuationBadge');
+  const valuationModal = document.getElementById('valuationModal');
+  const valuationBackdrop = document.getElementById('valuationBackdrop');
+  const valuationClose = document.getElementById('valuationClose');
+
+  function openValuationModal(){
+    valuationModal.classList.add('open');
+    valuationModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeValuationModal(){
+    valuationModal.classList.remove('open');
+    valuationModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  valuationBadge.addEventListener('click', openValuationModal);
+  valuationBackdrop.addEventListener('click', closeValuationModal);
+  valuationClose.addEventListener('click', closeValuationModal);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeValuationModal();
+  });
+
+  // "Chcem predať" tlačidlo v strip CTA (pod "Ako vám pomôžem") -> otvorí modal s ocenením
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('#stripCtaSellBtn')) openValuationModal();
+  });
+
+  // Dlaždice "Hľadám" / "Chcem predať" -> po kliknutí odhalia príslušný formulár
+  const qbTiles = document.querySelectorAll('.qb-tile');
+  function resetTileLabels(){
+    qbTiles.forEach(t => {
+      t.classList.remove('active');
+      t.querySelector('.qb-tile-arrow').textContent = 'Klikni sem';
+    });
+  }
+  qbTiles.forEach((tile) => {
+    tile.addEventListener('click', () => {
+      const targetId = tile.dataset.target;
+      const targetWrap = document.getElementById(targetId);
+      const isAlreadyOpen = tile.classList.contains('active');
+
+      // zavrieť všetko
+      resetTileLabels();
+      document.querySelectorAll('.qb-form-wrap').forEach(w => w.classList.remove('open'));
+
+      // ak dlaždica nebola predtým otvorená, otvor ju (klik na už otvorenú ju len zatvorí)
+      if (!isAlreadyOpen){
+        tile.classList.add('active');
+        tile.querySelector('.qb-tile-arrow').textContent = 'Zavrieť';
+        targetWrap.classList.add('open');
+        setTimeout(() => {
+          targetWrap.scrollIntoView({ behavior:'smooth', block:'center' });
+        }, 200);
+      }
+    });
+  });
+
+  // Dve message bubbles s vlastnými krátkymi formulármi — Hľadám / Chcem predať
+  function wireQuickForm(formId, intentLabel, extraFieldsFn){
+    const f = document.getElementById(formId);
+    if (!f) return;
+    f.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const meno = f.meno.value.trim();
+      const telefon = f.telefon.value.trim();
+      const lokalita = f.lokalita.value.trim();
+      const extra = extraFieldsFn ? extraFieldsFn(f) : {};
+      const ok = await sendToFormspree({
+        _subject: `${intentLabel} — ${meno}`,
+        Meno: meno,
+        Telefón: telefon,
+        'Dôvod kontaktu': intentLabel,
+        Lokalita: lokalita,
+        ...extra
+      }, 'Ďakujeme! Ozvem sa vám čo najskôr.');
+      if (ok) f.reset();
+    });
+  }
+
+  wireQuickForm('quickFormBuy', 'Hľadám nehnuteľnosť', (f) => {
+    const typ = f.typ.value;
+    const rozloha = f.rozloha.value.trim();
+    const izby = f.izby.value.trim();
+    const rozpocet = f.rozpocet.value.trim();
+    return {
+      'Typ nehnuteľnosti': typ,
+      Rozloha: rozloha ? rozloha + ' m²' : '-',
+      'Počet izieb': izby || '-',
+      'Orientačný rozpočet': rozpocet || '-'
+    };
+  });
+
+  const sellRozlohaInput = document.getElementById('sell-rozloha');
+  const sellRozlohaUnsure = document.getElementById('sell-rozloha-unsure');
+  if (sellRozlohaInput && sellRozlohaUnsure){
+    sellRozlohaUnsure.addEventListener('change', () => {
+      if (sellRozlohaUnsure.checked){
+        sellRozlohaInput.disabled = true;
+        sellRozlohaInput.value = '';
+        sellRozlohaInput.placeholder = 'Nie som si istý/á';
+      } else {
+        sellRozlohaInput.disabled = false;
+        sellRozlohaInput.placeholder = 'Rozloha (m²)';
+      }
+    });
+  }
+
+  wireQuickForm('quickFormSell', 'Chcem predať nehnuteľnosť', (f) => {
+    const typ = f.typ2.value;
+    const rozloha = sellRozlohaUnsure && sellRozlohaUnsure.checked ? 'Nie som si istý/á' : f.rozloha.value.trim();
+    const izby = f.izby.value.trim();
+    const stav = f.stav.value;
+    return {
+      'Typ nehnuteľnosti': typ,
+      Rozloha: rozloha || '-',
+      'Počet izieb': izby || '-',
+      'Stav nehnuteľnosti': stav || '-'
+    };
+  });
+
+  // Formulár priamo v modale "Zisti cenu nehnuteľnosti zadarmo"
+  const mRozlohaInput = document.getElementById('m-rozloha');
+  const mRozlohaUnsure = document.getElementById('m-rozloha-unsure');
+  if (mRozlohaInput && mRozlohaUnsure){
+    mRozlohaUnsure.addEventListener('change', () => {
+      if (mRozlohaUnsure.checked){
+        mRozlohaInput.disabled = true;
+        mRozlohaInput.value = '';
+        mRozlohaInput.placeholder = 'Nie som si istý/á';
+      } else {
+        mRozlohaInput.disabled = false;
+        mRozlohaInput.placeholder = 'Rozloha (m²)';
+      }
+    });
+  }
+  const modalValuationForm = document.getElementById('modalValuationForm');
+  if (modalValuationForm){
+    modalValuationForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const f = modalValuationForm;
+      const typ = f.typ.value;
+      const adresa = f.adresa.value.trim();
+      const rozloha = mRozlohaUnsure.checked ? 'Nie som si istý/á' : f.rozloha.value.trim();
+      const izby = f.izby.value.trim();
+      const stav = f.stav.value;
+      const meno = f.meno.value.trim();
+      const telefon = f.telefon.value.trim();
+      const email = f.email.value.trim();
+      const poznamka = f.poznamka.value.trim();
+      const ok = await sendToFormspree({
+        _subject: `Žiadosť o ocenenie nehnuteľnosti — ${meno}`,
+        Meno: meno,
+        Telefón: telefon,
+        'E-mail': email,
+        'Typ nehnuteľnosti': typ,
+        Lokalita: adresa,
+        Rozloha: rozloha || '-',
+        'Počet izieb': izby || '-',
+        'Stav nehnuteľnosti': stav || '-',
+        Poznámka: poznamka || '-'
+      }, 'Ďakujeme! Ozvem sa vám s ocenením čo najskôr.');
+      if (ok){
+        f.reset();
+        setTimeout(closeValuationModal, 900);
+      }
+    });
+  }
+
+  document.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  // Potiahnutie myšou pre rady recenzií a ponuky (na mobile funguje scroll prstom prirodzene)
+  document.querySelectorAll('.reviews-row, .listings-row').forEach((row) => {
+    let isDown = false;
+    let startX, scrollLeft;
+    row.addEventListener('mousedown', (e) => {
+      isDown = true;
+      row.classList.add('dragging');
+      startX = e.pageX - row.offsetLeft;
+      scrollLeft = row.scrollLeft;
+    });
+    row.addEventListener('mouseleave', () => { isDown = false; row.classList.remove('dragging'); });
+    row.addEventListener('mouseup', () => { isDown = false; row.classList.remove('dragging'); });
+    row.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - row.offsetLeft;
+      row.scrollLeft = scrollLeft - (x - startX);
+    });
+  });
+
+  // Automatický pomalý posun (marquee) pre "Moja aktuálna ponuka" — zastaví sa pri interakcii
+  const listingsRow = document.querySelector('.listings-row');
+  if (listingsRow){
+    // zdvojenie kariet pre plynulé nekonečné posúvanie
+    const originalCards = Array.from(listingsRow.children);
+    originalCards.forEach(card => {
+      listingsRow.appendChild(card.cloneNode(true));
+    });
+
+    let autoScroll = true;
+    let resumeTimer = null;
+    const SPEED = 1.1; // px za frame
+
+    function pauseAutoScroll(){
+      autoScroll = false;
+      clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(() => { autoScroll = true; }, 2500);
+    }
+
+    listingsRow.addEventListener('mouseenter', () => { autoScroll = false; });
+    listingsRow.addEventListener('mouseleave', () => { clearTimeout(resumeTimer); autoScroll = true; });
+    listingsRow.addEventListener('touchstart', pauseAutoScroll, { passive:true });
+    listingsRow.addEventListener('mousedown', pauseAutoScroll);
+    listingsRow.addEventListener('scroll', () => {
+      // ak scrollneme za polovicu (koniec pôvodnej sady), plynulo skoč naspäť na začiatok
+      const half = listingsRow.scrollWidth / 2;
+      if (listingsRow.scrollLeft >= half){
+        listingsRow.scrollLeft -= half;
+      }
+    });
+
+    function tick(){
+      if (autoScroll){
+        listingsRow.scrollLeft += SPEED;
+      }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  // Toast notifikácia (potvrdenie/chyba pri odosielaní formulárov)
+  const toastEl = document.getElementById('toast');
+  let toastTimer = null;
+  function showToast(message){
+    toastEl.textContent = message;
+    toastEl.classList.add('visible');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove('visible'), 3800);
+  }
+
+  // Formspree — priame odoslanie formulárov na e-mail, bez otvárania e-mailového klienta
+  const FORMSPREE_URL = 'https://formspree.io/f/mpqvqpqn';
+  async function sendToFormspree(dataObj, successMessage){
+    try {
+      const res = await fetch(FORMSPREE_URL, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new URLSearchParams(dataObj)
+      });
+      if (res.ok){
+        showToast(successMessage || 'Ďakujeme! Správa bola odoslaná.');
+        return true;
+      }
+      showToast('Nastala chyba pri odosielaní. Skúste to prosím znova, alebo nám rovno zavolajte.');
+      return false;
+    } catch (err){
+      showToast('Nastala chyba pri odosielaní. Skúste to prosím znova, alebo nám rovno zavolajte.');
+      return false;
+    }
+  }
+
+  // Kontaktný formulár -> odošle sa priamo cez Formspree
+  const form = document.getElementById('contactForm');
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    const meno = form.meno.value.trim();
+    const telefon = form.telefon.value.trim();
+    const sprava = form.sprava.value.trim();
+    const ok = await sendToFormspree({
+      _subject: `Dopyt z webu — ${meno}`,
+      Meno: meno,
+      Telefón: telefon,
+      Správa: sprava
+    }, 'Ďakujeme! Ozvem sa vám čo najskôr.');
+    if (ok) form.reset();
+  });
+
+  // Scroll reveal — obsah sa jemne objaví, keď vojde do zorného poľa
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  // Tlačidlo "Späť hore"
+  const backToTopBtn = document.getElementById('backToTop');
+  function onBackToTopScroll(){
+    if (window.scrollY > 600){
+      backToTopBtn.classList.add('visible');
+    } else {
+      backToTopBtn.classList.remove('visible');
+    }
+  }
+  document.addEventListener('scroll', onBackToTopScroll, { passive:true });
+  onBackToTopScroll();
+  backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+</script>
+
+</body>
+</html>

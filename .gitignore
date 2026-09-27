@@ -1,0 +1,7 @@
+data/admin.json
+data/secret.key
+static/uploads/*
+!static/uploads/.gitkeep
+__pycache__/
+*.pyc
+.venv/

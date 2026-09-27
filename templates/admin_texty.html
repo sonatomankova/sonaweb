@@ -1,0 +1,66 @@
+{% extends "admin_layout.html" %}
+{% block title %}Texty stránky{% endblock %}
+{% block content %}
+<h1 class="page-title">Texty stránky</h1>
+
+<form method="post" action="{{ url_for('admin_texty') }}">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <h3 style="font-size:14px;text-transform:uppercase;letter-spacing:.03em;color:var(--brown);">Hero (úvod pod menom)</h3>
+  <label>Kicker <input type="text" name="kicker" value="{{ site.hero.kicker }}"></label>
+  <label>Úvodný text <textarea name="hero_text" rows="2">{{ site.hero.text }}</textarea></label>
+
+  <h3 style="font-size:14px;text-transform:uppercase;letter-spacing:.03em;color:var(--brown);margin-top:28px;">Kontakt</h3>
+  <div class="field-row two">
+    <label>Telefón <input type="text" name="phone" value="{{ site.contact.phone }}"></label>
+    <label>Email <input type="text" name="email" value="{{ site.contact.email }}"></label>
+  </div>
+  <div class="field-row two">
+    <label>Instagram (celý odkaz) <input type="text" name="instagram" value="{{ site.contact.instagram }}"></label>
+    <label>Facebook (celý odkaz) <input type="text" name="facebook" value="{{ site.contact.facebook }}"></label>
+  </div>
+  <button class="btn primary" type="submit">Uložiť hero a kontakt</button>
+</form>
+
+<h3 style="font-size:14px;text-transform:uppercase;letter-spacing:.03em;color:var(--brown);margin-top:32px;">Pozadie (hero)</h3>
+<div class="card" style="max-width:420px;">
+  <div style="border-radius:8px;overflow:hidden;background:var(--beige);aspect-ratio:16/10;margin-bottom:14px;">
+    {% if site.hero.bg_type == 'image' %}
+    <img src="{{ site.hero.bg_src }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;">
+    {% else %}
+    <video src="{{ site.hero.bg_src }}" muted loop autoplay playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+    {% endif %}
+  </div>
+  <form method="post" action="{{ url_for('admin_hero_bg') }}" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>Nahraj nové video alebo fotku
+      <input type="file" name="bg_file" accept="video/*,image/*" required>
+    </label>
+    <button class="btn primary" type="submit">Nahrať ako pozadie</button>
+  </form>
+</div>
+
+<h3 style="font-size:14px;text-transform:uppercase;letter-spacing:.03em;color:var(--brown);margin-top:32px;">O mne</h3>
+<div class="cardlist">
+  {% for p in site.about %}
+  <div class="card">
+    <div class="card-head">
+      <div class="card-title">Odstavec {{ loop.index }}</div>
+      <div class="card-actions">
+        <form method="post" action="{{ url_for('admin_about_move', idx=loop.index0) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="direction" value="up"><button class="icon-btn" title="Hore">↑</button></form>
+        <form method="post" action="{{ url_for('admin_about_move', idx=loop.index0) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="direction" value="down"><button class="icon-btn" title="Dole">↓</button></form>
+        <form method="post" action="{{ url_for('admin_about_delete', idx=loop.index0) }}" onsubmit="return confirm('Naozaj zmazať tento odstavec?');"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="icon-btn danger" title="Zmazať">Zmazať</button></form>
+      </div>
+    </div>
+    <form method="post" action="{{ url_for('admin_about_save', idx=loop.index0) }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label><textarea name="text" rows="3">{{ p }}</textarea></label>
+      <button class="btn primary" type="submit">Uložiť</button>
+    </form>
+  </div>
+  {% endfor %}
+</div>
+<form method="post" action="{{ url_for('admin_about_add') }}">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <button class="btn" type="submit">+ Pridať odstavec</button>
+</form>
+{% endblock %}

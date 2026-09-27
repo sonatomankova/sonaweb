@@ -1,0 +1,59 @@
+{% extends "admin_layout.html" %}
+{% block title %}Marketing videá{% endblock %}
+{% block content %}
+<h1 class="page-title">Ako prezentujem nehnuteľnosti</h1>
+<p style="font-size:13px;color:var(--brown);margin-top:-14px;margin-bottom:20px;">
+  Táto sekcia sa zobrazuje priamo na hlavnej stránke, hneď za "Moja ponuka".
+</p>
+
+<form method="post" action="{{ url_for('admin_videa_heading') }}" style="max-width:480px;">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label>Nadpis sekcie <input type="text" name="heading" value="{{ site.marketing_heading }}"></label>
+  <label>Úvodný text <textarea name="intro" rows="3">{{ site.marketing_intro }}</textarea></label>
+  <button class="btn primary" type="submit">Uložiť nadpis a text</button>
+</form>
+
+<h3 style="font-size:14px;text-transform:uppercase;letter-spacing:.03em;color:var(--brown);margin-top:32px;">Videá</h3>
+<div class="cardlist">
+  {% for v in site.marketing_videos %}
+  <div class="card">
+    <div class="card-head">
+      <video class="thumb" src="{{ v.src }}" muted></video>
+      <div class="card-title">{{ loop.index }}. {{ v.title or '(bez názvu)' }}</div>
+      <div class="card-actions">
+        <form method="post" action="{{ url_for('admin_videa_move', idx=loop.index0) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="direction" value="up"><button class="icon-btn" title="Hore">↑</button></form>
+        <form method="post" action="{{ url_for('admin_videa_move', idx=loop.index0) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="direction" value="down"><button class="icon-btn" title="Dole">↓</button></form>
+        <form method="post" action="{{ url_for('admin_videa_delete', idx=loop.index0) }}" onsubmit="return confirm('Naozaj zmazať toto video?');"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="icon-btn danger" title="Zmazať">Zmazať</button></form>
+      </div>
+    </div>
+    <details>
+      <summary>Upraviť</summary>
+      <div class="details-body">
+        <form method="post" action="{{ url_for('admin_videa_edit', idx=loop.index0) }}" enctype="multipart/form-data">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <label>Názov videa <input type="text" name="title" value="{{ v.title }}" placeholder="napr. Video prehliadka bytu, Beckovská"></label>
+          <label>Video — URL <input type="text" name="src" value="{{ v.src }}" placeholder="https://..."></label>
+          <label>alebo nahraj súbor <input type="file" name="videofile" accept="video/*"></label>
+          <button class="btn primary" type="submit">Uložiť</button>
+        </form>
+      </div>
+    </details>
+  </div>
+  {% else %}
+  <p style="font-size:14px;color:var(--brown);">Zatiaľ žiadne videá.</p>
+  {% endfor %}
+</div>
+
+<details>
+  <summary style="font-size:14px;">+ Pridať video</summary>
+  <div class="details-body">
+    <form method="post" action="{{ url_for('admin_videa_add') }}" enctype="multipart/form-data">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label>Názov videa <input type="text" name="title" placeholder="napr. Video prehliadka bytu, Beckovská"></label>
+      <label>Video — URL <input type="text" name="src" placeholder="https://..."></label>
+      <label>alebo nahraj súbor <input type="file" name="videofile" accept="video/*"></label>
+      <button class="btn primary" type="submit">Pridať video</button>
+    </form>
+  </div>
+</details>
+{% endblock %}

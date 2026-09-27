@@ -1,0 +1,79 @@
+{% extends "admin_layout.html" %}
+{% block title %}Moja ponuka{% endblock %}
+{% block content %}
+<h1 class="page-title">Moja ponuka</h1>
+<p style="font-size:13px;color:var(--brown);margin-top:-14px;margin-bottom:20px;">
+  {{ site.updated }} (dátum sa pri uložení nastaví automaticky na dnešný)
+</p>
+
+<div class="cardlist">
+  {% for l in site.listings %}
+  <div class="card">
+    <div class="card-head">
+      <img src="{{ l.img }}" alt="">
+      <div class="card-title">{{ loop.index }}. {{ l.type }}{% if l.place %} — {{ l.place }}{% endif %}</div>
+      <div class="card-actions">
+        <form method="post" action="{{ url_for('admin_ponuky_move', idx=loop.index0) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="direction" value="up"><button class="icon-btn" title="Hore">↑</button></form>
+        <form method="post" action="{{ url_for('admin_ponuky_move', idx=loop.index0) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="direction" value="down"><button class="icon-btn" title="Dole">↓</button></form>
+        <form method="post" action="{{ url_for('admin_ponuky_delete', idx=loop.index0) }}" onsubmit="return confirm('Naozaj zmazať túto ponuku?');"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="icon-btn danger" title="Zmazať">Zmazať</button></form>
+      </div>
+    </div>
+    <details>
+      <summary>Upraviť</summary>
+      <div class="details-body">
+        <form method="post" action="{{ url_for('admin_ponuky_edit', idx=loop.index0) }}" enctype="multipart/form-data">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <label>Fotka — URL <input type="text" name="img" value="{{ l.img }}" placeholder="https://..."></label>
+          <label>alebo nahraj súbor <input type="file" name="imgfile" accept="image/*"></label>
+          <div class="field-row two">
+            <label>Typ nehnuteľnosti <input type="text" name="type" value="{{ l.type }}"></label>
+            <label>Lokalita <input type="text" name="place" value="{{ l.place }}"></label>
+          </div>
+          <div class="field-row two">
+            <label>Info (veľkosť · cena) <input type="text" name="meta" value="{{ l.meta }}"></label>
+            <label>Označenie
+              <select name="badge">
+                {% for b in ['Na predaj', 'Na prenájom', 'Predané'] %}
+                <option {{ 'selected' if l.badge == b else '' }}>{{ b }}</option>
+                {% endfor %}
+              </select>
+            </label>
+          </div>
+          <label>Odkaz na inzerát <input type="text" name="href" value="{{ l.href }}"></label>
+          <button class="btn primary" type="submit">Uložiť</button>
+        </form>
+      </div>
+    </details>
+  </div>
+  {% else %}
+  <p style="font-size:14px;color:var(--brown);">Zatiaľ žiadne ponuky.</p>
+  {% endfor %}
+</div>
+
+<details>
+  <summary style="font-size:14px;">+ Pridať novú ponuku</summary>
+  <div class="details-body">
+    <form method="post" action="{{ url_for('admin_ponuky_add') }}" enctype="multipart/form-data">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label>Fotka — URL <input type="text" name="img" placeholder="https://..."></label>
+      <label>alebo nahraj súbor <input type="file" name="imgfile" accept="image/*"></label>
+      <div class="field-row two">
+        <label>Typ nehnuteľnosti <input type="text" name="type" placeholder="napr. 3-izbový byt"></label>
+        <label>Lokalita <input type="text" name="place" placeholder="napr. Beckovská ulica, Trenčín"></label>
+      </div>
+      <div class="field-row two">
+        <label>Info (veľkosť · cena) <input type="text" name="meta" placeholder="napr. 70 m² · 166 900 €"></label>
+        <label>Označenie
+          <select name="badge">
+            <option>Na predaj</option>
+            <option>Na prenájom</option>
+            <option>Predané</option>
+          </select>
+        </label>
+      </div>
+      <label>Odkaz na inzerát <input type="text" name="href" placeholder="https://www.bosen.sk/..."></label>
+      <button class="btn primary" type="submit">Pridať ponuku</button>
+    </form>
+  </div>
+</details>
+{% endblock %}
