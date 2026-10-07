@@ -25,6 +25,11 @@ SECRET_FILE = DATA_DIR / "secret.key"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
+# Núdzový reset prihlásenia: s premennou ADMIN_RESET=1 sa pri štarte zmaže admin.json
+# a pri ďalšom prihlásení sa vytvorí nový účet (heslo sa vypíše do logov).
+if os.environ.get("ADMIN_RESET") == "1" and ADMIN_FILE.exists():
+    ADMIN_FILE.unlink()
+
 # Pri prvom spustení na prázdnom trvalom disku "zaseje" počiatočný obsah webu.
 if not SITE_FILE.exists():
     _seed = BASE_DIR / "data" / "site.json"
