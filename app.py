@@ -14,16 +14,25 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 
 BASE_DIR = Path(__file__).resolve().parent
-DATA_DIR = BASE_DIR / "data"
-UPLOAD_DIR = BASE_DIR / "static" / "uploads"
+# DATA_DIR/UPLOAD_DIR sú nastaviteľné cez premenné prostredia, aby sa dali
+# nasmerovať na trvalý disk na hostingu (lokálne ostávajú pôvodné priečinky).
+DATA_DIR = Path(os.environ.get("DATA_DIR", str(BASE_DIR / "data")))
+UPLOAD_DIR = Path(os.environ.get("UPLOAD_DIR", str(BASE_DIR / "static" / "uploads")))
 SITE_FILE = DATA_DIR / "site.json"
 ADMIN_FILE = DATA_DIR / "admin.json"
 SECRET_FILE = DATA_DIR / "secret.key"
 
-DATA_DIR.mkdir(exist_ok=True)
+DATA_DIR.mkdir(parents=True, exist_ok=True)
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
+# Pri prvom spustení na prázdnom trvalom disku "zaseje" počiatočný obsah webu.
+if not SITE_FILE.exists():
+    _seed = BASE_DIR / "data" / "site.json"
+    if _seed.exists() and _seed.resolve() != SITE_FILE.resolve():
+        SITE_FILE.write_text(_seed.read_text(encoding="utf-8"), encoding="utf-8")
+
 app = Flask(__name__)
+app.jinja_env.globals["video_embed"] = lambda src: video_embed(src)
 
 
 def get_secret_key():
@@ -78,6 +87,23 @@ def phone_digits(phone, keep_plus=True):
     if not keep_plus:
         digits = digits.lstrip("+")
     return digits
+
+
+def video_embed(src):
+    """Rozpozná YouTube/Instagram odkaz a vráti embed; inak ide o priamy súbor videa."""
+    s = (src or "").strip()
+    m = re.search(r"(?:youtube\.com/(?:watch\?(?:[^#]*&)?v=|shorts/|embed/)|youtu\.be/)([A-Za-z0-9_-]{11})", s)
+    if m:
+        return {
+            "kind": "iframe",
+            "src": f"https://www.youtube.com/embed/{m.group(1)}",
+            "thumb": f"https://img.youtube.com/vi/{m.group(1)}/hqdefault.jpg",
+        }
+    m = re.search(r"instagram\.com/(reels?|p|tv)/([A-Za-z0-9_-]+)", s)
+    if m:
+        kind = "reel" if m.group(1).startswith("reel") else m.group(1)
+        return {"kind": "iframe", "src": f"https://www.instagram.com/{kind}/{m.group(2)}/embed"}
+    return {"kind": "video", "src": s}
 
 
 def today_sk():
@@ -148,6 +174,13 @@ def public_ocenenie():
 @app.route("/favicon.ico")
 def favicon():
     return send_from_directory(app.static_folder, "favicon.ico")
+
+
+@app.route("/static/uploads/<path:filename>")
+def uploaded_file(filename):
+    # Nahraté súbory servírujeme z UPLOAD_DIR nezávisle od toho, či je to
+    # priečinok vo vnútri appky (lokálne) alebo pripojený trvalý disk (hosting).
+    return send_from_directory(UPLOAD_DIR, filename)
 
 
 # ---------- Admin: prihlásenie ----------

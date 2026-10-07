@@ -18,7 +18,14 @@
   {% for v in site.marketing_videos %}
   <div class="card">
     <div class="card-head">
-      <video class="thumb" src="{{ v.src }}" muted></video>
+      {% set e = video_embed(v.src) %}
+      {% if e.kind == 'video' %}
+      <video class="thumb" src="{{ e.src }}#t=0.1" muted preload="metadata"></video>
+      {% elif e.thumb %}
+      <img class="thumb" src="{{ e.thumb }}" alt="">
+      {% else %}
+      <div class="thumb" style="display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--brown);">odkaz</div>
+      {% endif %}
       <div class="card-title">{{ loop.index }}. {{ v.title or '(bez názvu)' }}</div>
       <div class="card-actions">
         <form method="post" action="{{ url_for('admin_videa_move', idx=loop.index0) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="direction" value="up"><button class="icon-btn" title="Hore">↑</button></form>
@@ -32,7 +39,7 @@
         <form method="post" action="{{ url_for('admin_videa_edit', idx=loop.index0) }}" enctype="multipart/form-data">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           <label>Názov videa <input type="text" name="title" value="{{ v.title }}" placeholder="napr. Video prehliadka bytu, Beckovská"></label>
-          <label>Video — URL <input type="text" name="src" value="{{ v.src }}" placeholder="https://..."></label>
+          <label>Video — URL <input type="text" name="src" value="{{ v.src }}" placeholder="odkaz z YouTube alebo Instagramu (reel)"></label>
           <label>alebo nahraj súbor <input type="file" name="videofile" accept="video/*"></label>
           <button class="btn primary" type="submit">Uložiť</button>
         </form>
@@ -50,7 +57,7 @@
     <form method="post" action="{{ url_for('admin_videa_add') }}" enctype="multipart/form-data">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <label>Názov videa <input type="text" name="title" placeholder="napr. Video prehliadka bytu, Beckovská"></label>
-      <label>Video — URL <input type="text" name="src" placeholder="https://..."></label>
+      <label>Video — URL <input type="text" name="src" placeholder="odkaz z YouTube alebo Instagramu (reel)"></label>
       <label>alebo nahraj súbor <input type="file" name="videofile" accept="video/*"></label>
       <button class="btn primary" type="submit">Pridať video</button>
     </form>
