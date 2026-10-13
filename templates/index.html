@@ -1609,7 +1609,10 @@
     height:0;
     --rise: 330px;
     pointer-events:none;
+    transition: opacity .45s ease;
   }
+  .review-pop-stack.paused{ opacity:0; }
+  .review-pop-stack.paused .review-pop{ pointer-events:none; }
   .review-pop{
     position:absolute;
     left:0; bottom:0; width:100%;
@@ -2086,7 +2089,27 @@
     el.addEventListener('click', function(){ if(el.parentNode) el.parentNode.removeChild(el); });
     stack.appendChild(el);
   }
-  function tick(){ spawn(); timer = setTimeout(tick, cfg.interval); }
+  // Bubliny nesmú zakrývať text ani videá: v sekciách O mne a Marketing videá sa skryjú.
+  var lightSections = Array.prototype.slice.call(document.querySelectorAll('.panel, .marketing-section'));
+  var blocked = false, checkQueued = false;
+  function checkBlocked(){
+    checkQueued = false;
+    var desktop = window.innerWidth >= 900;
+    var bottomOffset = desktop ? 30 : 140;
+    var zoneBottom = window.innerHeight - bottomOffset + 10;
+    var zoneTop = zoneBottom - cfg.rise - 100;
+    var hit = lightSections.some(function(el){
+      var r = el.getBoundingClientRect();
+      return r.top < zoneBottom && r.bottom > zoneTop;
+    });
+    blocked = hit;
+    stack.classList.toggle('paused', hit);
+  }
+  function queueCheck(){ if(!checkQueued){ checkQueued = true; requestAnimationFrame(checkBlocked); } }
+  window.addEventListener('scroll', queueCheck, { passive:true });
+  window.addEventListener('resize', queueCheck);
+  checkBlocked();
+  function tick(){ if(!blocked) spawn(); timer = setTimeout(tick, cfg.interval); }
   document.addEventListener('visibilitychange', function(){
     clearTimeout(timer);
     if(document.hidden){ stack.innerHTML = ''; }
