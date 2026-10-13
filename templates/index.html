@@ -2106,12 +2106,20 @@
   const hero = document.getElementById('hero');
   if(heroVideo){
     heroVideo.muted = true;
-    heroVideo.play().catch(() => {
-      // ak prehliadač zablokuje autoplay, spustí sa pri prvej interakcii používateľa
-      const startOnInteract = () => { heroVideo.play(); document.removeEventListener('click', startOnInteract); document.removeEventListener('touchstart', startOnInteract); };
-      document.addEventListener('click', startOnInteract, { once:true });
-      document.addEventListener('touchstart', startOnInteract, { once:true });
-    });
+    // iOS (najmä v režime nízkej spotreby) môže zablokovať autoplay. Skúšame video spustiť
+    // pri každej interakcii (ťuknutie, potiahnutie, klik), kým naozaj nezačne bežať.
+    const interactEvents = ['touchend', 'pointerup', 'click', 'keydown', 'touchmove'];
+    const startVideo = () => {
+      if(!heroVideo.paused) return;
+      const p = heroVideo.play();
+      if(p && p.catch) p.catch(() => {});
+    };
+    interactEvents.forEach(ev => document.addEventListener(ev, startVideo, { passive:true }));
+    heroVideo.addEventListener('playing', () => {
+      interactEvents.forEach(ev => document.removeEventListener(ev, startVideo));
+    }, { once:true });
+    startVideo();
+    document.addEventListener('visibilitychange', () => { if(!document.hidden) startVideo(); });
   }
 
   function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
