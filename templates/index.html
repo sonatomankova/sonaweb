@@ -1598,6 +1598,50 @@
     /* sticky call bar not needed once the hero/links already show the number */
     .sticky-cta{ display:none; }
   }
+
+  /* ---------- VYSKAKOVACIE RECENZIE (celou stránkou) ---------- */
+  .review-pop{
+    position:fixed;
+    top:8px;
+    left:14px;
+    z-index:15;
+    width:min(250px, calc(100vw - 100px));
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    background:rgba(36,28,21,.86);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    border:1px solid rgba(245,240,231,.14);
+    border-radius:18px 18px 18px 4px;
+    padding:11px 13px 12px;
+    color:var(--cream);
+    box-shadow:0 10px 26px rgba(0,0,0,.35);
+    opacity:0;
+    transform:scale(.6) translateY(-8px);
+    transform-origin:top left;
+    pointer-events:none;
+    transition:opacity .25s ease, transform .45s cubic-bezier(.2,.9,.3,1.35);
+  }
+  .review-pop.show{ opacity:1; transform:scale(1) translateY(0); pointer-events:auto; cursor:pointer; }
+  .review-pop-avatar{
+    flex:none; width:30px; height:30px; border-radius:50%;
+    background:var(--sand); color:var(--espresso);
+    font-family:'Jost'; font-weight:500; font-size:11px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .review-pop-stars{ color:#E8C27A; font-size:10px; letter-spacing:1px; }
+  .review-pop-text{
+    font-family:'Jost'; font-weight:300; font-size:12px; line-height:1.4;
+    color:#EADFCB; margin:3px 0 4px;
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  .review-pop-author{ font-family:'Jost'; font-weight:400; font-size:10.5px; color:var(--sand); }
+  @media (min-width: 900px){
+    .review-pop{ top:24px; left:28px; width:290px; }
+    .review-pop-text{ font-size:13px; -webkit-line-clamp:3; }
+  }
+  @media (prefers-reduced-motion: reduce){ .review-pop{ display:none; } }
 </style>
 </head>
 <body>
@@ -1981,6 +2025,44 @@
 
 <!-- BACK TO TOP -->
 <button type="button" class="back-to-top" id="backToTop" aria-label="Späť hore">↑</button>
+
+<!-- VYSKAKOVACIE RECENZIE: jedna bublina za druhou počas celého scrollovania -->
+<div class="review-pop" id="reviewPop" aria-live="polite">
+  <div class="review-pop-avatar" id="rpAvatar"></div>
+  <div>
+    <div class="review-pop-stars" id="rpStars"></div>
+    <div class="review-pop-text" id="rpText"></div>
+    <div class="review-pop-author" id="rpAuthor"></div>
+  </div>
+</div>
+<script>
+(function(){
+  var reviews = {{ site.reviews|tojson }};
+  var pop = document.getElementById('reviewPop');
+  if(!pop || !reviews.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var i = 0, timer;
+  function show(){
+    var r = reviews[i % reviews.length]; i++;
+    document.getElementById('rpAvatar').textContent = r.avatar;
+    document.getElementById('rpStars').textContent = '★'.repeat(r.stars || 5);
+    document.getElementById('rpText').textContent = r.text;
+    document.getElementById('rpAuthor').textContent = r.author;
+    pop.classList.add('show');
+    timer = setTimeout(hide, 6000);
+  }
+  function hide(){
+    pop.classList.remove('show');
+    timer = setTimeout(show, 3000);
+  }
+  pop.addEventListener('click', function(){ clearTimeout(timer); hide(); });
+  document.addEventListener('visibilitychange', function(){
+    clearTimeout(timer);
+    if(document.hidden){ pop.classList.remove('show'); }
+    else { timer = setTimeout(show, 1000); }
+  });
+  timer = setTimeout(show, 2500);
+})();
+</script>
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
