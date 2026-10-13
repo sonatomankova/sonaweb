@@ -2106,8 +2106,8 @@
     el.addEventListener('click', function(){ if(el.parentNode) el.parentNode.removeChild(el); });
     stack.appendChild(el);
   }
-  // Bubliny nesmú zakrývať text ani videá: v sekciách O mne a Marketing videá sa skryjú.
-  var lightSections = Array.prototype.slice.call(document.querySelectorAll('.panel, .marketing-section'));
+  // Bubliny nesmú zakrývať text ani videá: v sekciách Marketing videá, Chcem predať/Hľadám a O mne sa skryjú.
+  var lightSections = Array.prototype.slice.call(document.querySelectorAll('.panel, .marketing-section, .quick-bubble-section'));
   var blocked = false, checkQueued = false;
   function checkBlocked(){
     checkQueued = false;
