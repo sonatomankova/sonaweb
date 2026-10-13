@@ -1,5 +1,5 @@
 {
-  "updated": "Aktualizované: 30. 7. 2026 · úplný a vždy aktuálny zoznam nájdete na bosen.sk",
+  "updated": "Aktualizované: 13. 10. 2026 · úplný a vždy aktuálny zoznam nájdete na bosen.sk",
   "hero": {
     "kicker": "Realitná maklérka — Trenčín a okolie",
     "text": "Prvá konzultácia je nezáväzná. Poďme spolu nájsť riešenie, ktoré vám bude naozaj sedieť :)",
@@ -21,55 +21,163 @@
   },
   "listings": [
     {
-      "href": "https://www.bosen.sk/nehnutelnost/12297555-bosen-na-predaj-3i-byt-beckovska-ulica-trencin",
+      "href": "https://www.bosen.sk/nehnutelnost/12298309-bosen-novostavba-kompletne-zariadeny-2i-byt-s-parkovacim-statim-trencin",
       "badge": "Na predaj",
-      "img": "https://domire.pravda.sk/pmi/02170e1c131b15/0705185e071d070a1c5e01045d56/offers/41405d495247415a/img/medium/-69d105e136a1244a770f0404.jpeg",
-      "alt": "Fotka bytu, Beckovská ulica, Trenčín",
+      "img": "https://www.bosen.sk/imgcache/cw/900/ch/525/-6ac761c8ded2a88f5b004628.png",
+      "alt": "Fotka, 2-izbový byt, novostavba, Liptovská, Trenčín",
+      "type": "2-izbový byt, novostavba",
+      "place": "Liptovská, Trenčín",
+      "meta": "55 m² · 180 500 €"
+    },
+    {
+      "href": "https://www.bosen.sk/nehnutelnost/12298292-bosen-na-predaj-kompletne-zariadeny-2i-byt-legionarska-ulica",
+      "badge": "Na predaj",
+      "img": "https://www.bosen.sk/imgcache/cw/900/ch/525/-6ac3a8357ae5673f6f0d6ee8.jpg",
+      "alt": "Fotka, 2-izbový byt, zariadený, Legionárska ulica, Trenčín",
+      "type": "2-izbový byt, zariadený",
+      "place": "Legionárska ulica, Trenčín",
+      "meta": "56 m² · 165 000 €"
+    },
+    {
+      "href": "https://www.bosen.sk/nehnutelnost/12298270-bosen-na-predaj-3i-byt-ul-mostova-sala",
+      "badge": "Na predaj",
+      "img": "https://www.bosen.sk/imgcache/cw/900/ch/525/-6ac352ba88bdc40e4105d902.png",
+      "alt": "Fotka, 3-izbový byt, Mostová, Šaľa",
       "type": "3-izbový byt",
-      "place": "Beckovská ulica, Trenčín",
-      "meta": "70 m² · 170 000 €"
+      "place": "Mostová, Šaľa",
+      "meta": "68 m² · 144 000 €"
     },
     {
-      "href": "https://www.bosen.sk/nehnutelnost/12297407-bosen-na-predaj-byt-v-centre-trencina",
+      "href": "https://www.bosen.sk/nehnutelnost/12298194-bosen-novostavba-kompletne-zariadeny-2i-byt-s-parkovacim-statim-trencin",
       "badge": "Na predaj",
-      "img": "https://domire.pravda.sk/pmi/02170e1c131b15/0705185e071d070a1c5e01045d56/offers/41405d4952464458/img/medium/-69bb1131aea0f0b188008f17.jpeg",
-      "alt": "Fotka bytu, Legionárska, Trenčín",
-      "type": "Byt s parkovaním",
-      "place": "Legionárska, Trenčín",
-      "meta": "79 m² · 208 000 €"
+      "img": "https://www.bosen.sk/imgcache/cw/900/ch/525/-6aa13eb9d15e2b517805e1e5.jpg",
+      "alt": "Fotka, 2-izbový byt, novostavba, Liptovská, Trenčín",
+      "type": "2-izbový byt, novostavba",
+      "place": "Liptovská, Trenčín",
+      "meta": "58 m² · 178 000 €"
     },
     {
-      "href": "https://www.bosen.sk/nehnutelnost/12297700-bosen-na-predaj-rodinny-dom-ladce",
+      "href": "https://www.bosen.sk/nehnutelnost/12298035-bosen-na-predaj-kompletne-zariadeny-1i-byt-dubnica-nad-vahom",
       "badge": "Na predaj",
-      "img": "https://domire.pravda.sk/pmi/02170e1c131b15/0705185e071d070a1c5e01045d56/offers/41405d495245445f/img/medium/-69f9c466f9c511c3f00cd7ab.jpeg",
-      "alt": "Fotka rodinného domu, Ladce",
-      "type": "Rodinný dom",
-      "place": "Ladce",
-      "meta": "1 252 m² · 285 000 €"
+      "img": "https://www.bosen.sk/imgcache/cw/900/ch/525/-6acbe2283f9dab7cfa0e342e.png",
+      "alt": "Fotka, 1-izbový byt, zariadený, Bratislavská, Dubnica nad Váhom",
+      "type": "1-izbový byt, zariadený",
+      "place": "Bratislavská, Dubnica nad Váhom",
+      "meta": "31 m² · 99 990 €"
     },
     {
-      "href": "https://www.bosen.sk/nehnutelnost/12297560-bosen-na-predaj-rodinny-dom-banovce-nad-bebravou",
+      "href": "https://www.bosen.sk/nehnutelnost/12297775-bosen-na-predaj-stavebny-pozemok-investicna-prilezitost-na-vystavbu-chaty-domu",
       "badge": "Na predaj",
-      "img": "https://www.bosen.sk/imgcache/wt/lowerright/-69d4d1abc9a737adcb01716e.jpg",
-      "alt": "Fotka rodinného domu, Bánovce nad Bebravou",
-      "type": "Rodinný dom s pozemkom",
-      "place": "Bánovce nad Bebravou",
-      "meta": "1 967 m² · 249 000 €"
-    },
-    {
-      "href": "https://www.bosen.sk/nehnutelnost/12297775-bosen-na-predaj-stavebny-pozemok-prasnik",
-      "badge": "Na predaj",
-      "img": "https://domire.pravda.sk/pmi/02170e1c131b15/0705185e071d070a1c5e01045d56/offers/41405d495245435a/img/medium/-6a102bc918364a4ff70a601f.jpeg",
-      "alt": "Fotka pozemku, Prašník",
+      "img": "https://www.bosen.sk/imgcache/cw/900/ch/525/-6a102bc918364a4ff70a601f.jpg",
+      "alt": "Fotka, Stavebný pozemok, Prašník",
       "type": "Stavebný pozemok",
       "place": "Prašník",
       "meta": "1 500 m² · 85 000 €"
     },
     {
+      "href": "https://www.bosen.sk/nehnutelnost/12297700-bosen-na-predaj-rodinny-dom-v-krasnom-prostredi-ladce",
+      "badge": "Na predaj",
+      "img": "https://www.bosen.sk/imgcache/cw/900/ch/525/-69f9c466f9c511c3f00cd7ab.jpg",
+      "alt": "Fotka, Rodinný dom, Ladce",
+      "type": "Rodinný dom",
+      "place": "Ladce",
+      "meta": "1 252 m² · 285 000 €"
+    },
+    {
+      "href": "https://www.bosen.sk/nehnutelnost/12297573-bosen-na-predaj-stavebne-pozemky-na-vystavbu-rd-ladce",
+      "badge": "Na predaj",
+      "img": "https://www.bosen.sk/imgcache/cw/900/ch/525/-69d7853f4c2e3570a80824cf.jpg",
+      "alt": "Fotka, Stavebné pozemky na výstavbu RD, Ladce",
+      "type": "Stavebné pozemky na výstavbu RD",
+      "place": "Ladce",
+      "meta": "1 252 m² · 95 €/m²"
+    },
+    {
+      "href": "https://www.bosen.sk/nehnutelnost/12297560-bosen-na-predaj-6-izbovy-dom-260-m-s-garazou-stavebny-pozemok-s-upi-banovce-n-b-horne-ozorovce",
+      "badge": "Na predaj",
+      "img": "https://www.bosen.sk/imgcache/cw/900/ch/525/-69d4d1abc9a737adcb01716e.jpg",
+      "alt": "Fotka, 6-izbový dom s garážou, Horné Ozorovce, Bánovce nad Bebravou",
+      "type": "6-izbový dom s garážou",
+      "place": "Horné Ozorovce, Bánovce nad Bebravou",
+      "meta": "1 967 m² · 245 000 €"
+    },
+    {
+      "href": "https://www.bosen.sk/nehnutelnost/12297555-bosen-na-predaj-3i-byt-beckovska-ulica-trencin",
+      "badge": "Na predaj",
+      "img": "https://www.bosen.sk/imgcache/cw/900/ch/525/-69d105de61f3f8eaa30959ef.png",
+      "alt": "Fotka, 3-izbový byt, Beckovská ulica, Trenčín",
+      "type": "3-izbový byt",
+      "place": "Beckovská ulica, Trenčín",
+      "meta": "70 m² · 149 000 €"
+    },
+    {
+      "href": "https://www.bosen.sk/nehnutelnost/12297407-bosen-na-predaj-byt-v-centre-trencina-o-vymere-78m2-s-parkovanim",
+      "badge": "Na predaj",
+      "img": "https://www.bosen.sk/imgcache/cw/900/ch/525/-69bb1134623d59359a0ae209.jpg",
+      "alt": "Fotka, Byt s parkovaním, Legionárska, Trenčín",
+      "type": "Byt s parkovaním",
+      "place": "Legionárska, Trenčín",
+      "meta": "79 m² · 198 000 €"
+    },
+    {
+      "href": "https://www.bosen.sk/nehnutelnost/12297303-bosen-prenajom-skladovych-priestorov-v-centre-mesta-trencin",
+      "badge": "Na prenájom",
+      "img": "https://www.bosen.sk/imgcache/cw/900/ch/525/-699dcc3528ade00ccd0e16b7.png",
+      "alt": "Fotka, Skladové priestory, Centrum Trenčína",
+      "type": "Skladové priestory",
+      "place": "Centrum Trenčína",
+      "meta": "73 m² · 5 €/m²/mes."
+    },
+    {
+      "href": "https://www.bosen.sk/nehnutelnost/12297249-bosen-na-predaj-stavebny-pozemok-1813-m2-adamovske-kochanovce",
+      "badge": "Na predaj",
+      "img": "https://www.bosen.sk/imgcache/cw/900/ch/525/-69f0986e881afbb41307bc8f.png",
+      "alt": "Fotka, Stavebný pozemok, Adamovské Kochanovce",
+      "type": "Stavebný pozemok",
+      "place": "Adamovské Kochanovce",
+      "meta": "1 813 m² · Info v RK"
+    },
+    {
+      "href": "https://www.bosen.sk/nehnutelnost/12297085-rezidencia-lucky-na-predaj-polyfunkcny-priestor-1-2-2-trencin",
+      "badge": "Na predaj",
+      "img": "https://www.bosen.sk/imgcache/cw/900/ch/525/-696527dba00c0201df06176c.jpg",
+      "alt": "Fotka, Polyfunkčný priestor, Rezidencia Lúčky, Trenčín",
+      "type": "Polyfunkčný priestor",
+      "place": "Rezidencia Lúčky, Trenčín",
+      "meta": "275 m² · Cena na webe/RK"
+    },
+    {
+      "href": "https://www.bosen.sk/nehnutelnost/12297065-rezidencia-lucky-na-predaj-2-izbovy-byt-2-9-trencin",
+      "badge": "Na predaj",
+      "img": "https://www.bosen.sk/imgcache/cw/900/ch/525/-6964276bce9337586606ff43.jpg",
+      "alt": "Fotka, 2-izbový byt, novostavba, Rezidencia Lúčky, Trenčín",
+      "type": "2-izbový byt, novostavba",
+      "place": "Rezidencia Lúčky, Trenčín",
+      "meta": "69 m² · Cena na webe/RK"
+    },
+    {
+      "href": "https://www.bosen.sk/nehnutelnost/12296916-bosen-na-predaj-stavebny-pozemok-investicna-prilezitost-na-vystavbu-chaty",
+      "badge": "Na predaj",
+      "img": "https://www.bosen.sk/imgcache/cw/900/ch/525/-692d9eb0d83c4eed0c0fb2f9.jpg",
+      "alt": "Fotka, Stavebný pozemok (chata/RD), Piešťany",
+      "type": "Stavebný pozemok (chata/RD)",
+      "place": "Piešťany",
+      "meta": "1 544 m² · 45 000 €"
+    },
+    {
+      "href": "https://www.bosen.sk/nehnutelnost/12296527-bosen-na-predaj-stavebny-pozemok-648-m-skalka-nad-vahom",
+      "badge": "Na predaj",
+      "img": "https://www.bosen.sk/imgcache/cw/900/ch/525/-68dc0d3b4c1cf84a6c5d4f4a.jpg",
+      "alt": "Fotka, Stavebný pozemok, Skalka nad Váhom",
+      "type": "Stavebný pozemok",
+      "place": "Skalka nad Váhom",
+      "meta": "648 m² · 59 000 €"
+    },
+    {
       "href": "https://www.bosen.sk/nehnutelnost/12296523-bosen-na-predaj-rozostavany-dom-s-projektom-velkou-terasou-a-pozemkom-1875-m",
       "badge": "Na predaj",
-      "img": "https://www.bosen.sk/imgcache/wt/lowerright/-697b2b3f77481fc5f901b6c1.jpg",
-      "alt": "Fotka rozostavaného domu s pozemkom, Dolné Motešice",
+      "img": "https://www.bosen.sk/imgcache/cw/900/ch/525/-697b2b3f77481fc5f901b6c1.jpg",
+      "alt": "Fotka, Rozostavaný dom s projektom, Dolné Motešice",
       "type": "Rozostavaný dom s projektom",
       "place": "Dolné Motešice",
       "meta": "1 875 m² · 198 000 €"
@@ -77,74 +185,11 @@
     {
       "href": "https://www.bosen.sk/nehnutelnost/12294974-bosen-na-predaj-investicny-pozemok-27-100-m2-pri-obci-dezerice-banovce-nad-bebravou",
       "badge": "Na predaj",
-      "img": "https://www.bosen.sk/imgcache/wt/lowerright/-670ccc08ce365178f10475f7.jpg",
-      "alt": "Fotka investičného pozemku, Dežerice",
+      "img": "https://www.bosen.sk/imgcache/cw/900/ch/525/-670ccc08ce365178f10475f7.jpg",
+      "alt": "Fotka, Investičný pozemok, Dežerice, Bánovce nad Bebravou",
       "type": "Investičný pozemok",
       "place": "Dežerice, Bánovce nad Bebravou",
       "meta": "27 100 m² · 23 €/m²"
-    },
-    {
-      "href": "https://www.bosen.sk/nehnutelnost/12296527-bosen-na-predaj-stavebny-pozemok-648-m-skalka-nad-vahom",
-      "badge": "Na predaj",
-      "img": "https://www.bosen.sk/imgcache/wt/lowerright/-68dc0d3b4c1cf84a6c5d4f4a.jpg",
-      "alt": "Fotka stavebného pozemku, Skalka nad Váhom",
-      "type": "Stavebný pozemok",
-      "place": "Skalka nad Váhom",
-      "meta": "648 m² · 65 900 €"
-    },
-    {
-      "href": "https://www.bosen.sk/nehnutelnost/12296886-bosen-na-predaj-4i-bungalov-121-m-tuchyna",
-      "badge": "Na predaj",
-      "img": "https://www.bosen.sk/imgcache/wt/lowerright/-6a1014c1e9cb90acc0035728.jpg",
-      "alt": "Fotka bungalovu, Tuchyňa",
-      "type": "4-izbový bungalov",
-      "place": "Tuchyňa",
-      "meta": "121 m² · Info v RK"
-    },
-    {
-      "href": "https://www.bosen.sk/nehnutelnost/12296916-bosen-na-predaj-stavebny-pozemok-investicna-prilezitost-na-vystavbu-chaty",
-      "badge": "Na predaj",
-      "img": "https://www.bosen.sk/imgcache/wt/lowerright/-692d9eb0d83c4eed0c0fb2f9.jpg",
-      "alt": "Fotka stavebného pozemku, Prašník",
-      "type": "Stavebný pozemok (chata/RD)",
-      "place": "Prašník",
-      "meta": "1 544 m² · 45 000 €"
-    },
-    {
-      "href": "https://www.bosen.sk/nehnutelnost/12297065-rezidencia-lucky-na-predaj-2-izbovy-byt-2-9-trencin",
-      "badge": "Na predaj",
-      "img": "https://www.bosen.sk/imgcache/wt/lowerright/-6964276bce9337586606ff43.jpg",
-      "alt": "Fotka bytu 2.9, Rezidencia Lúčky, Trenčín",
-      "type": "2-izbový byt, novostavba",
-      "place": "Rezidencia Lúčky, Trenčín",
-      "meta": "69 m² · Cena na webe/RK"
-    },
-    {
-      "href": "https://www.bosen.sk/nehnutelnost/12297085-rezidencia-lucky-na-predaj-polyfunkcny-priestor-1-2-2-trencin",
-      "badge": "Na predaj",
-      "img": "https://www.bosen.sk/imgcache/wt/lowerright/-696527dba00c0201df06176c.jpg",
-      "alt": "Fotka polyfunkčného priestoru, Rezidencia Lúčky, Trenčín",
-      "type": "Polyfunkčný priestor",
-      "place": "Rezidencia Lúčky, Trenčín",
-      "meta": "275 m² · Cena na webe/RK"
-    },
-    {
-      "href": "https://www.bosen.sk/nehnutelnost/12297249-bosen-na-predaj-stavebny-pozemok-1813-m2-adamovske-kochanovce",
-      "badge": "Na predaj",
-      "img": "https://www.bosen.sk/imgcache/wt/lowerright/-69f0986e881afbb41307bc8f.png",
-      "alt": "Fotka stavebného pozemku, Adamovské Kochanovce",
-      "type": "Stavebný pozemok",
-      "place": "Adamovské Kochanovce",
-      "meta": "1 813 m² · 79 €/m²"
-    },
-    {
-      "href": "https://www.bosen.sk/nehnutelnost/12297303-bosen-prenajom-skladovych-priestorov-v-centre-mesta-trencin",
-      "badge": "Na prenájom",
-      "img": "https://www.bosen.sk/imgcache/wt/lowerright/-699dcc3528ade00ccd0e16b7.png",
-      "alt": "Fotka skladových priestorov, Trenčín",
-      "type": "Skladové priestory",
-      "place": "Centrum Trenčína",
-      "meta": "73 m² · 5 €/m²/mes."
     }
   ],
   "reviews": [

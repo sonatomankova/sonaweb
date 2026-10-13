@@ -1,3 +1,4 @@
+import hashlib
 import json
 import os
 import re
@@ -49,6 +50,21 @@ if not SITE_FILE.exists():
     _seed = BASE_DIR / "data" / "site.json"
     if _seed.exists() and _seed.resolve() != SITE_FILE.resolve():
         SITE_FILE.write_text(_seed.read_text(encoding="utf-8"), encoding="utf-8")
+
+# Aktualizácia zoznamu ponúk: ak sa súbor data/listings_import.json zmení, jeho obsah
+# sa jednorazovo prenesie do site.json (aj na hostingu, kde je site.json na trvalom disku).
+_import_file = BASE_DIR / "data" / "listings_import.json"
+_import_marker = DATA_DIR / ".listings_import_applied"
+if _import_file.exists() and SITE_FILE.exists():
+    _imp_text = _import_file.read_text(encoding="utf-8")
+    _imp_hash = hashlib.sha256(_imp_text.encode("utf-8")).hexdigest()
+    if not _import_marker.exists() or _import_marker.read_text(encoding="utf-8") != _imp_hash:
+        _imp = json.loads(_imp_text)
+        _site_data = json.loads(SITE_FILE.read_text(encoding="utf-8"))
+        _site_data["listings"] = _imp["listings"]
+        _site_data["updated"] = _imp["updated"]
+        SITE_FILE.write_text(json.dumps(_site_data, ensure_ascii=False, indent=2), encoding="utf-8")
+        _import_marker.write_text(_imp_hash, encoding="utf-8")
 
 app = Flask(__name__)
 app.jinja_env.globals["video_embed"] = lambda src: video_embed(src)
