@@ -25,6 +25,13 @@ SECRET_FILE = DATA_DIR / "secret.key"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
+print(
+    f"[diag] DATA_DIR={DATA_DIR} UPLOAD_DIR={UPLOAD_DIR} "
+    f"mount(/var/data)={os.path.ismount('/var/data')} "
+    f"data_files={sorted(os.listdir(DATA_DIR))} upload_files={len(os.listdir(UPLOAD_DIR))}",
+    flush=True,
+)
+
 # Núdzový reset prihlásenia: s premennou ADMIN_RESET=1 sa pri štarte zmaže admin.json
 # a pri ďalšom prihlásení sa vytvorí nový účet (heslo sa vypíše do logov).
 if os.environ.get("ADMIN_RESET") == "1" and ADMIN_FILE.exists():
