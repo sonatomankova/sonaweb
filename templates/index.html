@@ -1599,19 +1599,20 @@
     .sticky-cta{ display:none; }
   }
 
-  /* ---------- VYSKAKOVACIE RECENZIE (celou stránkou) ---------- */
+  /* ---------- STÚPAJÚCE RECENZIE (celou stránkou) ---------- */
   .review-pop-stack{
     position:fixed;
     left:14px;
     bottom:140px;
     z-index:15;
     width:min(250px, calc(100vw - 100px));
-    display:flex;
-    flex-direction:column;
-    gap:14px;
+    height:0;
+    --rise: 330px;
     pointer-events:none;
   }
   .review-pop{
+    position:absolute;
+    left:0; bottom:0; width:100%;
     display:flex;
     gap:10px;
     align-items:flex-start;
@@ -1620,44 +1621,47 @@
     -webkit-backdrop-filter:blur(8px);
     border:1px solid rgba(245,240,231,.14);
     border-radius:18px 18px 18px 4px;
-    padding:11px 13px 12px;
+    padding:8px 11px 9px;
     color:var(--cream);
     box-shadow:0 10px 26px rgba(0,0,0,.35);
     opacity:0;
-    transform:scale(.6) translateY(14px);
     transform-origin:bottom left;
-    transition:opacity .3s ease, transform .45s cubic-bezier(.2,.9,.3,1.35);
     pointer-events:auto;
     cursor:pointer;
+    animation: riseUp var(--dur, 15s) linear forwards, popFloat 5s ease-in-out infinite;
+    will-change: transform, opacity;
   }
-  .review-pop.show{
-    opacity:1;
-    transform:scale(1) translateY(0);
-    animation: popFloat 5s ease-in-out infinite;
+  @keyframes riseUp{
+    0%{   opacity:0; transform: translateY(0) scale(.6); }
+    5%{   opacity:1; transform: translateY(calc(var(--rise) * -0.05)) scale(1.04); }
+    8%{   opacity:1; transform: translateY(calc(var(--rise) * -0.08)) scale(1); }
+    68%{  opacity:1; }
+    100%{ opacity:0; transform: translateY(calc(var(--rise) * -1)) scale(.96); }
   }
   @keyframes popFloat{
     0%{   translate: 0 0;      rotate: 0deg; }
-    25%{  translate: 5px -7px; rotate: 1.2deg; }
-    50%{  translate: 0 -11px;  rotate: 0deg; }
-    75%{  translate: -5px -7px; rotate: -1.2deg; }
+    25%{  translate: 5px -5px; rotate: 1.2deg; }
+    50%{  translate: 0 -8px;   rotate: 0deg; }
+    75%{  translate: -5px -5px; rotate: -1.2deg; }
     100%{ translate: 0 0;      rotate: 0deg; }
   }
-  .review-pop.leaving{ opacity:0; transform:scale(.9) translateY(-10px); }
   .review-pop-avatar{
-    flex:none; width:30px; height:30px; border-radius:50%;
+    flex:none; width:26px; height:26px; border-radius:50%;
     background:var(--sand); color:var(--espresso);
-    font-family:'Jost'; font-weight:500; font-size:11px;
+    font-family:'Jost'; font-weight:500; font-size:10px;
     display:flex; align-items:center; justify-content:center;
   }
   .review-pop-stars{ color:#E8C27A; font-size:10px; letter-spacing:1px; }
   .review-pop-text{
-    font-family:'Jost'; font-weight:300; font-size:12px; line-height:1.4;
-    color:#EADFCB; margin:3px 0 4px;
+    font-family:'Jost'; font-weight:300; font-size:11.5px; line-height:1.35;
+    color:#EADFCB; margin:2px 0 3px;
     display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
   }
   .review-pop-author{ font-family:'Jost'; font-weight:400; font-size:10.5px; color:var(--sand); }
   @media (min-width: 900px){
     .review-pop-stack{ left:28px; bottom:30px; width:290px; }
+    .review-pop{ padding:11px 13px 12px; }
+    .review-pop-avatar{ width:30px; height:30px; font-size:11px; }
     .review-pop-text{ font-size:13px; -webkit-line-clamp:3; }
   }
   @media (prefers-reduced-motion: reduce){ .review-pop-stack{ display:none; } }
@@ -2045,20 +2049,24 @@
 <!-- BACK TO TOP -->
 <button type="button" class="back-to-top" id="backToTop" aria-label="Späť hore">↑</button>
 
-<!-- VYSKAKOVACIE RECENZIE: viac bublín naraz počas celého scrollovania -->
-<div class="review-pop-stack" id="reviewPopStack" aria-live="polite"></div>
+<!-- STÚPAJÚCE RECENZIE: bubliny pomaly stúpajú hore počas celého scrollovania -->
+<div class="review-pop-stack" id="reviewPopStack" aria-live="off"></div>
 <script>
 (function(){
   var reviews = {{ site.reviews|tojson }};
   var stack = document.getElementById('reviewPopStack');
   if(!stack || !reviews.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   var i = 0, timer;
-  function maxCount(){ return window.innerWidth >= 900 ? 3 : 2; }
-  function removeEl(el){
-    el.classList.remove('show');
-    el.classList.add('leaving');
-    setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); }, 450);
+  var SPACING_DESKTOP = 124, SPACING_MOBILE = 88; // px medzi bublinami
+  function setup(){
+    var desktop = window.innerWidth >= 900;
+    var rise = desktop ? Math.min(window.innerHeight - 190, 640) : Math.min(window.innerHeight * 0.5, 400);
+    var dur = desktop ? 22 : 16;
+    stack.style.setProperty('--rise', Math.max(rise, 200) + 'px');
+    return { rise: Math.max(rise, 200), dur: dur, interval: (desktop ? SPACING_DESKTOP : SPACING_MOBILE) * dur / Math.max(rise, 200) * 1000 };
   }
+  var cfg = setup();
+  window.addEventListener('resize', function(){ cfg = setup(); });
   function spawn(){
     var r = reviews[i % reviews.length]; i++;
     var el = document.createElement('div');
@@ -2068,21 +2076,21 @@
     el.querySelector('.review-pop-stars').textContent = '★'.repeat(r.stars || 5);
     el.querySelector('.review-pop-text').textContent = r.text;
     el.querySelector('.review-pop-author').textContent = r.author;
-    el.addEventListener('click', function(){ removeEl(el); });
-    el.style.animationDuration = (4.4 + Math.random() * 1.8).toFixed(2) + 's';
-    el.style.animationDelay = '-' + (Math.random() * 4).toFixed(2) + 's';
+    el.style.setProperty('--dur', cfg.dur + 's');
+    el.style.left = (Math.random() * 14).toFixed(1) + 'px';
+    el.style.animationDuration = cfg.dur + 's, ' + (4.4 + Math.random() * 1.8).toFixed(2) + 's';
+    el.style.animationDelay = '0s, -' + (Math.random() * 4).toFixed(2) + 's';
+    el.addEventListener('animationend', function(ev){ if(ev.animationName === 'riseUp' && el.parentNode) el.parentNode.removeChild(el); });
+    el.addEventListener('click', function(){ if(el.parentNode) el.parentNode.removeChild(el); });
     stack.appendChild(el);
-    requestAnimationFrame(function(){ requestAnimationFrame(function(){ el.classList.add('show'); }); });
-    var live = stack.querySelectorAll('.review-pop:not(.leaving)');
-    while(live.length > maxCount()){ removeEl(live[0]); live = stack.querySelectorAll('.review-pop:not(.leaving)'); }
   }
-  function tick(){ spawn(); timer = setTimeout(tick, 3500); }
+  function tick(){ spawn(); timer = setTimeout(tick, cfg.interval); }
   document.addEventListener('visibilitychange', function(){
     clearTimeout(timer);
     if(document.hidden){ stack.innerHTML = ''; }
-    else { timer = setTimeout(tick, 800); }
+    else { timer = setTimeout(tick, 600); }
   });
-  timer = setTimeout(tick, 2500);
+  timer = setTimeout(tick, 2000);
 })();
 </script>
 
