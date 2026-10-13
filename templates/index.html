@@ -1625,18 +1625,15 @@
 
   /* ---------- STÚPAJÚCE RECENZIE (celou stránkou) ---------- */
   .review-pop-stack{
-    position:fixed;
+    position:absolute;
     left:14px;
-    bottom:140px;
-    z-index:15;
+    bottom:18px;
+    z-index:3;
     width:min(250px, calc(100vw - 100px));
     height:0;
-    --rise: 330px;
+    --rise: 260px;
     pointer-events:none;
-    transition: opacity .45s ease;
   }
-  .review-pop-stack.paused{ opacity:0; }
-  .review-pop-stack.paused .review-pop{ pointer-events:none; }
   .review-pop{
     position:absolute;
     left:0; bottom:0; width:100%;
@@ -1653,8 +1650,7 @@
     box-shadow:0 10px 26px rgba(0,0,0,.35);
     opacity:0;
     transform-origin:bottom left;
-    pointer-events:auto;
-    cursor:pointer;
+    pointer-events:none;
     animation: riseUp var(--dur, 15s) linear forwards, popFloat 5s ease-in-out infinite;
     will-change: transform, opacity;
   }
@@ -1714,6 +1710,9 @@
       <div class="kicker">{{ site.hero.kicker }}</div>
       <div class="hero-text">{{ site.hero.text }}</div>
     </div>
+
+    <!-- RECENZIE: jemne vyskakujú a levitujú len v hero sekcii -->
+    <div class="review-pop-stack" id="reviewPopStack" aria-live="off"></div>
   </section>
 
   <!-- LINK BUTTONS -->
@@ -2077,25 +2076,32 @@
 <button type="button" class="back-to-top" id="backToTop" aria-label="Späť hore">↑</button>
 
 <!-- STÚPAJÚCE RECENZIE: bubliny pomaly stúpajú hore počas celého scrollovania -->
-<div class="review-pop-stack" id="reviewPopStack" aria-live="off"></div>
 <script>
 (function(){
   var reviews = {{ site.reviews|tojson }};
   var stack = document.getElementById('reviewPopStack');
-  if(!stack || !reviews.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var i = 0, timer;
+  var hero = document.getElementById('hero');
+  var msg = document.getElementById('msgBubble');
+  if(!stack || !hero || !reviews.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var i = 0, timer, heroVisible = true;
   var SPACING_DESKTOP = 124, SPACING_MOBILE = 88; // px medzi bublinami
   var INTERVAL_MS = 1500; // ako často pribudne nová bublina
   function setup(){
     var desktop = window.innerWidth >= 900;
-    var rise = desktop ? Math.min(window.innerHeight - 190, 640) : Math.min(window.innerHeight * 0.5, 400);
+    var heroH = hero.getBoundingClientRect().height;
+    var bottom = desktop ? 30 : 18;
+    // bubliny nesmú zasiahnuť do úvodnej správy (meno, text) — stúpajú len v prázdnej časti hero
+    var msgBottom = msg ? (msg.getBoundingClientRect().bottom - hero.getBoundingClientRect().top) : 0;
+    var free = desktop ? heroH - 190 : heroH - bottom - msgBottom - 24 - 84; // 84 = výška bubliny
+    var rise = Math.max(Math.min(free, desktop ? 560 : 340), 130);
     var spacing = desktop ? SPACING_DESKTOP : SPACING_MOBILE;
-    stack.style.setProperty('--rise', Math.max(rise, 200) + 'px');
-    var r = Math.max(rise, 200);
-    return { rise: r, dur: r * (INTERVAL_MS / 1000) / spacing, interval: INTERVAL_MS };
+    stack.style.bottom = bottom + 'px';
+    stack.style.setProperty('--rise', rise + 'px');
+    return { rise: rise, dur: rise * (INTERVAL_MS / 1000) / spacing, interval: INTERVAL_MS };
   }
   var cfg = setup();
   window.addEventListener('resize', function(){ cfg = setup(); });
+  window.addEventListener('load', function(){ cfg = setup(); });
   function spawn(){
     var r = reviews[i % reviews.length]; i++;
     var el = document.createElement('div');
@@ -2110,38 +2116,26 @@
     el.style.animationDuration = cfg.dur + 's, ' + (4.4 + Math.random() * 1.8).toFixed(2) + 's';
     el.style.animationDelay = '0s, -' + (Math.random() * 4).toFixed(2) + 's';
     el.addEventListener('animationend', function(ev){ if(ev.animationName === 'riseUp' && el.parentNode) el.parentNode.removeChild(el); });
-    el.addEventListener('click', function(){ if(el.parentNode) el.parentNode.removeChild(el); });
     stack.appendChild(el);
   }
-  // Bubliny nesmú zakrývať text ani videá: v sekciách Marketing videá a O mne sa skryjú (na mobile aj pri formulároch Chcem predať/Hľadám).
-  var lightSections = Array.prototype.slice.call(document.querySelectorAll('.panel, .marketing-section'));
-  var mobileOnlySections = Array.prototype.slice.call(document.querySelectorAll('.quick-bubble-section')); // na desktope je formulár vpravo, bubliny vľavo
-  var blocked = false, checkQueued = false;
-  function checkBlocked(){
-    checkQueued = false;
-    var desktop = window.innerWidth >= 900;
-    var bottomOffset = desktop ? 30 : 140;
-    var zoneBottom = window.innerHeight - bottomOffset + 10;
-    var zoneTop = zoneBottom - cfg.rise - 100;
-    var list = desktop ? lightSections : lightSections.concat(mobileOnlySections);
-    var hit = list.some(function(el){
-      var r = el.getBoundingClientRect();
-      return r.top < zoneBottom && r.bottom > zoneTop;
-    });
-    blocked = hit;
-    stack.classList.toggle('paused', hit);
+  // Recenzie sú len v hero: keď hero zmizne z obrazovky, nová bublina sa nevytvára
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(entries){
+      heroVisible = entries[0].isIntersecting;
+      if(!heroVisible) stack.innerHTML = '';
+    }, { threshold: 0.15 }).observe(hero);
   }
-  function queueCheck(){ if(!checkQueued){ checkQueued = true; requestAnimationFrame(checkBlocked); } }
-  window.addEventListener('scroll', queueCheck, { passive:true });
-  window.addEventListener('resize', queueCheck);
-  checkBlocked();
-  function tick(){ if(!blocked) spawn(); timer = setTimeout(tick, cfg.interval); }
+  function tick(){ if(heroVisible) spawn(); timer = setTimeout(tick, cfg.interval); }
   document.addEventListener('visibilitychange', function(){
     clearTimeout(timer);
     if(document.hidden){ stack.innerHTML = ''; }
     else { timer = setTimeout(tick, 600); }
   });
-  timer = setTimeout(tick, 1500);
+  // hneď po otvorení stránky naskočia prvé tri bubliny, potom pribúda jedna za 1,5 s
+  setTimeout(spawn, 350);
+  setTimeout(spawn, 900);
+  setTimeout(spawn, 1450);
+  timer = setTimeout(tick, 2900);
 })();
 </script>
 
