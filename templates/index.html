@@ -1600,16 +1600,22 @@
   }
 
   /* ---------- VYSKAKOVACIE RECENZIE (celou stránkou) ---------- */
-  .review-pop{
+  .review-pop-stack{
     position:fixed;
-    top:8px;
     left:14px;
+    bottom:140px;
     z-index:15;
     width:min(250px, calc(100vw - 100px));
     display:flex;
+    flex-direction:column;
+    gap:8px;
+    pointer-events:none;
+  }
+  .review-pop{
+    display:flex;
     gap:10px;
     align-items:flex-start;
-    background:rgba(36,28,21,.86);
+    background:rgba(36,28,21,.88);
     backdrop-filter:blur(8px);
     -webkit-backdrop-filter:blur(8px);
     border:1px solid rgba(245,240,231,.14);
@@ -1618,12 +1624,14 @@
     color:var(--cream);
     box-shadow:0 10px 26px rgba(0,0,0,.35);
     opacity:0;
-    transform:scale(.6) translateY(-8px);
-    transform-origin:top left;
-    pointer-events:none;
-    transition:opacity .25s ease, transform .45s cubic-bezier(.2,.9,.3,1.35);
+    transform:scale(.6) translateY(14px);
+    transform-origin:bottom left;
+    transition:opacity .3s ease, transform .45s cubic-bezier(.2,.9,.3,1.35);
+    pointer-events:auto;
+    cursor:pointer;
   }
-  .review-pop.show{ opacity:1; transform:scale(1) translateY(0); pointer-events:auto; cursor:pointer; }
+  .review-pop.show{ opacity:1; transform:scale(1) translateY(0); }
+  .review-pop.leaving{ opacity:0; transform:scale(.9) translateY(-10px); }
   .review-pop-avatar{
     flex:none; width:30px; height:30px; border-radius:50%;
     background:var(--sand); color:var(--espresso);
@@ -1638,10 +1646,10 @@
   }
   .review-pop-author{ font-family:'Jost'; font-weight:400; font-size:10.5px; color:var(--sand); }
   @media (min-width: 900px){
-    .review-pop{ top:24px; left:28px; width:290px; }
+    .review-pop-stack{ left:28px; bottom:30px; width:290px; }
     .review-pop-text{ font-size:13px; -webkit-line-clamp:3; }
   }
-  @media (prefers-reduced-motion: reduce){ .review-pop{ display:none; } }
+  @media (prefers-reduced-motion: reduce){ .review-pop-stack{ display:none; } }
 </style>
 </head>
 <body>
@@ -2026,41 +2034,42 @@
 <!-- BACK TO TOP -->
 <button type="button" class="back-to-top" id="backToTop" aria-label="Späť hore">↑</button>
 
-<!-- VYSKAKOVACIE RECENZIE: jedna bublina za druhou počas celého scrollovania -->
-<div class="review-pop" id="reviewPop" aria-live="polite">
-  <div class="review-pop-avatar" id="rpAvatar"></div>
-  <div>
-    <div class="review-pop-stars" id="rpStars"></div>
-    <div class="review-pop-text" id="rpText"></div>
-    <div class="review-pop-author" id="rpAuthor"></div>
-  </div>
-</div>
+<!-- VYSKAKOVACIE RECENZIE: viac bublín naraz počas celého scrollovania -->
+<div class="review-pop-stack" id="reviewPopStack" aria-live="polite"></div>
 <script>
 (function(){
   var reviews = {{ site.reviews|tojson }};
-  var pop = document.getElementById('reviewPop');
-  if(!pop || !reviews.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var stack = document.getElementById('reviewPopStack');
+  if(!stack || !reviews.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   var i = 0, timer;
-  function show(){
+  function maxCount(){ return window.innerWidth >= 900 ? 3 : 2; }
+  function removeEl(el){
+    el.classList.remove('show');
+    el.classList.add('leaving');
+    setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); }, 450);
+  }
+  function spawn(){
     var r = reviews[i % reviews.length]; i++;
-    document.getElementById('rpAvatar').textContent = r.avatar;
-    document.getElementById('rpStars').textContent = '★'.repeat(r.stars || 5);
-    document.getElementById('rpText').textContent = r.text;
-    document.getElementById('rpAuthor').textContent = r.author;
-    pop.classList.add('show');
-    timer = setTimeout(hide, 6000);
+    var el = document.createElement('div');
+    el.className = 'review-pop';
+    el.innerHTML = '<div class="review-pop-avatar"></div><div><div class="review-pop-stars"></div><div class="review-pop-text"></div><div class="review-pop-author"></div></div>';
+    el.querySelector('.review-pop-avatar').textContent = r.avatar;
+    el.querySelector('.review-pop-stars').textContent = '★'.repeat(r.stars || 5);
+    el.querySelector('.review-pop-text').textContent = r.text;
+    el.querySelector('.review-pop-author').textContent = r.author;
+    el.addEventListener('click', function(){ removeEl(el); });
+    stack.appendChild(el);
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ el.classList.add('show'); }); });
+    var live = stack.querySelectorAll('.review-pop:not(.leaving)');
+    while(live.length > maxCount()){ removeEl(live[0]); live = stack.querySelectorAll('.review-pop:not(.leaving)'); }
   }
-  function hide(){
-    pop.classList.remove('show');
-    timer = setTimeout(show, 3000);
-  }
-  pop.addEventListener('click', function(){ clearTimeout(timer); hide(); });
+  function tick(){ spawn(); timer = setTimeout(tick, 3500); }
   document.addEventListener('visibilitychange', function(){
     clearTimeout(timer);
-    if(document.hidden){ pop.classList.remove('show'); }
-    else { timer = setTimeout(show, 1000); }
+    if(document.hidden){ stack.innerHTML = ''; }
+    else { timer = setTimeout(tick, 800); }
   });
-  timer = setTimeout(show, 2500);
+  timer = setTimeout(tick, 2500);
 })();
 </script>
 
