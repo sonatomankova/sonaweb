@@ -25,6 +25,13 @@ SECRET_FILE = DATA_DIR / "secret.key"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
+_marker = DATA_DIR / ".persist_marker"
+_marker_before = _marker.read_text(encoding="utf-8") if _marker.exists() else None
+if _marker_before is None:
+    from datetime import datetime as _dt
+    _marker.write_text(_dt.now().isoformat(), encoding="utf-8")
+print(f"[diag] persist_marker_before={_marker_before}", flush=True)
+
 print(
     f"[diag] DATA_DIR={DATA_DIR} UPLOAD_DIR={UPLOAD_DIR} "
     f"mount(/var/data)={os.path.ismount('/var/data')} "
