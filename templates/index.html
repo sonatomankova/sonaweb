@@ -1600,6 +1600,13 @@
     .qb-tile-title{ font-size:26px; }
     .qb-form-wrap.open{ margin-top:24px; }
     .quick-bubble{ max-width:460px; }
+    .qb-form-wrap > .quick-bubble{ margin-left:auto; width:100%; }
+    .quick-bubble{ border-radius:22px 22px 4px 22px; }
+    .quick-bubble::after{
+      left:auto; right:-6px;
+      border-left:none; border-right:1px solid rgba(245,240,231,0.16);
+      clip-path: polygon(0 0, 100% 100%, 0 100%);
+    }
     .quick-bubble{ padding:34px 30px; }
     .quick-bubble-label{ font-size:26px; }
     .qb-row{ gap:12px; }
@@ -2106,8 +2113,9 @@
     el.addEventListener('click', function(){ if(el.parentNode) el.parentNode.removeChild(el); });
     stack.appendChild(el);
   }
-  // Bubliny nesmú zakrývať text ani videá: v sekciách Marketing videá, Chcem predať/Hľadám a O mne sa skryjú.
-  var lightSections = Array.prototype.slice.call(document.querySelectorAll('.panel, .marketing-section, .quick-bubble-section'));
+  // Bubliny nesmú zakrývať text ani videá: v sekciách Marketing videá a O mne sa skryjú (na mobile aj pri formulároch Chcem predať/Hľadám).
+  var lightSections = Array.prototype.slice.call(document.querySelectorAll('.panel, .marketing-section'));
+  var mobileOnlySections = Array.prototype.slice.call(document.querySelectorAll('.quick-bubble-section')); // na desktope je formulár vpravo, bubliny vľavo
   var blocked = false, checkQueued = false;
   function checkBlocked(){
     checkQueued = false;
@@ -2115,7 +2123,8 @@
     var bottomOffset = desktop ? 30 : 140;
     var zoneBottom = window.innerHeight - bottomOffset + 10;
     var zoneTop = zoneBottom - cfg.rise - 100;
-    var hit = lightSections.some(function(el){
+    var list = desktop ? lightSections : lightSections.concat(mobileOnlySections);
+    var hit = list.some(function(el){
       var r = el.getBoundingClientRect();
       return r.top < zoneBottom && r.bottom > zoneTop;
     });
