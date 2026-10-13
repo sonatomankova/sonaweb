@@ -2472,6 +2472,20 @@
 
   // FormSubmit — správy chodia na Gmail Soni; priame odoslanie formulárov na e-mail, bez otvárania e-mailového klienta
   const FORMSPREE_URL = 'https://formsubmit.co/ajax/tomankova.sona@gmail.com';
+  // Anonymné počítanie klikov a odoslaných formulárov (zobrazí sa v administrácii → Návštevnosť)
+  function track(name){
+    try{ navigator.sendBeacon('/_e', new Blob([JSON.stringify({e:name})], {type:'application/json'})); }catch(e){}
+  }
+  document.addEventListener('click', function(ev){
+    var a = ev.target.closest && ev.target.closest('a[href]');
+    if(!a) return;
+    var h = a.getAttribute('href') || '';
+    if(h.indexOf('tel:') === 0) track('call');
+    else if(h.indexOf('wa.me') !== -1 || h.indexOf('whatsapp') !== -1) track('whatsapp');
+    else if(h.indexOf('instagram.com') !== -1) track('instagram');
+    else if(h.indexOf('facebook.com') !== -1) track('facebook');
+    else if(h.indexOf('mailto:') === 0) track('email');
+  });
   async function sendToFormspree(dataObj, successMessage){
     try {
       const res = await fetch(FORMSPREE_URL, {
@@ -2480,6 +2494,7 @@
         body: new URLSearchParams(dataObj)
       });
       if (res.ok){
+        track('form');
         showToast(successMessage || 'Ďakujeme! Správa bola odoslaná.');
         return true;
       }

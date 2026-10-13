@@ -1,8 +1,10 @@
 import hashlib
+import hmac
 import json
 import os
 import re
 import secrets
+import sqlite3
 import uuid
 from functools import wraps
 from pathlib import Path
@@ -194,16 +196,121 @@ def save_upload(file_storage):
     return f"/static/uploads/{unique_name}"
 
 
+# ---------- Štatistiky návštevnosti (anonymné, bez cookies) ----------
+
+STATS_DB = DATA_DIR / "stats.db"
+BOT_RE = re.compile(r"bot|crawl|spider|slurp|facebookexternalhit|facebot|preview|monitor|uptime|headless|curl|wget|python-requests|render/|lighthouse", re.I)
+EVENT_NAMES = {"form": "Odoslané formuláre", "call": "Kliknutia na telefón", "whatsapp": "Kliknutia na WhatsApp",
+               "instagram": "Kliknutia na Instagram", "facebook": "Kliknutia na Facebook", "email": "Kliknutia na e-mail"}
+
+
+def stats_conn():
+    conn = sqlite3.connect(str(STATS_DB), timeout=10)
+    conn.execute("""CREATE TABLE IF NOT EXISTS hits (
+        id INTEGER PRIMARY KEY AUTOINCREMENT, day TEXT, ts TEXT, kind TEXT, name TEXT,
+        visitor TEXT, source TEXT, campaign TEXT, device TEXT)""")
+    conn.execute("CREATE INDEX IF NOT EXISTS hits_day ON hits(day, kind)")
+    return conn
+
+
+def _local_now():
+    from datetime import datetime
+    try:
+        from zoneinfo import ZoneInfo
+        return datetime.now(ZoneInfo("Europe/Bratislava"))
+    except Exception:
+        return datetime.utcnow()
+
+
+def _client_ip():
+    fwd = request.headers.get("X-Forwarded-For", "")
+    return (fwd.split(",")[0].strip() if fwd else request.remote_addr) or ""
+
+
+def _visitor_id(day):
+    ua = request.headers.get("User-Agent", "")
+    raw = f"{day}|{_client_ip()}|{ua}"
+    key = (app.secret_key if isinstance(app.secret_key, bytes) else str(app.secret_key).encode("utf-8"))
+    return hmac.new(key, raw.encode("utf-8"), hashlib.sha256).hexdigest()[:16]
+
+
+def _device():
+    ua = request.headers.get("User-Agent", "")
+    if re.search(r"iPad|Tablet", ua):
+        return "Tablet"
+    if re.search(r"Mobi|Android|iPhone", ua):
+        return "Mobil"
+    return "Počítač"
+
+
+def _source():
+    args = request.args
+    if args.get("utm_source"):
+        return args.get("utm_source")[:40].lower()
+    ua = request.headers.get("User-Agent", "")
+    ref = request.referrer or ""
+    host = re.sub(r"^https?://", "", ref).split("/")[0].lower()
+    if "instagram" in host or "Instagram" in ua:
+        return "instagram"
+    if "facebook" in host or "fb." in host or "FBAN" in ua or "FBAV" in ua:
+        return "facebook"
+    if not host or host.endswith("sonatomankova.com"):
+        return "priamo"
+    if "google" in host:
+        return "google"
+    return host[:40]
+
+
+def _should_skip():
+    if session.get("logged_in"):
+        return True
+    if BOT_RE.search(request.headers.get("User-Agent", "")):
+        return True
+    if request.headers.get("Purpose", "").lower() == "prefetch" or request.headers.get("Sec-Purpose"):
+        return True
+    return False
+
+
+def record_event(kind, name):
+    try:
+        if _should_skip():
+            return
+        now = _local_now()
+        day = now.strftime("%Y-%m-%d")
+        conn = stats_conn()
+        with conn:
+            conn.execute(
+                "INSERT INTO hits (day, ts, kind, name, visitor, source, campaign, device) VALUES (?,?,?,?,?,?,?,?)",
+                (day, now.strftime("%Y-%m-%d %H:%M:%S"), kind, name, _visitor_id(day), _source(),
+                 (request.args.get("utm_campaign") or "")[:60], _device()),
+            )
+        conn.close()
+    except Exception as exc:  # štatistiky nikdy nesmú pokaziť web
+        print("[stats] chyba:", exc, flush=True)
+
+
 # ---------- Verejný web ----------
 
 @app.route("/")
 def public_index():
+    record_event("view", "/")
     return render_template("index.html", site=load_site())
 
 
 @app.route("/ocenenie.html")
 def public_ocenenie():
+    record_event("view", "/ocenenie.html")
     return render_template("ocenenie.html", site=load_site())
+
+
+@app.route("/_e", methods=["POST"])
+def public_event():
+    """Ľahké počítanie klikov (telefón, WhatsApp…) a odoslaných formulárov."""
+    data = request.get_json(silent=True) or {}
+    name = str(data.get("e", ""))
+    if name in EVENT_NAMES:
+        record_event("event", name)
+    return ("", 204)
 
 
 @app.route("/favicon.ico")
@@ -244,6 +351,59 @@ def admin_logout():
 @login_required
 def admin_dashboard():
     return redirect(url_for("admin_ponuky"))
+
+
+# ---------- Admin: Návštevnosť ----------
+
+@app.route("/admin/navstevnost")
+@login_required
+def admin_navstevnost():
+    from datetime import timedelta
+    try:
+        days = int(request.args.get("dni", 30))
+    except ValueError:
+        days = 30
+    days = days if days in (7, 30, 90) else 30
+    today = _local_now().date()
+    start = today - timedelta(days=days - 1)
+    start_s, today_s = start.strftime("%Y-%m-%d"), today.strftime("%Y-%m-%d")
+
+    conn = stats_conn()
+    conn.row_factory = sqlite3.Row
+    per_day = {r["day"]: (r["v"], r["views"]) for r in conn.execute(
+        "SELECT day, COUNT(DISTINCT visitor) v, COUNT(*) views FROM hits WHERE kind='view' AND day BETWEEN ? AND ? GROUP BY day",
+        (start_s, today_s))}
+    totals = conn.execute(
+        "SELECT COUNT(*) views FROM hits WHERE kind='view' AND day BETWEEN ? AND ?", (start_s, today_s)).fetchone()
+    sources = conn.execute(
+        "SELECT source, COUNT(DISTINCT day||visitor) n FROM hits WHERE kind='view' AND day BETWEEN ? AND ? GROUP BY source ORDER BY n DESC LIMIT 10",
+        (start_s, today_s)).fetchall()
+    campaigns = conn.execute(
+        "SELECT campaign, COUNT(DISTINCT day||visitor) n FROM hits WHERE kind='view' AND campaign!='' AND day BETWEEN ? AND ? GROUP BY campaign ORDER BY n DESC LIMIT 10",
+        (start_s, today_s)).fetchall()
+    devices = conn.execute(
+        "SELECT device, COUNT(DISTINCT day||visitor) n FROM hits WHERE kind='view' AND day BETWEEN ? AND ? GROUP BY device ORDER BY n DESC",
+        (start_s, today_s)).fetchall()
+    events = {r["name"]: r["n"] for r in conn.execute(
+        "SELECT name, COUNT(*) n FROM hits WHERE kind='event' AND day BETWEEN ? AND ? GROUP BY name", (start_s, today_s))}
+    conn.close()
+
+    rows = []
+    unique_total = 0
+    max_v = max([v for v, _ in per_day.values()] or [1]) or 1
+    for i in range(days):
+        d = today - timedelta(days=i)
+        key = d.strftime("%Y-%m-%d")
+        v, views = per_day.get(key, (0, 0))
+        unique_total += v
+        rows.append({"label": f"{d.day}. {d.month}.", "visitors": v, "views": views, "pct": round(v * 100 / max_v)})
+    today_v = per_day.get(today_s, (0, 0))
+    return render_template(
+        "admin_navstevnost.html", active="navstevnost", days=days, rows=rows,
+        unique_total=unique_total, views_total=totals["views"], today_visitors=today_v[0],
+        sources=sources, campaigns=campaigns, devices=devices,
+        events=[(EVENT_NAMES[k], events.get(k, 0)) for k in EVENT_NAMES],
+    )
 
 
 # ---------- Admin: Ponuky ----------
