@@ -460,14 +460,37 @@
     border-radius: 20px;
     overflow:hidden;
   }
-  .video-card video,
-  .video-card iframe{
+  .video-card video{
     width:100%;
     height:300px;
     object-fit:cover;
     display:block;
     background:#000;
     border:0;
+  }
+  .video-media{
+    position:relative;
+    width:100%;
+    height:300px;
+    overflow:hidden;
+    background:#000;
+  }
+  .video-media iframe{
+    position:absolute;
+    top:0; left:0;
+    width:100%; height:100%;
+    border:0;
+  }
+  /* Instagram: odrežeme jeho hlavičku (meno + "Zobraziť profil") a čierne pásy po stranách */
+  .video-media.ig{
+    height:auto;
+    aspect-ratio: 208 / 335;
+  }
+  .video-media.ig iframe{
+    width:143%;
+    left:-21.5%;
+    top:-19.6%;
+    height:185%;
   }
   .video-card-title{
     padding:12px 14px 16px;
@@ -1652,7 +1675,9 @@
       <div class="video-card">
         {% set e = video_embed(v.src) %}
         {% if e.kind == 'iframe' %}
-        <iframe src="{{ e.src }}" loading="lazy" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture" title="{{ v.title }}"></iframe>
+        <div class="video-media{% if 'instagram.com' in e.src %} ig{% endif %}">
+          <iframe src="{{ e.src }}" loading="lazy" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture" title="{{ v.title }}"></iframe>
+        </div>
         {% else %}
         <video src="{{ e.src }}#t=0.1" controls playsinline preload="metadata"></video>
         {% endif %}
