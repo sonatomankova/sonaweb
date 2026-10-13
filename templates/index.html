@@ -2058,12 +2058,14 @@
   if(!stack || !reviews.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   var i = 0, timer;
   var SPACING_DESKTOP = 124, SPACING_MOBILE = 88; // px medzi bublinami
+  var INTERVAL_MS = 1500; // ako často pribudne nová bublina
   function setup(){
     var desktop = window.innerWidth >= 900;
     var rise = desktop ? Math.min(window.innerHeight - 190, 640) : Math.min(window.innerHeight * 0.5, 400);
-    var dur = desktop ? 22 : 16;
+    var spacing = desktop ? SPACING_DESKTOP : SPACING_MOBILE;
     stack.style.setProperty('--rise', Math.max(rise, 200) + 'px');
-    return { rise: Math.max(rise, 200), dur: dur, interval: (desktop ? SPACING_DESKTOP : SPACING_MOBILE) * dur / Math.max(rise, 200) * 1000 };
+    var r = Math.max(rise, 200);
+    return { rise: r, dur: r * (INTERVAL_MS / 1000) / spacing, interval: INTERVAL_MS };
   }
   var cfg = setup();
   window.addEventListener('resize', function(){ cfg = setup(); });
@@ -2090,7 +2092,7 @@
     if(document.hidden){ stack.innerHTML = ''; }
     else { timer = setTimeout(tick, 600); }
   });
-  timer = setTimeout(tick, 2000);
+  timer = setTimeout(tick, 1500);
 })();
 </script>
 
