@@ -2467,8 +2467,8 @@
     toastTimer = setTimeout(() => toastEl.classList.remove('visible'), 3800);
   }
 
-  // Formspree — priame odoslanie formulárov na e-mail, bez otvárania e-mailového klienta
-  const FORMSPREE_URL = 'https://formspree.io/f/mpqvqpqn';
+  // FormSubmit — správy chodia na Gmail Soni; priame odoslanie formulárov na e-mail, bez otvárania e-mailového klienta
+  const FORMSPREE_URL = 'https://formsubmit.co/ajax/tomankova.sona@gmail.com';
   async function sendToFormspree(dataObj, successMessage){
     try {
       const res = await fetch(FORMSPREE_URL, {
