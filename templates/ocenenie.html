@@ -478,7 +478,7 @@
     }
 
     try {
-      const res = await fetch('https://formspree.io/f/mpqvqpqn', {
+      const res = await fetch('https://formsubmit.co/ajax/tomankova.sona@gmail.com', {
         method: 'POST',
         headers: { 'Accept': 'application/json' },
         body: new URLSearchParams({
@@ -495,6 +495,8 @@
         })
       });
       if (res.ok){
+        if (window.swPixelEvent) swPixelEvent('Lead');
+        try{ navigator.sendBeacon('/_e', new Blob([JSON.stringify({e:'form'})], {type:'application/json'})); }catch(e){}
         showToast('Ďakujeme! Ozvem sa vám s ocenením čo najskôr.');
         form.reset();
       } else {
@@ -506,5 +508,6 @@
   });
 </script>
 
+{% include '_pixel.html' %}
 </body>
 </html>

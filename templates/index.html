@@ -1968,6 +1968,7 @@
         <span class="name">soňa</span>
         <span class="surname">Tománková</span>
       </div>
+      <a href="#" class="admin-entry" onclick="swCookieSettings();return false;">Nastavenie cookies</a>
       <a href="/admin/login" class="admin-entry">Správa webu →</a>
     </div>
    </div>
@@ -2475,6 +2476,10 @@
   // Anonymné počítanie klikov a odoslaných formulárov (zobrazí sa v administrácii → Návštevnosť)
   function track(name){
     try{ navigator.sendBeacon('/_e', new Blob([JSON.stringify({e:name})], {type:'application/json'})); }catch(e){}
+    if(window.swPixelEvent){
+      if(name === 'form') swPixelEvent('Lead');
+      else if(name === 'call' || name === 'whatsapp' || name === 'email') swPixelEvent('Contact');
+    }
   }
   document.addEventListener('click', function(ev){
     var a = ev.target.closest && ev.target.closest('a[href]');
@@ -2550,5 +2555,6 @@
   });
 </script>
 
+{% include '_pixel.html' %}
 </body>
 </html>

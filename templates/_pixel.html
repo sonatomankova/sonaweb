@@ -1,0 +1,57 @@
+<!-- Cookie lišta + Meta Pixel (spúšťa sa až po súhlase) -->
+<style>
+  .cookie-bar{
+    position:fixed; left:12px; right:12px; bottom:12px; z-index:500;
+    max-width:560px; margin:0 auto;
+    background:rgba(36,28,21,.96); color:#F5F0E7;
+    border:1px solid rgba(245,240,231,.18); border-radius:16px;
+    padding:14px 16px; box-shadow:0 12px 32px rgba(0,0,0,.35);
+    font-family:'Jost',sans-serif; font-size:12.5px; line-height:1.5;
+  }
+  .cookie-bar[hidden]{ display:none; }
+  .cookie-bar p{ margin:0 0 10px; color:#EADFCB; }
+  .cookie-bar a{ color:#C9B79E; }
+  .cookie-bar .cookie-btns{ display:flex; gap:8px; }
+  .cookie-bar button{
+    flex:1; font:inherit; font-size:12.5px; cursor:pointer; border-radius:100px; padding:9px 14px;
+    border:1px solid #C9B79E; background:transparent; color:#F5F0E7;
+  }
+  .cookie-bar button.yes{ background:#C9B79E; color:#241C15; font-weight:500; }
+</style>
+<div class="cookie-bar" id="cookieBar" role="dialog" aria-label="Nastavenie cookies" hidden>
+  <p>Používam cookies a Meta Pixel, aby som vedela vyhodnotiť, ktoré reklamy fungujú. Súhlasíš s ich použitím? Web funguje rovnako aj bez súhlasu.</p>
+  <div class="cookie-btns">
+    <button type="button" id="cookieNo">Odmietnuť</button>
+    <button type="button" class="yes" id="cookieYes">Súhlasím</button>
+  </div>
+</div>
+<script>
+(function(){
+  var PIXEL_ID = '2336432257230596';
+  var KEY = 'sw_cookie_consent';
+  var bar = document.getElementById('cookieBar');
+  function get(){ try{ return localStorage.getItem(KEY); }catch(e){ return null; } }
+  function set(v){ try{ localStorage.setItem(KEY, v); }catch(e){} }
+  function loadPixel(){
+    if(window.fbq){ try{ fbq('consent','grant'); }catch(e){} return; }
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', PIXEL_ID);
+    fbq('track', 'PageView');
+  }
+  // Udalosti pre meranie reklamy: Lead = odoslaný formulár, Contact = klik na telefón / WhatsApp / e-mail
+  window.swPixelEvent = function(name){ try{ if(window.fbq) fbq('track', name); }catch(e){} };
+  window.swCookieSettings = function(){ bar.hidden = false; };
+  document.getElementById('cookieYes').addEventListener('click', function(){ set('yes'); bar.hidden = true; loadPixel(); });
+  document.getElementById('cookieNo').addEventListener('click', function(){
+    set('no'); bar.hidden = true;
+    try{ if(window.fbq) fbq('consent','revoke'); }catch(e){}
+  });
+  var c = get();
+  if(c === 'yes') loadPixel();
+  else if(c !== 'no') bar.hidden = false;
+})();
+</script>
