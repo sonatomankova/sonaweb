@@ -1,4 +1,4 @@
-<!-- Cookie lišta + Meta Pixel (spúšťa sa až po súhlase) -->
+<!-- Cookie lišta + Meta Pixel + súhlas pre Google Analytics (spúšťa sa až po súhlase) -->
 <style>
   .cookie-bar{
     position:fixed; left:12px; right:12px; bottom:12px; z-index:500;
@@ -19,7 +19,7 @@
   .cookie-bar button.yes{ background:#C9B79E; color:#241C15; font-weight:500; }
 </style>
 <div class="cookie-bar" id="cookieBar" role="dialog" aria-label="Nastavenie cookies" hidden>
-  <p>Používam cookies a Meta Pixel na meranie reklamy.</p>
+  <p>Používam cookies na meranie návštevnosti a reklamy (Google Analytics, Meta Pixel).</p>
   <div class="cookie-btns">
     <button type="button" id="cookieNo">Odmietnuť</button>
     <button type="button" class="yes" id="cookieYes">Súhlasím</button>
@@ -32,6 +32,9 @@
   var bar = document.getElementById('cookieBar');
   function get(){ try{ return localStorage.getItem(KEY); }catch(e){ return null; } }
   function set(v){ try{ localStorage.setItem(KEY, v); }catch(e){} }
+  function gaConsent(v){
+    try{ if(window.gtag) gtag('consent','update',{ analytics_storage:v, ad_storage:v, ad_user_data:v, ad_personalization:v }); }catch(e){}
+  }
   function loadPixel(){
     if(window.fbq){ try{ fbq('consent','grant'); }catch(e){} return; }
     !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -43,11 +46,15 @@
     fbq('track', 'PageView');
   }
   // Udalosti pre meranie reklamy: Lead = odoslaný formulár, Contact = klik na telefón / WhatsApp / e-mail
-  window.swPixelEvent = function(name){ try{ if(window.fbq) fbq('track', name); }catch(e){} };
+  window.swPixelEvent = function(name){
+    try{ if(window.fbq) fbq('track', name); }catch(e){}
+    try{ if(window.gtag) gtag('event', name === 'Lead' ? 'generate_lead' : 'contact'); }catch(e){}
+  };
   window.swCookieSettings = function(){ bar.hidden = false; };
-  document.getElementById('cookieYes').addEventListener('click', function(){ set('yes'); bar.hidden = true; loadPixel(); });
+  document.getElementById('cookieYes').addEventListener('click', function(){ set('yes'); bar.hidden = true; gaConsent('granted'); loadPixel(); });
   document.getElementById('cookieNo').addEventListener('click', function(){
     set('no'); bar.hidden = true;
+    gaConsent('denied');
     try{ if(window.fbq) fbq('consent','revoke'); }catch(e){}
   });
   var c = get();
