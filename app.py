@@ -155,7 +155,23 @@ def inject_contact_helpers():
     return {
         "contact_tel": phone_digits(site["contact"]["phone"], keep_plus=True),
         "contact_wa": phone_digits(site["contact"]["phone"], keep_plus=False),
+        "share_image_url": share_image_url(site),
     }
+
+
+SITE_URL = os.environ.get("SITE_URL", "https://www.sonatomankova.com").rstrip("/")
+
+
+def share_image_url(site):
+    # og:image musí byť absolútna URL, inak ho WhatsApp/Facebook nespoľahlivo načítajú
+    path = site.get("share_image") or "/static/og-image.jpg"
+    version = ""
+    if path == "/static/og-image.jpg":
+        try:
+            version = f"?v={int((BASE_DIR / 'static' / 'og-image.jpg').stat().st_mtime)}"
+        except OSError:
+            pass
+    return f"{SITE_URL}{path}{version}"
 
 
 def login_required(view):
@@ -525,6 +541,26 @@ def admin_hero_bg():
     site["hero"]["bg_src"] = save_upload(file)
     save_site(site)
     flash("Pozadie uložené ✓", "ok")
+    return redirect(url_for("admin_texty"))
+
+
+@app.route("/admin/texty/share-image", methods=["POST"])
+@login_required
+def admin_share_image():
+    site = load_site()
+    if request.form.get("reset"):
+        site.pop("share_image", None)
+        save_site(site)
+        flash("Náhľad vrátený na predvolený ✓", "ok")
+        return redirect(url_for("admin_texty"))
+    file = request.files.get("share_file")
+    ext = Path(secure_filename(file.filename)).suffix.lower() if file and file.filename else ""
+    if ext not in {".jpg", ".jpeg", ".png", ".webp"}:
+        flash("Nahraj obrázok (jpg, png alebo webp).", "error")
+        return redirect(url_for("admin_texty"))
+    site["share_image"] = save_upload(file)
+    save_site(site)
+    flash("Náhľad pri zdieľaní uložený ✓", "ok")
     return redirect(url_for("admin_texty"))
 
 
