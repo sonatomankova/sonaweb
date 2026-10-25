@@ -11,7 +11,7 @@ from pathlib import Path
 
 from flask import (
     Flask, render_template, request, redirect, url_for,
-    session, flash, abort, send_from_directory
+    session, flash, abort, send_from_directory, Response
 )
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
@@ -327,6 +327,28 @@ def public_event():
     if name in EVENT_NAMES:
         record_event("event", name)
     return ("", 204)
+
+
+@app.route("/robots.txt")
+def robots_txt():
+    body = (
+        "User-agent: *\n"
+        "Allow: /\n"
+        "Sitemap: https://www.sonatomankova.com/sitemap.xml\n"
+    )
+    return Response(body, mimetype="text/plain")
+
+
+@app.route("/sitemap.xml")
+def sitemap_xml():
+    pages = ["https://www.sonatomankova.com/", "https://www.sonatomankova.com/ocenenie.html"]
+    urls = "".join(f"  <url><loc>{u}</loc></url>\n" for u in pages)
+    body = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        f"{urls}</urlset>\n"
+    )
+    return Response(body, mimetype="application/xml")
 
 
 @app.route("/favicon.ico")
