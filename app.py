@@ -409,6 +409,11 @@ def public_index():
     return render_template("index.html", site=load_site())
 
 
+@app.route("/index.html")
+def legacy_index_redirect():
+    return redirect(url_for("public_index"), code=301)
+
+
 @app.route("/ocenenie.html")
 def public_ocenenie():
     record_event("view", "/ocenenie.html")
