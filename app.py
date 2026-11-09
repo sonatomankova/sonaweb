@@ -4,7 +4,9 @@ import json
 import os
 import re
 import secrets
+import smtplib
 import sqlite3
+import threading
 import uuid
 from functools import wraps
 from pathlib import Path
@@ -303,6 +305,100 @@ def record_event(kind, name):
         conn.close()
     except Exception as exc:  # štatistiky nikdy nesmú pokaziť web
         print("[stats] chyba:", exc, flush=True)
+
+
+# ---------- Správy z formulárov (uložia sa na web, mail je navyše) ----------
+
+def messages_conn():
+    conn = sqlite3.connect(str(STATS_DB), timeout=10)
+    conn.execute("""CREATE TABLE IF NOT EXISTS messages (
+        id INTEGER PRIMARY KEY AUTOINCREMENT, ts TEXT, subject TEXT, body TEXT, mailed INTEGER DEFAULT 0)""")
+    return conn
+
+
+def _send_mail_async(subject, body, msg_id):
+    """Pokúsi sa poslať mail na pozadí. Uloženie správy na web tým nie je ohrozené."""
+    def worker():
+        sent = False
+        try:
+            host = os.environ.get("SMTP_HOST")
+            user = os.environ.get("SMTP_USER")
+            pwd = os.environ.get("SMTP_PASS")
+            to_addr = os.environ.get("MAIL_TO") or user or ""
+            if host and user and pwd and to_addr:
+                from email.message import EmailMessage
+                m = EmailMessage()
+                m["Subject"] = subject
+                m["From"] = user
+                m["To"] = to_addr
+                m.set_content(body)
+                with smtplib.SMTP(host, int(os.environ.get("SMTP_PORT", "587")), timeout=15) as srv:
+                    srv.starttls()
+                    srv.login(user, pwd)
+                    srv.send_message(m)
+                sent = True
+            else:
+                import urllib.parse, urllib.request
+                data = urllib.parse.urlencode({"_subject": subject, "Správa": body}).encode("utf-8")
+                req = urllib.request.Request(
+                    "https://formsubmit.co/ajax/tomankova.sona@gmail.com", data=data,
+                    headers={"Accept": "application/json", "Origin": "https://www.sonatomankova.com",
+                             "Referer": "https://www.sonatomankova.com/", "User-Agent": "Mozilla/5.0"})
+                with urllib.request.urlopen(req, timeout=10) as r:
+                    sent = 200 <= r.status < 300
+        except Exception as exc:
+            print("[mail] chyba:", exc, flush=True)
+        try:
+            conn = messages_conn()
+            with conn:
+                conn.execute("UPDATE messages SET mailed=? WHERE id=?", (1 if sent else 0, msg_id))
+            conn.close()
+        except Exception:
+            pass
+    threading.Thread(target=worker, daemon=True).start()
+
+
+@app.route("/_form", methods=["POST"])
+def public_form():
+    data = request.get_json(silent=True) or {}
+    fields = data.get("fields") or {}
+    if not isinstance(fields, dict) or fields.get("_gotcha"):
+        return ("", 204)
+    subject = str(fields.pop("_subject", "Správa z webu"))[:150]
+    lines = []
+    for k, v in list(fields.items())[:20]:
+        lines.append(f"{str(k)[:60]}: {str(v)[:2000]}")
+    body = "\n".join(lines)[:6000]
+    if not body.strip():
+        return ("", 400)
+    now = _local_now().strftime("%Y-%m-%d %H:%M:%S")
+    try:
+        conn = messages_conn()
+        # jednoduchá ochrana pred zahltením: max 30 správ za hodinu
+        recent = conn.execute("SELECT COUNT(*) FROM messages WHERE ts > ?",
+                              ((_local_now().replace(minute=0, second=0)).strftime("%Y-%m-%d %H:%M:%S"),)).fetchone()[0]
+        if recent >= 30:
+            conn.close()
+            return ("", 429)
+        with conn:
+            cur = conn.execute("INSERT INTO messages (ts, subject, body) VALUES (?,?,?)", (now, subject, body))
+            msg_id = cur.lastrowid
+        conn.close()
+    except Exception as exc:
+        print("[form] chyba pri ukladaní:", exc, flush=True)
+        return ("", 500)
+    _send_mail_async(subject, body, msg_id)
+    return {"ok": True}
+
+
+@app.route("/admin/spravy")
+@login_required
+def admin_spravy():
+    conn = messages_conn()
+    conn.row_factory = sqlite3.Row
+    rows = conn.execute("SELECT id, ts, subject, body, mailed FROM messages ORDER BY id DESC LIMIT 200").fetchall()
+    conn.close()
+    return render_template("admin_spravy.html", rows=rows, active="spravy")
 
 
 # ---------- Verejný web ----------

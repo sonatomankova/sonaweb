@@ -2559,10 +2559,10 @@
   });
   async function sendToFormspree(dataObj, successMessage){
     try {
-      const res = await fetch(FORMSPREE_URL, {
+      const res = await fetch('/_form', {
         method: 'POST',
-        headers: { 'Accept': 'application/json' },
-        body: new URLSearchParams(dataObj)
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fields: dataObj })
       });
       if (res.ok){
         track('form');

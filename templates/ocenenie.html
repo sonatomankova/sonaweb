@@ -480,10 +480,10 @@
     }
 
     try {
-      const res = await fetch('https://formsubmit.co/ajax/tomankova.sona@gmail.com', {
+      const res = await fetch('/_form', {
         method: 'POST',
-        headers: { 'Accept': 'application/json' },
-        body: new URLSearchParams({
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fields: {
           _subject: `Žiadosť o ocenenie nehnuteľnosti — ${meno}`,
           Meno: meno,
           Telefón: telefon,
@@ -494,7 +494,7 @@
           'Počet izieb': izby || '-',
           'Stav nehnuteľnosti': stav || '-',
           Poznámka: poznamka || '-'
-        })
+        } })
       });
       if (res.ok){
         if (window.swPixelEvent) swPixelEvent('Lead');

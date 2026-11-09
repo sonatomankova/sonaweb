@@ -1,0 +1,21 @@
+{% extends "admin_layout.html" %}
+{% block title %}Správy z formulára{% endblock %}
+{% block content %}
+<h1 class="page-title">Správy z formulára</h1>
+<p style="font-size:13px;color:var(--brown);margin-top:-14px;margin-bottom:20px;">
+  Každá správa z webu (kontakt, ocenenie) sa uloží sem, aj keby mail nedorazil. Najnovšie sú navrchu.
+</p>
+<div class="cardlist">
+  {% for r in rows %}
+  <div class="card">
+    <div class="card-head">
+      <div class="card-title">{{ r.subject }}</div>
+      <span style="font-size:12px;color:var(--brown);">{{ r.ts }}{% if r.mailed %} · mail odoslaný{% endif %}</span>
+    </div>
+    <pre style="white-space:pre-wrap;font:inherit;font-size:14px;margin:10px 0 0;">{{ r.body }}</pre>
+  </div>
+  {% else %}
+  <p style="font-size:14px;color:var(--brown);">Zatiaľ žiadne správy.</p>
+  {% endfor %}
+</div>
+{% endblock %}
