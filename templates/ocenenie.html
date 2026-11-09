@@ -330,6 +330,50 @@
     text-decoration:underline; text-underline-offset:3px;
   }
   .form-thanks-again:hover{ opacity:1; }
+
+  /* ---------- BLOK DÔVERY (pod formulárom) ---------- */
+  .trust{
+    padding: 8px 26px 34px;
+  }
+  .trust-intro{
+    display:flex; align-items:center; gap:16px;
+    margin-bottom:22px;
+  }
+  .trust-avatar{
+    flex:none; width:84px; height:84px; border-radius:50%;
+    object-fit:cover; border:2px solid var(--sand); background: var(--beige);
+  }
+  .trust-name{
+    font-family:'Cormorant Garamond'; font-style:italic; font-weight:500;
+    font-size:24px; line-height:1.1; color: var(--espresso-deep);
+  }
+  .trust-role{
+    font-family:'Jost'; font-size:9px; letter-spacing:.22em; text-transform:uppercase;
+    color: var(--brown); margin-top:4px;
+  }
+  .trust-text{
+    font-family:'Jost'; font-weight:300; font-size:14.5px; line-height:1.6;
+    color: var(--espresso); margin:0 0 24px;
+  }
+  .trust-heading{
+    font-family:'Jost'; font-size:10px; letter-spacing:.22em; text-transform:uppercase;
+    color: var(--brown); margin-bottom:12px;
+  }
+  .trust-reviews{ display:flex; flex-direction:column; gap:10px; margin-bottom:22px; }
+  .trust-review{
+    background:#fff; border:1px solid #E3D9C7; border-radius:16px 16px 16px 4px; padding:13px 15px;
+  }
+  .trust-review .stars{ color:#C9A25E; font-size:12px; letter-spacing:1.5px; }
+  .trust-review p{
+    font-family:'Jost'; font-weight:300; font-size:13.5px; line-height:1.55;
+    color: var(--espresso); margin:4px 0 6px;
+  }
+  .trust-review .who{ font-family:'Jost'; font-size:11.5px; color: var(--brown); }
+  .trust-more{
+    display:inline-block; font-family:'Jost'; font-size:14px; font-weight:500;
+    color: var(--espresso-deep); border-bottom:1px solid var(--sand); padding-bottom:2px;
+  }
+  .trust-more:hover{ border-color: var(--espresso-deep); }
 </style>
 </head>
 <body>
@@ -439,6 +483,32 @@
       <p class="form-note" id="formNote">Po odoslaní vás budem kontaktovať priamo na uvedený telefón alebo e-mail.</p>
     </form>
   </div>
+
+  <!-- BLOK DÔVERY: pod formulárom -->
+  <section class="trust" aria-label="O mne a recenzie">
+    <div class="trust-intro">
+      <img class="trust-avatar" src="/static/sona-avatar.jpg" alt="Soňa Tománková" width="84" height="84" loading="lazy">
+      <div>
+        <div class="trust-name">Soňa Tománková</div>
+        <div class="trust-role">{{ site.hero.kicker }}</div>
+      </div>
+    </div>
+    {% if site.about %}<p class="trust-text">{{ site.about[0] }}</p>{% endif %}
+
+    {% if site.reviews %}
+    <div class="trust-heading">Čo hovoria klienti</div>
+    <div class="trust-reviews">
+      {% for r in site.reviews[:3] %}
+      <div class="trust-review">
+        <div class="stars">{{ '★' * r.stars }}</div>
+        <p>{{ r.text }}</p>
+        <div class="who">{{ r.author }}</div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <a href="/" class="trust-more">Viac o mne →</a>
+  </section>
 
   <div class="contact-strip">
     <div class="label">Radšej priamo?</div>
