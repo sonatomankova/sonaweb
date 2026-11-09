@@ -1110,6 +1110,18 @@
   .nav-link-highlight:hover{ background: var(--sand); opacity:.9; }
 
 
+
+  /* ---------- POĎAKOVANIE PO ODOSLANÍ FORMULÁRA ---------- */
+  .form-thanks{ display:none; text-align:center; padding:30px 10px; color: var(--espresso-deep); }
+  .form-thanks.on-dark{ color: var(--cream); }
+  .form-thanks-title{ font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:500; font-size:30px; line-height:1.15; }
+  .form-thanks-again{
+    margin-top:16px; background:none; border:none; padding:4px 6px; cursor:pointer;
+    font-family:'Jost',sans-serif; font-size:12px; letter-spacing:.04em; color:inherit; opacity:.65;
+    text-decoration:underline; text-underline-offset:3px;
+  }
+  .form-thanks-again:hover{ opacity:1; }
+
   /* ---------- HERO TLAČIDLO + SEKCIA OCENENIE ---------- */
   .hero-cta{
     margin-top:14px;
@@ -2296,6 +2308,7 @@
   const valuationClose = document.getElementById('valuationClose');
 
   function openValuationModal(){
+    resetThanks(document.getElementById('modalValuationForm'));
     valuationModal.classList.add('open');
     valuationModal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
@@ -2371,7 +2384,7 @@
         Lokalita: lokalita,
         ...extra
       }, 'Ďakujeme! Ozvem sa vám čo najskôr.');
-      if (ok) f.reset();
+      if (ok){ f.reset(); showThanks(f); }
     });
   }
 
@@ -2459,7 +2472,7 @@
       }, 'Ďakujeme! Ozvem sa vám s ocenením čo najskôr.');
       if (ok){
         f.reset();
-        setTimeout(closeValuationModal, 900);
+        showThanks(f);
       }
     });
   }
@@ -2539,6 +2552,27 @@
 
   // FormSubmit — správy chodia na Gmail Soni; priame odoslanie formulárov na e-mail, bez otvárania e-mailového klienta
   const FORMSPREE_URL = 'https://formsubmit.co/ajax/tomankova.sona@gmail.com';
+  // Po úspešnom odoslaní formulár zmizne a ukáže sa poďakovanie
+  function showThanks(form){
+    var dark = !!form.closest('.quick-bubble');
+    var box = (form.nextElementSibling && form.nextElementSibling.classList.contains('form-thanks')) ? form.nextElementSibling : null;
+    if(!box){
+      box = document.createElement('div');
+      box.className = 'form-thanks' + (dark ? ' on-dark' : '');
+      box.innerHTML = '<div class="form-thanks-title">Čoskoro sa vám ozvem! :)</div><button type="button" class="form-thanks-again">Poslať ďalšiu správu</button>';
+      box.querySelector('button').addEventListener('click', function(){ resetThanks(form); });
+      form.parentNode.insertBefore(box, form.nextSibling);
+    }
+    form.style.display = 'none';
+    box.style.display = 'block';
+  }
+  function resetThanks(form){
+    if(!form) return;
+    var b = form.nextElementSibling;
+    if(b && b.classList.contains('form-thanks')) b.style.display = 'none';
+    form.style.display = '';
+  }
+
   // Anonymné počítanie klikov a odoslaných formulárov (zobrazí sa v administrácii → Návštevnosť)
   function track(name){
     try{ navigator.sendBeacon('/_e', new Blob([JSON.stringify({e:name})], {type:'application/json'})); }catch(e){}
@@ -2590,7 +2624,7 @@
       Telefón: telefon,
       Správa: sprava
     }, 'Ďakujeme! Ozvem sa vám čo najskôr.');
-    if (ok) form.reset();
+    if (ok){ form.reset(); showThanks(form); }
   });
 
   // Scroll reveal — obsah sa jemne objaví, keď vojde do zorného poľa
