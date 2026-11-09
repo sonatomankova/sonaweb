@@ -529,6 +529,17 @@
         } })
       });
       if (res.ok){
+        // Záloha: ak server nevie posielať maily (SMTP), pošle ich prehliadač cez FormSubmit
+        res.clone().json().then(function(j){
+          if(!j.smtp){
+            try{
+              fetch('https://formsubmit.co/ajax/tomankova.sona@gmail.com', { method:'POST', headers:{ 'Accept':'application/json' }, body:new URLSearchParams({
+                _subject: `Žiadosť o ocenenie nehnuteľnosti — ${meno}`, Meno: meno, Telefón: telefon, 'E-mail': email,
+                'Typ nehnuteľnosti': typ, Lokalita: adresa, Rozloha: rozloha || '-', 'Počet izieb': izby || '-',
+                'Stav nehnuteľnosti': stav || '-', Poznámka: poznamka || '-' }), keepalive:true }).catch(function(){});
+            }catch(e){}
+          }
+        }).catch(function(){});
         if (window.swPixelEvent) swPixelEvent('Lead');
         try{ navigator.sendBeacon('/_e', new Blob([JSON.stringify({e:'form'})], {type:'application/json'})); }catch(e){}
         showToast('Ďakujeme! Ozvem sa vám s ocenením čo najskôr.');

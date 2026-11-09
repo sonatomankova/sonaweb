@@ -337,15 +337,6 @@ def _send_mail_async(subject, body, msg_id):
                     srv.login(user, pwd)
                     srv.send_message(m)
                 sent = True
-            else:
-                import urllib.parse, urllib.request
-                data = urllib.parse.urlencode({"_subject": subject, "Správa": body}).encode("utf-8")
-                req = urllib.request.Request(
-                    "https://formsubmit.co/ajax/tomankova.sona@gmail.com", data=data,
-                    headers={"Accept": "application/json", "Origin": "https://www.sonatomankova.com",
-                             "Referer": "https://www.sonatomankova.com/", "User-Agent": "Mozilla/5.0"})
-                with urllib.request.urlopen(req, timeout=10) as r:
-                    sent = 200 <= r.status < 300
         except Exception as exc:
             print("[mail] chyba:", exc, flush=True)
         try:
@@ -387,8 +378,10 @@ def public_form():
     except Exception as exc:
         print("[form] chyba pri ukladaní:", exc, flush=True)
         return ("", 500)
-    _send_mail_async(subject, body, msg_id)
-    return {"ok": True}
+    smtp_on = bool(os.environ.get("SMTP_HOST") and os.environ.get("SMTP_USER") and os.environ.get("SMTP_PASS"))
+    if smtp_on:
+        _send_mail_async(subject, body, msg_id)
+    return {"ok": True, "smtp": smtp_on}
 
 
 @app.route("/admin/spravy")

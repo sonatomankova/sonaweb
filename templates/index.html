@@ -2599,6 +2599,12 @@
         body: JSON.stringify({ fields: dataObj })
       });
       if (res.ok){
+        // Záloha: ak server nevie posielať maily (SMTP), pošle ich prehliadač cez FormSubmit (bez čakania a bez chyby pre návštevníka)
+        res.clone().json().then(function(j){
+          if(!j.smtp){
+            try{ fetch('https://formsubmit.co/ajax/tomankova.sona@gmail.com', { method:'POST', headers:{ 'Accept':'application/json' }, body:new URLSearchParams(dataObj), keepalive:true }).catch(function(){}); }catch(e){}
+          }
+        }).catch(function(){});
         track('form');
         showToast(successMessage || 'Ďakujeme! Správa bola odoslaná.');
         return true;
