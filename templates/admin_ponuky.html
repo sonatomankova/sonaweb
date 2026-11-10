@@ -13,6 +13,7 @@
       <img src="{{ l.img }}" alt="">
       <div class="card-title">{{ loop.index }}. {{ l.type }}{% if l.place %} — {{ l.place }}{% endif %}</div>
       <div class="card-actions">
+        {% if not loop.first %}<form method="post" action="{{ url_for('admin_ponuky_move', idx=loop.index0) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="direction" value="top"><button class="icon-btn" title="Presunúť na začiatok (zobrazí sa ako prvá)">⤒ Na začiatok</button></form>{% endif %}
         <form method="post" action="{{ url_for('admin_ponuky_move', idx=loop.index0) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="direction" value="up"><button class="icon-btn" title="Hore">↑</button></form>
         <form method="post" action="{{ url_for('admin_ponuky_move', idx=loop.index0) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="direction" value="down"><button class="icon-btn" title="Dole">↓</button></form>
         <form method="post" action="{{ url_for('admin_ponuky_delete', idx=loop.index0) }}" onsubmit="return confirm('Naozaj zmazať túto ponuku?');"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="icon-btn danger" title="Zmazať">Zmazať</button></form>

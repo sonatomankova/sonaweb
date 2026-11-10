@@ -563,7 +563,7 @@ def admin_ponuky_add():
         "place": request.form.get("place", "").strip(),
         "meta": request.form.get("meta", "").strip(),
     }
-    site["listings"].append(listing)
+    site["listings"].insert(0, listing)
     site["updated"] = f"Aktualizované: {today_sk()} · úplný a vždy aktuálny zoznam nájdete na bosen.sk"
     save_site(site)
     flash("Ponuka pridaná ✓", "ok")
@@ -615,6 +615,11 @@ def admin_ponuky_move(idx):
     site = load_site()
     direction = request.form.get("direction")
     listings = site["listings"]
+    if direction == "top":
+        if 0 < idx < len(listings):
+            listings.insert(0, listings.pop(idx))
+            save_site(site)
+        return redirect(url_for("admin_ponuky"))
     target = idx - 1 if direction == "up" else idx + 1
     if 0 <= idx < len(listings) and 0 <= target < len(listings):
         listings[idx], listings[target] = listings[target], listings[idx]
